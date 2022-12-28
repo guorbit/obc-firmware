@@ -1,0 +1,4 @@
+tm_collection_vm_if.c:14:6:init_tm_collection	32	static
+tm_collection_vm_if.c:32:6:tm_collection_collect_tm	32	static
+tm_collection_vm_if.c:48:1:_GLOBAL__sub_D_00099_0_tm_collection_initialized	16	static
+tm_collection_vm_if.c:48:1:_GLOBAL__sub_I_00099_1_tm_collection_initialized	16	static

@@ -1,0 +1,4 @@
+loc_provider.c:18:6:loc_provider_startup	16	static
+loc_provider.c:24:6:loc_provider_PI_request_loc	176	static
+loc_provider.c:38:1:_GLOBAL__sub_D_00099_0_loc_provider_startup	16	static
+loc_provider.c:38:1:_GLOBAL__sub_I_00099_1_loc_provider_startup	16	static

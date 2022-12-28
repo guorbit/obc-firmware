@@ -1,0 +1,11 @@
+C_ASN1_Types.c:559:5:Encode_NATIVE_Location_Fix_Packet	48	static
+C_ASN1_Types.c:612:5:Decode_NATIVE_Location_Fix_Packet	48	static
+C_ASN1_Types.c:661:5:Encode_NATIVE_Temperature_Generic	48	static
+C_ASN1_Types.c:714:5:Decode_NATIVE_Temperature_Generic	48	static
+C_ASN1_Types.c:763:5:Encode_NATIVE_Deployment_Digital	48	static
+C_ASN1_Types.c:816:5:Decode_NATIVE_Deployment_Digital	48	static
+C_ASN1_Types.c:865:5:Encode_NATIVE_Deployment_Analogue	48	static
+C_ASN1_Types.c:918:5:Decode_NATIVE_Deployment_Analogue	48	static
+C_ASN1_Types.c:1171:5:Encode_NATIVE_Mode_Change_Packet	48	static
+C_ASN1_Types.c:1224:5:Decode_NATIVE_Mode_Change_Packet	48	static
+C_ASN1_Types.c:1231:1:_GLOBAL__sub_I_00099_0_Encode_NATIVE_Location_Fix_Packet	16	static

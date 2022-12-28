@@ -1,0 +1,27 @@
+<DeploymentView>
+    <Node name="x86_Linux_POHIC_1" type="ocarina_processors_x86::x86.linux" node_label="Node_1" namespace="ocarina_processors_x86">
+        <Property name="Taste::coordinates" value="10900 9400 62400 42700"/>
+        <Partition name="Partition_1">
+            <Property name="Taste::coordinates" value="15300 13800 58100 39000"/>
+            <Function name="loc_provider" path="loc_provider" selected_implementation="default"/>
+            <Function name="tm_collection" path="tm_collection" selected_implementation="default"/>
+            <Function name="tc_validation" path="tc_validation"/>
+            <Function name="state_handler_entrypoint" path="state_handler_entrypoint" selected_implementation="fsm"/>
+            <Function name="tc_provider" path="tc_provider"/>
+            <Function name="tm_provider" path="tm_provider"/>
+            <Function name="gui" path="gui"/>
+        </Partition>
+        <Device name="ethernet1" requires_bus_access="ocarina_buses::ip.i" port="ethernet1" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers">
+            <Property name="Taste::coordinates" value="10900 11200"/>
+        </Device>
+        <Device name="ethernet2" requires_bus_access="ocarina_buses::ip.i" port="ethernet2" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers">
+            <Property name="Taste::coordinates" value="10900 15200"/>
+        </Device>
+        <Device name="ethernet3" requires_bus_access="ocarina_buses::ip.i" port="ethernet3" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers">
+            <Property name="Taste::coordinates" value="10900 19300"/>
+        </Device>
+        <Device name="serial" requires_bus_access="ocarina_buses::serial.minimal" port="serial" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::linux_serial.minimal" extends="ocarina_drivers::linux_serial" namespace="ocarina_drivers">
+            <Property name="Taste::coordinates" value="10900 23400"/>
+        </Device>
+    </Node>
+</DeploymentView>

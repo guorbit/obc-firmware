@@ -1,0 +1,133 @@
+V "GNAT Lib v8"
+A -gnatwa
+A -O0
+A -Wall
+A -Wextra
+A -gnatA
+A -fdata-sections
+A -ffunction-sections
+A -gnatd.E
+A -fstack-usage
+A -g
+A -fstack-check=specific
+A -mtune=generic
+A -march=x86-64
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U taste_basictypes%b	taste_basictypes.adb	473e7ea6 NE OO PK
+
+U taste_basictypes%s	taste_basictypes.ads	0bfed639 EE NE OO PK
+W adaasn1rtl%s		adaasn1rtl.adb		adaasn1rtl.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20170911084841 76789da1 ada%s
+D a-charac.ads		20170908151217 2d3ec45b ada.characters%s
+D a-chlat1.ads		20170908151217 66457d31 ada.characters.latin_1%s
+D adaasn1rtl.ads	20221228094750 ba1d55d4 adaasn1rtl%s
+D board_config.ads	20221228094750 ff248fc1 board_config%s
+D interfac.ads		20180111085525 5ab55268 interfaces%s
+D system.ads		20180111085525 4635ec04 system%s
+D s-bitops.ads		20180111085525 0765e3a3 system.bit_ops%s
+D s-unstyp.ads		20180111085525 34867c83 system.unsigned_types%s
+D taste_basictypes.ads	20221228094750 f7d66fe9 taste_basictypes%s
+D taste_basictypes.adb	20221228094750 b0e8114f taste_basictypes%b
+X 4 adaasn1rtl.ads
+5K9*adaasn1rtl 125e15 10|3w6 11r5 16r10 17r10 18r10 19r10 20r10 30r27 36r72
+. 39r28 45r74 48r26 54r70 57r27 63r72 66r29 72r76 85r84 11|22r72 25r11 25r37
+. 53r74 56r11 56r37 84r70 87r11 87r37 115r72 118r11 118r37 146r76 150r11
+. 150r37 153r12 179r84 183r11 183r37 186r12
+10M9*BIT 10|20r21
+12M12*Asn1Byte{6|63M9}
+14I12*Asn1Int{5|3I12} 10|19r21 30r38 48r37
+15M12*Asn1UInt{5|4M12} 10|18r21 39r39 57r38
+19B12*Asn1Boolean{boolean} 10|66r40
+22A9*BitArray(10M9)<integer> 10|17r21
+25A9*OctetBuffer(12M12)<integer> 10|16r21
+41R9*ASN1_RESULT 44e14 10|36r83 45r85 54r81 63r83 72r87 85r95 11|22r83 25r22
+. 25r48 53r85 56r22 56r48 84r81 87r22 87r48 115r83 118r22 118r48 146r87 150r22
+. 150r48 153r23 179r95 183r22 183r48 186r23
+42b7*Success{boolean} 11|25m61 28m9 29r30 56m61 59m9 60r30 87m61 90m9 91r30
+. 118m61 121m9 122r30 150m61 153m36 183m61 186m36
+43i7*ErrorCode{integer} 11|25m78 29m9 56m78 60m9 87m78 91m9 118m78 122m9
+. 150m78 153m53 183m78 186m53
+X 5 board_config.ads
+3I12*Asn1Int{6|55I9}
+4M12*Asn1UInt{6|77M9}
+X 6 interfac.ads
+55I9*Integer_64<long_long_integer>
+63M9*Unsigned_8
+77M9*Unsigned_64
+X 7 system.ads
+37K9*System 156e11 10|7w6
+X 10 taste_basictypes.ads
+26K9*TASTE_BasicTypes 95l5 95e21 11|6b14 205l5 205t21
+30I9*asn1SccT_Int32{4|14I12} 33r44 36r49 38r37 11|14r46 22r49 33r37 35r10
+33V10*asn1SccT_Int32_Equal{boolean} 33>31 33>37 11|14b10 20l5 20t25
+33i31 val1{30I9} 11|14b32 18r16
+33i37 val2{30I9} 11|14b38 18r23
+35i1*ERR_T_INT32{integer} 11|29r50
+36V10*asn1SccT_Int32_IsConstraintValid{4|41R9} 36>43 11|22b10 31l5 31t37
+36i43 val{30I9} 11|22b43 28r37 28r47
+38V10*asn1SccT_Int32_Init{30I9} 11|33b10 41l5 41t24
+39M9*asn1SccT_UInt32{4|15M12} 42r45 45r50 47r38 11|45r47 53r50 64r38 66r10
+42V10*asn1SccT_UInt32_Equal{boolean} 42>32 42>38 11|45b10 51l5 51t26
+42m32 val1{39M9} 11|45b33 49r16
+42m38 val2{39M9} 11|45b39 49r23
+44i1*ERR_T_UINT32{integer} 11|60r50
+45V10*asn1SccT_UInt32_IsConstraintValid{4|41R9} 45>44 11|53b10 62l5 62t38
+45m44 val{39M9} 11|53b44 59r21
+47V10*asn1SccT_UInt32_Init{39M9} 11|64b10 72l5 72t25
+48I9*asn1SccT_Int8{4|14I12} 51r43 54r48 56r36 11|76r45 84r48 95r36 97r10
+51V10*asn1SccT_Int8_Equal{boolean} 51>30 51>36 11|76b10 82l5 82t24
+51i30 val1{48I9} 11|76b31 80r16
+51i36 val2{48I9} 11|76b37 80r23
+53i1*ERR_T_INT8{integer} 11|91r50
+54V10*asn1SccT_Int8_IsConstraintValid{4|41R9} 54>42 11|84b10 93l5 93t36
+54i42 val{48I9} 11|84b42 90r30 90r40
+56V10*asn1SccT_Int8_Init{48I9} 11|95b10 103l5 103t23
+57M9*asn1SccT_UInt8{4|15M12} 60r44 63r49 65r37 11|107r46 115r49 126r37 128r10
+60V10*asn1SccT_UInt8_Equal{boolean} 60>31 60>37 11|107b10 113l5 113t25
+60m31 val1{57M9} 11|107b32 111r16
+60m37 val2{57M9} 11|107b38 111r23
+62i1*ERR_T_UINT8{integer} 11|122r50
+63V10*asn1SccT_UInt8_IsConstraintValid{4|41R9} 63>43 11|115b10 124l5 124t37
+63m43 val{57M9} 11|115b43 121r21
+65V10*asn1SccT_UInt8_Init{57M9} 11|126b10 134l5 134t24
+66B9*asn1SccT_Boolean{4|19E12} 69r46 72r51 74r39 11|138r48 146r51 157r39
+. 159r10
+69V10*asn1SccT_Boolean_Equal{boolean} 69>33 69>39 11|138b10 144l5 144t27
+69b33 val1{66E9} 11|138b34 142r16
+69b39 val2{66E9} 11|138b40 142r23
+71i1*ERR_T_BOOLEAN{integer}
+72V10*asn1SccT_Boolean_IsConstraintValid{4|41R9} 72>45 11|146b10 155l5 155t39
+72b45 val{66E9} 11|146b45 148r26
+74V10*asn1SccT_Boolean_Init{66E9} 11|157b10 165l5 165t26
+77R6*asn1SccT_Null_Record 79e11 82r50 85r55 87r43 11|169r52 179r55 190r43
+. 192r10
+82V10*asn1SccT_Null_Record_Equal{boolean} 82>37 82>43 11|169b10 177l5 177t31
+82r37 val1{77R6} 11|169b38 171r25
+82r43 val2{77R6} 11|169b44 172r25
+84i1*ERR_T_NULL_RECORD{integer}
+85V10*asn1SccT_Null_Record_IsConstraintValid{4|41R9} 85>49 11|179b10 188l5
+. 188t43
+85r49 val{77R6} 11|179b49 181r26
+87V10*asn1SccT_Null_Record_Init{77R6} 11|190b10 198l5 198t30
+X 11 taste_basictypes.adb
+25r5 ret{4|41R9} 28m5 29m5 29r26 30r12
+35i5 val{10|30I9} 37m5 39r12
+56r5 ret{4|41R9} 59m5 60m5 60r26 61r12
+66m5 val{10|39M9} 68m5 70r12
+87r5 ret{4|41R9} 90m5 91m5 91r26 92r12
+97i5 val{10|48I9} 99m5 101r12
+118r5 ret{4|41R9} 121m5 122m5 122r26 123r12
+128m5 val{10|57M9} 130m5 132r12
+150r5 ret{4|41R9} 153m5 154r12
+159b5 val{10|66E9} 161m5 163r12
+183r5 ret{4|41R9} 186m5 187r12
+192r5 val{10|77R6} 194m5 196r12
+

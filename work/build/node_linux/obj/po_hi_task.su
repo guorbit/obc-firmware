@@ -1,0 +1,16 @@
+po_hi_task.c:127:17:__po_hi_get_task_id	32	static
+po_hi_task.c:177:6:__po_hi_wait_for_tasks	32	static
+po_hi_task.c:237:5:__po_hi_compute_next_period	176	static
+po_hi_task.c:304:5:__po_hi_wait_for_next_period	48	static
+po_hi_task.c:445:5:__po_hi_initialize_tasking	32	static
+po_hi_task.c:472:5:__po_hi_number_of_cpus	32	static
+po_hi_task.c:498:11:__po_hi_posix_create_thread	528	static
+po_hi_task.c:607:5:__po_hi_posix_initialize_task	32	static
+po_hi_task.c:705:5:__po_hi_create_generic_task	80	static
+po_hi_task.c:776:5:__po_hi_create_periodic_task	80	dynamic,bounded
+po_hi_task.c:839:6:__po_hi_task_wait_offset	32	static
+po_hi_task.c:848:5:__po_hi_create_sporadic_task	80	dynamic,bounded
+po_hi_task.c:897:5:__po_hi_task_delay_until	176	static
+po_hi_task.c:964:6:__po_hi_tasks_killall	32	static
+po_hi_task.c:978:1:_GLOBAL__sub_D_00099_0___po_hi_get_task_id	16	static
+po_hi_task.c:978:1:_GLOBAL__sub_I_00099_1___po_hi_get_task_id	16	static

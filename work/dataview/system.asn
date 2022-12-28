@@ -1,0 +1,19 @@
+-- Dataview generated on-the-fly providing information on the system
+-- and made available to the user code.
+System-Dataview DEFINITIONS ::=
+BEGIN
+
+-- List of functions (instances) present in the system
+PID ::= ENUMERATED {
+    gui,
+    loc-provider,
+    state-handler-entrypoint,
+    tc-provider,
+    tc-validation,
+    tm-collection,
+    tm-provider,
+    
+    env
+}
+
+END

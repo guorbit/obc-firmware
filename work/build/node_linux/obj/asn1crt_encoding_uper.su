@@ -1,0 +1,8 @@
+asn1crt_encoding_uper.c:10:13:ObjectIdentifier_subidentifiers_uper_encode	176	static
+asn1crt_encoding_uper.c:32:6:ObjectIdentifier_uper_encode	432	static
+asn1crt_encoding_uper.c:58:6:RelativeOID_uper_encode	432	static
+asn1crt_encoding_uper.c:84:13:ObjectIdentifier_subidentifiers_uper_decode	192	static
+asn1crt_encoding_uper.c:104:13:ObjectIdentifier_uper_decode_lentg	160	static
+asn1crt_encoding_uper.c:118:6:ObjectIdentifier_uper_decode	224	static
+asn1crt_encoding_uper.c:144:6:RelativeOID_uper_decode	224	static
+asn1crt_encoding_uper.c:161:1:_GLOBAL__sub_I_00099_0_ObjectIdentifier_uper_encode	16	static

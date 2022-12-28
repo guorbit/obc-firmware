@@ -1,0 +1,9 @@
+asn1crt.c:26:13:int2uint	16	static
+asn1crt.c:38:13:uint2int	48	static
+asn1crt.c:49:5:GetCharIndex	48	static
+asn1crt.c:72:6:ObjectIdentifier_Init	48	static
+asn1crt.c:80:6:ObjectIdentifier_isValid	32	static
+asn1crt.c:84:6:RelativeOID_isValid	32	static
+asn1crt.c:88:6:ObjectIdentifier_equal	48	static
+asn1crt.c:101:1:_GLOBAL__sub_D_00099_0_ber_aux	16	static
+asn1crt.c:101:1:_GLOBAL__sub_I_00099_1_ber_aux	16	static

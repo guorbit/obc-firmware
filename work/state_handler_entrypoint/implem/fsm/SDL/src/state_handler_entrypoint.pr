@@ -1,0 +1,127 @@
+/* CIF PROCESS (236, 150), (177, 75) */
+process State_Handler_Entrypoint;
+    /* CIF TEXT (831, 16), (267, 140) */
+    -- Text area for declarations and comments
+    
+    dcl k, s, w CounterK;
+    dcl k_max, s_max, w_max CounterK;
+    
+    dcl mcp Mode_Change_Packet;
+    dcl lfp Location_Fix_Packet;
+    /* CIF ENDTEXT */
+    /* CIF START (522, 17), (70, 35) */
+    START;
+        /* CIF PROCEDURECALL (341, 67), (431, 35) */
+        call writeln("[state_handler_entrypoint] Initialising SDL implementation");
+        /* CIF task (507, 117), (99, 35) */
+        task k_max := 999;
+        /* CIF task (515, 172), (83, 35) */
+        task s_max := 3;
+        /* CIF task (513, 227), (87, 35) */
+        task w_max := 1;
+        /* CIF NEXTSTATE (522, 277), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (958, 226), (70, 35) */
+    state Wait;
+        /* CIF input (1134, 281), (120, 35) */
+        input poll_aoi, trig_aoi;
+            /* CIF PROCEDURECALL (1136, 331), (116, 35) */
+            call request_loc(lfp);
+            /* CIF PROCEDURECALL (1015, 381), (358, 35) */
+            call writeln("[state_handler_entrypoint] [poll_aoi] printout:");
+            /* CIF PROCEDURECALL (1132, 431), (124, 35) */
+            call writeln("    k: ", k);
+            /* CIF PROCEDURECALL (1124, 481), (140, 35) */
+            call writeln("    t: ", lfp.t);
+            /* CIF PROCEDURECALL (1114, 531), (161, 35) */
+            call writeln("    lat: ", lfp.lat);
+            /* CIF PROCEDURECALL (1111, 581), (167, 35) */
+            call writeln("    lon: ", lfp.lon);
+            /* CIF PROCEDURECALL (1151, 631), (86, 35) */
+            call writeln("");
+            /* CIF output (1133, 681), (122, 35) */
+            output send_tm_aoi(lfp);
+            /* CIF task (1110, 731), (169, 35) */
+            task k := (k+1) mod (k_max+1);
+            /* CIF NEXTSTATE (1160, 781), (70, 35) */
+            NEXTSTATE Wait;
+        /* CIF input (724, 281), (135, 35) */
+        input poll_mcp, trig_mcp;
+            /* CIF PROCEDURECALL (732, 331), (119, 35) */
+            call request_tc(mcp);
+            /* CIF PROCEDURECALL (609, 381), (365, 35) */
+            call writeln("[state_handler_entrypoint] [poll_mcp] printout:");
+            /* CIF PROCEDURECALL (730, 431), (124, 35) */
+            call writeln("    k: ", k);
+            /* CIF PROCEDURECALL (654, 481), (276, 35) */
+            call writeln("    target-addr: ", mcp.target_addr);
+            /* CIF PROCEDURECALL (647, 531), (290, 35) */
+            call writeln("    target-mode: ", mcp.target_mode);
+            /* CIF PROCEDURECALL (688, 581), (208, 35) */
+            call writeln("    ttl-ms:", mcp.ttl_ms);
+            /* CIF PROCEDURECALL (749, 631), (86, 35) */
+            call writeln("");
+            /* CIF output (723, 681), (138, 35) */
+            output send_tm_mcp(mcp);
+            /* CIF task (707, 731), (169, 35) */
+            task k := (k+1) mod (k_max+1);
+            /* CIF NEXTSTATE (757, 781), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (1737, 230), (70, 35) */
+    state Wait;
+        /* CIF input (1625, 285), (90, 35) */
+        input toggle_pwr;
+            /* CIF task (1581, 340), (179, 35) */
+            task w := (w+1) mod (w_max+1);
+            /* CIF decision (1627, 390), (87, 50) */
+            decision w = w_max;
+                /* CIF ANSWER (1740, 460), (70, 23) */
+                (false):
+                /* CIF ANSWER (1522, 460), (70, 23) */
+                (true):
+                    /* CIF label (1522, 498), (70, 35) */
+                    sleep:
+                    /* CIF PROCEDURECALL (1391, 548), (331, 35) */
+                    call writeln("[state_handler_entrypoint] going to sleep");
+                    /* CIF PROCEDURECALL (1513, 598), (86, 35) */
+                    call writeln("");
+                    /* CIF NEXTSTATE (1522, 648), (70, 35) */
+                    NEXTSTATE Sleep;
+            enddecision;
+            /* CIF NEXTSTATE (1636, 713), (70, 35) */
+            NEXTSTATE Wait;
+        /* CIF input (1816, 285), (73, 35) */
+        input trig_pwr;
+            /* CIF join (1836, 340), (35, 35) */
+            join sleep;
+    endstate;
+    /* CIF state (2195, 230), (70, 35) */
+    state Sleep;
+        /* CIF input (2292, 285), (73, 35) */
+        input trig_pwr;
+            /* CIF join (2312, 340), (35, 35) */
+            join wake;
+        /* CIF input (2091, 285), (90, 35) */
+        input toggle_pwr;
+            /* CIF task (2053, 340), (166, 35) */
+            task s := (s+1) mod (s_max+1);
+            /* CIF decision (2097, 395), (78, 50) */
+            decision s = s_max;
+                /* CIF ANSWER (2212, 465), (70, 23) */
+                (false):
+                    /* CIF NEXTSTATE (2212, 508), (70, 35) */
+                    NEXTSTATE Sleep;
+                /* CIF ANSWER (2006, 465), (70, 23) */
+                (true):
+                    /* CIF label (2006, 503), (70, 35) */
+                    wake:
+                    /* CIF PROCEDURECALL (1886, 553), (308, 35) */
+                    call writeln("[state_handler_entrypoint] waking up");
+                    /* CIF PROCEDURECALL (1997, 603), (86, 35) */
+                    call writeln("");
+            enddecision;
+            /* CIF NEXTSTATE (2102, 714), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess State_Handler_Entrypoint;

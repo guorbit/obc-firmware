@@ -1,0 +1,13 @@
+po_hi_time.c:97:5:__po_hi_get_time	160	static
+po_hi_time.c:158:5:__po_hi_add_times	48	static
+po_hi_time.c:171:5:__po_hi_seconds	32	static
+po_hi_time.c:179:5:__po_hi_milliseconds	32	static
+po_hi_time.c:187:5:__po_hi_microseconds	32	static
+po_hi_time.c:195:5:__po_hi_delay_until	368	static
+po_hi_time.c:287:5:__po_hi_time_is_greater	32	static
+po_hi_time.c:301:5:__po_hi_time_copy	32	static
+po_hi_time.c:311:16:get_epoch	16	static
+po_hi_time.c:316:6:set_epoch	16	static
+po_hi_time.c:326:5:milliseconds_since_epoch	144	static
+po_hi_time.c:335:1:_GLOBAL__sub_D_00099_0___po_hi_get_time	16	static
+po_hi_time.c:335:1:_GLOBAL__sub_I_00099_1___po_hi_get_time	16	static

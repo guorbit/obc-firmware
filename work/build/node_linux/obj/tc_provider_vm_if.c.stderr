@@ -1,0 +1,8 @@
+[01m[K/home/taste/obc-model/obc-model/work/tc_provider/C/wrappers/tc_provider_vm_if.c:[m[K In function ‘[01m[Kinit_tc_provider[m[K’:
+[01m[K/home/taste/obc-model/obc-model/work/tc_provider/C/wrappers/tc_provider_vm_if.c:17:17:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kunused[m[K’ [[01;35m[K-Wunused-variable[m[K]
+       long long [01;35m[Kunused[m[K = getTimeInMilliseconds();
+                 [01;35m[K^~~~~~[m[K
+[01m[K/home/taste/obc-model/obc-model/work/tc_provider/C/wrappers/tc_provider_vm_if.c:[m[K In function ‘[01m[Ktc_provider_request_tc[m[K’:
+[01m[K/home/taste/obc-model/obc-model/work/tc_provider/C/wrappers/tc_provider_vm_if.c:27:31:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KOUT_mcp_len[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+       (char *OUT_mcp, [01;35m[Ksize_t *OUT_mcp_len[m[K)
+                       [01;35m[K~~~~~~~~^~~~~~~~~~~[m[K

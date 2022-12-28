@@ -1,0 +1,8 @@
+po_hi_protected.c:53:5:__po_hi_protected_init	32	static
+po_hi_protected.c:68:5:__po_hi_protected_lock	32	static
+po_hi_protected.c:84:5:__po_hi_protected_unlock	32	static
+po_hi_protected.c:100:5:__po_hi_mutex_init	32	static
+po_hi_protected.c:205:5:__po_hi_mutex_lock	32	static
+po_hi_protected.c:252:5:__po_hi_mutex_unlock	32	static
+po_hi_protected.c:288:1:_GLOBAL__sub_D_00099_0___po_hi_protected_init	16	static
+po_hi_protected.c:288:1:_GLOBAL__sub_I_00099_1___po_hi_protected_init	16	static

@@ -1,0 +1,94 @@
+--  This file was generated automatically - do not modify it manually
+--  If you wish to modify the template used to create this file, it is located
+--  in ~/tool-src/misc/space-creator/dv2aadl/deploymentview.tmplt
+--  After modifications, install it by running ~/tool-src/install/90_misc
+--  Template written by Maxime Perrotin (maxime.perrotin@esa.int) 2021-09
+package deploymentview::DV::Node_1
+public
+
+ with Deployment;
+ with TASTE;
+ with TASTE_DV_Properties;
+
+
+ --  Declare partition(s) of node "Node_1" (aka "x86_Linux_POHIC_1").
+ process Partition_1
+ end Partition_1;
+
+ process implementation Partition_1.others
+ end Partition_1.others;
+
+end deploymentview::DV::Node_1;
+
+package deploymentview::DV
+public
+
+ with TASTE;
+ with Deployment;
+ with Interfaceview::IV;
+ with TASTE_DV_Properties;
+
+ --  Dependencies of node Node_1
+ with interfaceview::IV::loc_provider;
+ with interfaceview::IV::tm_collection;
+ with interfaceview::IV::tc_validation;
+ with interfaceview::IV::state_handler_entrypoint;
+ with interfaceview::IV::tc_provider;
+ with interfaceview::IV::tm_provider;
+ with interfaceview::IV::gui;
+ with deploymentview::DV::Node_1;
+ with ocarina_processors_x86;
+
+ --  Node Node_1
+ system Node_1
+ end Node_1;
+
+ system implementation Node_1.others
+ subcomponents
+    IV_loc_provider : system Interfaceview::IV::loc_provider::loc_provider.others {
+       Taste::ImplementationName => "default";
+    };
+    IV_tm_collection : system Interfaceview::IV::tm_collection::tm_collection.others {
+       Taste::ImplementationName => "default";
+    };
+    IV_tc_validation : system Interfaceview::IV::tc_validation::tc_validation.others {
+       Taste::ImplementationName => "";
+    };
+    IV_state_handler_entrypoint : system Interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others {
+       Taste::ImplementationName => "fsm";
+    };
+    IV_tc_provider : system Interfaceview::IV::tc_provider::tc_provider.others {
+       Taste::ImplementationName => "";
+    };
+    IV_tm_provider : system Interfaceview::IV::tm_provider::tm_provider.others {
+       Taste::ImplementationName => "";
+    };
+    IV_gui : system Interfaceview::IV::gui::gui.others {
+       Taste::ImplementationName => "";
+    };
+    Partition_1 : process deploymentview::DV::Node_1::Partition_1.others { 
+       TASTE_DV_Properties::CoverageEnabled => false;
+    };
+    p1 : processor ocarina_processors_x86::x86.linux;
+ properties
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_loc_provider;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_tm_collection;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_tc_validation;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_state_handler_entrypoint;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_tc_provider;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_tm_provider;
+    TASTE::APLC_Binding => (reference (Partition_1)) applies to IV_gui;
+    Actual_Processor_Binding => (reference (p1)) applies to Partition_1;
+ end Node_1.others;
+
+
+system deploymentview
+end deploymentview;
+
+system implementation deploymentview.others
+subcomponents
+   interfaceview : system interfaceview::IV::interfaceview.others;
+   Node_1 : system Node_1.others;
+end deploymentview.others;
+
+end deploymentview::DV;

@@ -1,0 +1,14 @@
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:[m[K In function ‘[01m[K__po_hi_marshall_type_location_fix_packet_buffer_impl[m[K’:
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:89:67:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[K__po_hi_marshall_type_location_fix_packet_buffer_max_impl[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   __po_hi_marshall_type_location_fix_packet_buffer_max_impl ([01;35m[Kvalue->buffer[m[K, message, offset);
+                                                              [01;35m[K~~~~~^~~~~~~~[m[K
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:30:53:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kdataview__stream_element_buffer (*)[32][m[K’ {aka ‘[01m[Kchar (*)[32][m[K’} but argument is of type ‘[01m[Kdataview__stream_element_buffer *[m[K’ {aka ‘[01m[Kchar *[m[K’}
+     ([01;36m[Kdataview__location_fix_packet_buffer_max_impl* value[m[K,
+      [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:[m[K In function ‘[01m[K__po_hi_marshall_type_mode_change_packet_buffer_impl[m[K’:
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:145:66:[m[K [01;35m[Kwarning: [m[Kpassing argument 1 of ‘[01m[K__po_hi_marshall_type_mode_change_packet_buffer_max_impl[m[K’ from incompatible pointer type [[01;35m[K-Wincompatible-pointer-types[m[K]
+   __po_hi_marshall_type_mode_change_packet_buffer_max_impl ([01;35m[Kvalue->buffer[m[K, message, offset);
+                                                             [01;35m[K~~~~~^~~~~~~~[m[K
+[01m[K/home/taste/obc-model/obc-model/work/build/deploymentview_final/demo/marshallers.c:122:52:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[Kdataview__stream_element_buffer (*)[16][m[K’ {aka ‘[01m[Kchar (*)[16][m[K’} but argument is of type ‘[01m[Kdataview__stream_element_buffer *[m[K’ {aka ‘[01m[Kchar *[m[K’}
+     ([01;36m[Kdataview__mode_change_packet_buffer_max_impl* value[m[K,
+      [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~[m[K

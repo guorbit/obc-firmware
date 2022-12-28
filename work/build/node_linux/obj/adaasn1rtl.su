@@ -1,0 +1,17 @@
+adaasn1rtl.ads:22:9:bitarrayip	16	static
+adaasn1rtl.ads:25:9:octetbufferip	16	static
+adaasn1rtl.ads:34:4:tobjectidentifier_arraybip	16	static
+adaasn1rtl.ads:36:9:asn1objectidentifierip	16	static
+adaasn1rtl.ads:41:9:asn1_resultip	16	static
+adaasn1rtl.ads:49:9:test_case_resultip	16	static
+adaasn1rtl.ads:87:4:asn1real_equal	16	static
+adaasn1rtl.ads:94:4:octetstring_equal	112	static
+adaasn1rtl.ads:106:4:bitstring_equal	704	dynamic
+adaasn1rtl.adb:7:4:getstringsize	48	static
+adaasn1rtl.adb:19:4:getzerobasedcharindex	64	static
+adaasn1rtl.adb:36:4:characterpos	16	static
+adaasn1rtl.adb:46:4:objectidentifier_init	72	static
+adaasn1rtl.adb:52:4:objectidentifier_isvalid	16	static
+adaasn1rtl.adb:60:4:relativeoid_isvalid	16	static
+adaasn1rtl.adb:65:4:objectidentifier_equal	48	static
+adaasn1rtl.adb:83:4:string_equal	160	static

@@ -1,0 +1,4 @@
+tc_validation.cc:19:6:void tc_validation_startup()	16	static
+tc_validation.cc:25:6:void tc_validation_PI_validate_mc_vs_tm()	16	static
+tc_validation.cc:28:1:_GLOBAL__sub_D_00099_0_ctxt_tc_validation	16	static
+tc_validation.cc:28:1:_GLOBAL__sub_I_00099_1_ctxt_tc_validation	16	static

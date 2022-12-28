@@ -1,0 +1,17 @@
+Context-loc-provider DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      CounterK FROM OBC-MODEL-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-loc-provider ::= SEQUENCE {
+   k CounterK
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+loc-provider-ctxt Context-loc-provider ::= {
+   k 0
+
+}
+END

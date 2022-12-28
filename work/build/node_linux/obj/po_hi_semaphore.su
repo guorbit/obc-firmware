@@ -1,0 +1,12 @@
+po_hi_semaphore.c:38:5:__po_hi_sem_init	48	static
+po_hi_semaphore.c:133:5:__po_hi_sem_wait	32	static
+po_hi_semaphore.c:200:5:__po_hi_sem_mutex_wait	32	static
+po_hi_semaphore.c:226:5:__po_hi_sem_release	32	static
+po_hi_semaphore.c:273:11:__po_hi_sem_mutex_release	32	static
+po_hi_semaphore.c:294:11:__po_hi_sem_init_gqueue	48	static
+po_hi_semaphore.c:313:11:__po_hi_sem_wait_gqueue	48	static
+po_hi_semaphore.c:319:11:__po_hi_sem_mutex_wait_gqueue	48	static
+po_hi_semaphore.c:326:11:__po_hi_sem_release_gqueue	48	static
+po_hi_semaphore.c:332:11:__po_hi_sem_mutex_release_gqueue	48	static
+po_hi_semaphore.c:337:7:_GLOBAL__sub_D_00099_0___po_hi_sem_init	16	static
+po_hi_semaphore.c:337:7:_GLOBAL__sub_I_00099_1___po_hi_sem_init	16	static

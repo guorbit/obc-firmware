@@ -1,0 +1,5 @@
+project tc_validation_Ada is
+   for Languages use ("Ada");
+      for Source_Dirs use (".") & External_As_List ("CODE_PATH", ":");
+      for Object_Dir use "../obj";
+   end tc_validation_Ada;

@@ -1,0 +1,2 @@
+state_handler_entrypoint_datamodel.adb:24:28: warning: "Long_Float" is already use-visible inside package "Standard"
+state_handler_entrypoint_datamodel.adb:25:28: warning: "Long_Float" is already use-visible inside package "Standard"

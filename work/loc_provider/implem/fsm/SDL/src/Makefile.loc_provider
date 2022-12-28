@@ -1,0 +1,7 @@
+all:
+	mkdir -p code
+	cd code && opengeode --toAda /home/taste/obc-model/work/loc_provider/implem/fsm/SDL/src/loc_provider.pr "../system_structure.pr"
+	asn1scc -fp AUTO -typePrefix asn1Scc -o code -equal -Ada dataview-uniq.asn code/loc_provider_datamodel.asn
+	cd code && gnat make loc_provider
+clean:
+	rm -rf code

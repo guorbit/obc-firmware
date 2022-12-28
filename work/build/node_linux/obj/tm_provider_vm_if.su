@@ -1,0 +1,4 @@
+tm_provider_vm_if.c:13:6:init_tm_provider	32	static
+tm_provider_vm_if.c:26:6:tm_provider_request_tm	80	static
+tm_provider_vm_if.c:55:1:_GLOBAL__sub_D_00099_0_tm_provider_initialized	16	static
+tm_provider_vm_if.c:55:1:_GLOBAL__sub_I_00099_1_tm_provider_initialized	16	static

@@ -1,0 +1,31 @@
+[GENERATED OBJECT FILE]
+b__main.o
+[PROJECT FILES]
+/home/taste/obc-model/obc-model/work/build/node_linux/demo.gpr
+20221228094729
+[BOUND OBJECT FILES]
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/board_config.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/adaasn1rtl.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/obc_model_dataview.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/context_tm_provider.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/gui_subtype.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/state_handler_entrypoint_datamodel.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/system_dataview.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/taste_basictypes.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/state_handler_entrypoint_ri.o
+/home/taste/obc-model/obc-model/work/build/node_linux/obj/state_handler_entrypoint.o
+[GENERATED SOURCE FILES]
+b__main.ads
+b__main.adb
+b__main.ali
+[RESULTING OPTIONS]
+-L/home/taste/obc-model/obc-model/work/build/node_linux/obj/
+-L/home/taste/obc-model/obc-model/work/build/node_linux/obj/
+-L/usr/lib/gcc/x86_64-linux-gnu/8/adalib/
+-shared
+-shared-libgcc
+-lgnat-8
+-ldl
+[RUN PATH OPTION]
+/usr/lib/gcc/x86_64-linux-gnu/8/adalib/
+/usr/lib

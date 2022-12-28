@@ -1,0 +1,4 @@
+tc_validation_vm_if.c:12:6:init_tc_validation	32	static
+tc_validation_vm_if.c:25:6:tc_validation_validate_mc_vs_tm	32	static
+tc_validation_vm_if.c:41:1:_GLOBAL__sub_D_00099_0_tc_validation_initialized	16	static
+tc_validation_vm_if.c:41:1:_GLOBAL__sub_I_00099_1_tc_validation_initialized	16	static

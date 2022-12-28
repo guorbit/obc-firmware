@@ -1,0 +1,24 @@
+/* CIF PROCESS (250, 150), (150, 75) */
+process Loc_Provider;
+    /* CIF TEXT (682, 69), (267, 140) */
+    -- Text area for declarations and comments
+    
+    dcl k, max_k CounterK;
+    dcl lfp Location_Fix_Packet;
+    /* CIF ENDTEXT */
+    /* CIF START (18, 23), (70, 35) */
+    START;
+        /* CIF task (3, 78), (99, 35) */
+        task max_k := 999;
+        /* CIF NEXTSTATE (18, 133), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (553, 205), (70, 35) */
+    state Wait;
+        /* CIF input (542, 260), (92, 35) */
+        input request_loc;
+            /* CIF task (553, 310), (70, 35) */
+            task ;
+            /* CIF NEXTSTATE (553, 365), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess Loc_Provider;

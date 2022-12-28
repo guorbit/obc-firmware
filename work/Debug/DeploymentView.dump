@@ -1,0 +1,8 @@
+Node : node_linux
+  |_ Partition        : demo
+    |_ Coverage       : FALSE
+    |_ Package        : ocarina_processors_x86
+    |_ CPU Name       : x86_linux
+    |_ CPU Platform   : PLATFORM_NATIVE
+    |_ CPU Classifier : ocarina_processors_x86::x86.linux
+    |_ Contains       : tc_validation loc_provider tm_collection state_handler_entrypoint gui tc_provider tm_provider 

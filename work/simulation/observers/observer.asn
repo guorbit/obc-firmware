@@ -1,0 +1,351 @@
+State-handler-entrypoint-Datamodel DEFINITIONS ::=
+BEGIN
+--  This file was generated automatically by OpenGEODE
+IMPORTS
+   CounterK, Time-UNIX, Latitude-WGS84, Longitude-WGS84, Location, Temperature-Generic, Deployment-Digital, Deployment-Analogue, System-Mode, Subsystem-Address, Mode-Change-Packet, Location-Fix-Packet FROM OBC-MODEL-DATAVIEW
+   T-Int32, T-UInt32, T-Int8, T-UInt8, T-Boolean, T-Null-Record FROM TASTE-BasicTypes
+   PID FROM System-Dataview;
+
+State-handler-entrypoint-States ::= ENUMERATED {sleep, wait}
+
+State-handler-entrypoint-Context ::= SEQUENCE {
+   state State-handler-entrypoint-States,
+   init-done BOOLEAN,
+   k CounterK,
+   s CounterK,
+   w CounterK,
+   k-max CounterK,
+   s-max CounterK,
+   w-max CounterK,
+   mcp Mode-Change-Packet,
+   lfp Location-Fix-Packet
+}
+
+END
+
+OBC-MODEL-DATAVIEW DEFINITIONS ::=
+BEGIN
+
+-- ASN.1 Type definitions must start with an uppercase
+-- Field names in records (SEQUENCE) must start with a lowercase
+-- Underscores are not allowed: use dash (hyphen) 
+-- For integers do not assume that small ranges will be translated to small
+-- types in C or Ada (expect unsigned or signed 64 bits types with subtypes
+-- for the range in Ada)
+
+-- Simple types:
+
+-- TASTE-Boolean ::= BOOLEAN
+-- MyInteger   ::= INTEGER (0..255)
+-- MyReal      ::= REAL (0.0 .. 1000.0)
+-- MyBool      ::= BOOLEAN
+-- MyEnum      ::= ENUMERATED { hello, world, how-are-you }
+
+-- Complex types:
+
+--  MySeq       ::= SEQUENCE {
+--      input-data  MyInteger,
+--      output-data MyInteger,
+--      validity    ENUMERATED { valid, invalid }
+--  }
+--
+--  MyChoice    ::= CHOICE {
+--      a BOOLEAN,
+--      b MySeq
+--  }
+--
+--  MySeqOf     ::= SEQUENCE (SIZE (2)) OF MyEnum
+--
+--  MyOctStr    ::= OCTET STRING (SIZE (3))
+--
+--  -- You can also declare constants
+--  myVar       MySeqOf     ::= { hello, world }
+
+CounterK                ::= INTEGER (0 .. 1000)
+
+Time-UNIX               ::= INTEGER (0 .. 4294967294)   -- overflow in 2106
+
+Latitude-WGS84          ::= REAL (-90.0 .. 90.0)
+Longitude-WGS84         ::= REAL (-180.0 .. 180.0)
+Location                ::= SEQUENCE {
+    lat             Latitude-WGS84,
+    lon             Longitude-WGS84
+}
+
+Temperature-Generic     ::= REAL (-200.0 .. 200.0)
+Deployment-Digital      ::= BOOLEAN
+Deployment-Analogue     ::= REAL (0.0 .. 100.0)
+
+System-Mode             ::= ENUMERATED {
+    idle,
+    uplink,
+    downlink,
+    imaging,
+    processing
+}
+
+Subsystem-Address       ::= ENUMERATED {
+    obc,
+    comms,
+    electrical,
+    mechanical,
+    control,
+    software,
+    payload
+}
+
+Mode-Change-Packet      ::= SEQUENCE {
+    target-addr     Subsystem-Address,
+    target-mode     System-Mode,
+    ttl-ms          INTEGER (0 .. 10000)
+}
+
+Location-Fix-Packet     ::= SEQUENCE {
+    t               Time-UNIX,
+    lat             Latitude-WGS84,
+    lon             Longitude-WGS84
+}
+
+END
+
+
+TASTE-BasicTypes DEFINITIONS ::=
+BEGIN
+
+-- Set of TASTE predefined basic types
+
+T-Int32 ::=  INTEGER (-2147483648 .. 2147483647)
+
+T-UInt32 ::= INTEGER (0 .. 4294967295)
+
+T-Int8 ::= INTEGER (-128 .. 127)
+
+T-UInt8 ::= INTEGER (0 .. 255)
+
+T-Boolean ::= BOOLEAN
+
+T-Null-Record ::= SEQUENCE {}
+
+END
+
+
+-- Dataview generated on-the-fly providing information on the system
+-- and made available to the user code.
+System-Dataview DEFINITIONS ::=
+BEGIN
+
+-- List of functions (instances) present in the system
+PID ::= ENUMERATED {
+    gui,
+    loc-provider,
+    state-handler-entrypoint,
+    tc-provider,
+    tc-validation,
+    tm-collection,
+    tm-provider,
+    
+    env
+}
+
+END
+
+GUI-SUBTYPE DEFINITIONS ::=
+BEGIN
+
+IMPORTS Location-Fix-Packet FROM OBC-MODEL-DATAVIEW
+
+
+
+
+Mode-Change-Packet FROM OBC-MODEL-DATAVIEW
+
+
+ ;
+
+
+
+
+Gui-send-tm-aoi-lfp ::= Location-Fix-Packet
+
+
+
+
+Gui-send-tm-mcp-mcp ::= Mode-Change-Packet
+
+
+
+
+
+
+
+END
+
+
+Simulation-DataView DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      
+      
+      --  ASN.1 modules used by thread gui_send_tm_aoi
+      Location-Fix-Packet FROM OBC-MODEL-DATAVIEW
+      
+      --  ASN.1 modules used by thread gui_send_tm_mcp
+      Mode-Change-Packet FROM OBC-MODEL-DATAVIEW
+      
+      
+      
+      
+      
+      
+      
+      -- Import generic integer type (used for timers)
+      T-UInt32 FROM TASTE-BasicTypes
+      PID      FROM System-Dataview
+      -- Import timers
+      AggregateTimerData FROM Simulation-Timers-DataView
+      --  Import the SDL function states needed for the global system state
+      State-handler-entrypoint-Context FROM State-handler-entrypoint-Datamodel
+   ;
+
+   --  Simulator needs to knows about cyclic interfaces
+   Periodic-Event {Event-Ty} ::= SEQUENCE {
+      period INTEGER (0 .. 500000),  -- Upper limit is arbitrary
+      event  Event-Ty
+   }
+
+   --  To keep a constant list of events.
+   Periodic-Events {Event-Ty, INTEGER:max} ::=
+      SEQUENCE (SIZE (0 .. max)) OF Periodic-Event {Event-Ty}
+
+   
+   
+   
+   Gui-Event ::= CHOICE {
+      msg-in CHOICE {
+         send-tm-aoi SEQUENCE { lfp Location-Fix-Packet},
+         send-tm-mcp SEQUENCE { mcp Mode-Change-Packet}
+      },
+      msg-out CHOICE {
+         trig-aoi SEQUENCE {   },
+         trig-mcp SEQUENCE {   },
+         trig-pwr SEQUENCE {   }
+      }
+   }
+   
+   Loc-Provider-Event ::= SEQUENCE {}  -- Synchronous function
+   
+   State-Handler-Entrypoint-Event ::= CHOICE {
+      msg-in CHOICE {
+         input-none SEQUENCE {},
+         poll-aoi   SEQUENCE {  },
+         poll-mcp   SEQUENCE {  },
+         toggle-pwr SEQUENCE {  },
+         trig-aoi   SEQUENCE {  },
+         trig-mcp   SEQUENCE {  },
+         trig-pwr   SEQUENCE {  }
+      },
+      msg-out CHOICE {
+         send-tm-aoi SEQUENCE { lfp Location-Fix-Packet },
+         send-tm-mcp SEQUENCE { mcp Mode-Change-Packet }
+      }
+   }
+   State-Handler-Entrypoint-Periodic-Events ::=
+      Periodic-Events {State-Handler-Entrypoint-Event, 3}
+   
+   state-handler-entrypoint-periodic-events State-Handler-Entrypoint-Periodic-Events ::= {
+      { period 1000, event msg-in: poll-aoi : {} },
+      { period 500, event msg-in: poll-mcp : {} },
+      { period 10000, event msg-in: toggle-pwr : {} }
+   }
+   
+   Tc-Provider-Event ::= SEQUENCE {}  -- Synchronous function
+   
+   Tc-Validation-Event ::= SEQUENCE {}  -- Synchronous function
+   
+   Tm-Collection-Event ::= SEQUENCE {}  -- Synchronous function
+   
+   Tm-Provider-Event ::= SEQUENCE {}  -- Synchronous function
+   
+
+   --  Current observer state flag (used by model checkers)
+   Observer-State-Kind ::= ENUMERATED {
+      regular-state,
+      error-state,
+      ignore-state,
+      success-state
+   }
+
+   --  Event related to the execution of a PI or call of a RI in the functional code
+   Function-Event ::= CHOICE {
+      gui                      Gui-Event,
+      loc-provider             Loc-Provider-Event,
+      state-handler-entrypoint State-Handler-Entrypoint-Event,
+      tc-provider              Tc-Provider-Event,
+      tc-validation            Tc-Validation-Event,
+      tm-collection            Tm-Collection-Event,
+      tm-provider              Tm-Provider-Event
+   }
+
+   --  Type used to store events in a database: associate a name to the event
+   Named-Function-Event ::= SEQUENCE {
+      id    IA5String (SIZE (1..80)),
+      event Function-Event
+   }
+
+   --  Event at interface level (PI or RI), including source and destination ID
+   Interface-Event ::= SEQUENCE {
+      source PID,
+      dest   PID,
+      event  Function-Event
+   }
+
+   --  Event sent to the observers
+   Observable-Event ::= CHOICE {
+      no-event        SEQUENCE {},
+      system-startup  SEQUENCE {},
+      input-event     Interface-Event,   --  input event is evaluated after the transition
+      output-event    Interface-Event,   --  output event is evaluated before the message is sent
+      unhandled-input Interface-Event    --  message received in a state where it is not expected
+   }
+
+   --  constant that can be used to refer to the absence of an input/output event
+   nothing Observable-Event ::= no-event : {}
+
+   --  Define a queue of events, corresponding to the input queue for each function
+   max-events INTEGER ::= 10
+   Events-Ty ::= SEQUENCE (SIZE (0 .. max-events)) OF Observable-Event
+
+   --  Global system state (excluding observers, which are defined later)
+   state-handler-entrypoint-queue-size INTEGER ::= 2
+
+   System-State ::= SEQUENCE {
+      --  Timers
+      timers AggregateTimerData,
+      --  Message queues
+      state-handler-entrypoint-queue Events-Ty (SIZE (0 .. state-handler-entrypoint-queue-size)),
+
+      state-handler-entrypoint  State-handler-entrypoint-Context
+   }
+
+END
+
+Simulation-Timers-DataView DEFINITIONS ::=
+BEGIN
+
+   TimerData ::= SEQUENCE {
+      timer-enabled BOOLEAN,
+      interval INTEGER (0 .. 50000)
+   }
+
+   AggregateTimerData ::= SEQUENCE {
+      
+      
+      
+      state-handler-entrypoint SEQUENCE {
+      },
+      
+      dummy-entry SEQUENCE {}
+   }
+
+END
+

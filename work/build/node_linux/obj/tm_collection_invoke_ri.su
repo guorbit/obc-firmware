@@ -1,0 +1,3 @@
+tm_collection_invoke_ri.c:16:6:tm_collection_RI_request_tm	320	static
+tm_collection_invoke_ri.c:48:1:_GLOBAL__sub_D_00099_0_tm_collection_RI_request_tm	16	static
+tm_collection_invoke_ri.c:48:1:_GLOBAL__sub_I_00099_1_tm_collection_RI_request_tm	16	static

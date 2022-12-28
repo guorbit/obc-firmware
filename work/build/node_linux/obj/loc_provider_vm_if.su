@@ -1,0 +1,4 @@
+loc_provider_vm_if.c:13:6:init_loc_provider	32	static
+loc_provider_vm_if.c:26:6:loc_provider_request_loc	48	static
+loc_provider_vm_if.c:51:1:_GLOBAL__sub_D_00099_0_loc_provider_initialized	16	static
+loc_provider_vm_if.c:51:1:_GLOBAL__sub_I_00099_1_loc_provider_initialized	16	static

@@ -1,0 +1,6 @@
+gui.c:34:6:gui_startup	176	static
+gui.c:91:6:gui_PI_Poll	256	static
+gui.c:127:6:gui_PI_send_tm_aoi	32	static
+gui.c:145:6:gui_PI_send_tm_mcp	32	static
+gui.c:160:1:_GLOBAL__sub_D_00099_0_gui_startup	16	static
+gui.c:160:1:_GLOBAL__sub_I_00099_1_gui_startup	16	static

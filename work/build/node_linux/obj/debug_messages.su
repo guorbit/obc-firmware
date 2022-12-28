@@ -1,0 +1,3 @@
+debug_messages.c:11:6:debug_printf	336	static
+debug_messages.c:35:1:_GLOBAL__sub_D_00099_0_debug_printf	16	static
+debug_messages.c:35:1:_GLOBAL__sub_I_00099_1_debug_printf	16	static
