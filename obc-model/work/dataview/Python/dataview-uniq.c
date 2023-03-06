@@ -818,7 +818,7 @@ flag System_Mode_Equal(const System_Mode* pVal1, const System_Mode* pVal2)
 flag System_Mode_IsConstraintValid(const System_Mode* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = ((((((((((*(pVal)) == System_Mode_idle)) || (((*(pVal)) == System_Mode_uplink)))) || (((*(pVal)) == System_Mode_downlink)))) || (((*(pVal)) == System_Mode_imaging)))) || (((*(pVal)) == System_Mode_processing)));
+    ret = ((*(pVal)) <= 4UL);
     *pErrCode = ret ? 0 :  ERR_SYSTEM_MODE; 
 
 	return ret;
@@ -829,7 +829,7 @@ void System_Mode_Initialize(System_Mode* pVal)
 	(void)pVal;
 
 
-	(*(pVal)) = System_Mode_idle;
+	(*(pVal)) = 0;
 }
 
 flag System_Mode_Encode(const System_Mode* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
@@ -840,27 +840,7 @@ flag System_Mode_Encode(const System_Mode* pVal, BitStream* pBitStrm, int* pErrC
 	*pErrCode = 0;
 	ret = bCheckConstraints ? System_Mode_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
-	    switch((*(pVal))) 
-	    {
-	        case System_Mode_idle:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 4);
-	        	break;
-	        case System_Mode_uplink:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 4);
-	        	break;
-	        case System_Mode_downlink:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 4);
-	        	break;
-	        case System_Mode_imaging:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 4);
-	        	break;
-	        case System_Mode_processing:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 4);
-	        	break;
-	        default:                    /*COVERAGE_IGNORE*/
-	    	    *pErrCode = ERR_UPER_ENCODE_SYSTEM_MODE; /*COVERAGE_IGNORE*/
-	    	    ret = FALSE;            /*COVERAGE_IGNORE*/
-	    }
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 4);
     } /*COVERAGE_IGNORE*/
 
 	
@@ -873,36 +853,8 @@ flag System_Mode_Decode(System_Mode* pVal, BitStream* pBitStrm, int* pErrCode)
 	*pErrCode = 0;
 
 
-	{
-	    asn1SccSint enumIndex;
-	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 4);
-	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_SYSTEM_MODE;
-	    if (ret) {
-	        switch(enumIndex) 
-	        {
-	            case 0: 
-	                (*(pVal)) = System_Mode_idle;
-	                break;
-	            case 1: 
-	                (*(pVal)) = System_Mode_uplink;
-	                break;
-	            case 2: 
-	                (*(pVal)) = System_Mode_downlink;
-	                break;
-	            case 3: 
-	                (*(pVal)) = System_Mode_imaging;
-	                break;
-	            case 4: 
-	                (*(pVal)) = System_Mode_processing;
-	                break;
-	            default:                        /*COVERAGE_IGNORE*/
-		            *pErrCode = ERR_UPER_DECODE_SYSTEM_MODE;     /*COVERAGE_IGNORE*/
-		            ret = FALSE;                /*COVERAGE_IGNORE*/
-	        }
-	    } else {
-	        (*(pVal)) = System_Mode_idle;             /*COVERAGE_IGNORE*/
-	    }
-	}
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 4);
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_SYSTEM_MODE;
 
 	return ret  && System_Mode_IsConstraintValid(pVal, pErrCode);
 }
@@ -911,33 +863,10 @@ flag System_Mode_ACN_Encode(const System_Mode* pVal, BitStream* pBitStrm, int* p
 {
     flag ret = TRUE;
 
-	asn1SccUint uIntVal;
     *pErrCode = 0;
 	ret = bCheckConstraints ? System_Mode_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
-	    switch((*(pVal))) { 
-	        case System_Mode_idle:
-	            uIntVal = 0;
-	            break;
-	        case System_Mode_uplink:
-	            uIntVal = 1;
-	            break;
-	        case System_Mode_downlink:
-	            uIntVal = 2;
-	            break;
-	        case System_Mode_imaging:
-	            uIntVal = 3;
-	            break;
-	        case System_Mode_processing:
-	            uIntVal = 4;
-	            break;
-	        default:                                    /*COVERAGE_IGNORE*/
-	            ret = FALSE;                            /*COVERAGE_IGNORE*/
-	            *pErrCode = ERR_ACN_ENCODE_SYSTEM_MODE;                 /*COVERAGE_IGNORE*/
-	    }
-	    if (ret) {
-	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 4);
-	    }
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 4);
     } /*COVERAGE_IGNORE*/
 
 	
@@ -949,32 +878,9 @@ flag System_Mode_ACN_Decode(System_Mode* pVal, BitStream* pBitStrm, int* pErrCod
     flag ret = TRUE;
 	*pErrCode = 0;
 
-	asn1SccUint uIntVal;
 
-	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 4);
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 4);
 	*pErrCode = ret ? 0 : ERR_ACN_DECODE_SYSTEM_MODE;
-	if (ret) {
-	    switch (uIntVal) {
-	        case 0:
-	            (*(pVal)) = System_Mode_idle;
-	            break;
-	        case 1:
-	            (*(pVal)) = System_Mode_uplink;
-	            break;
-	        case 2:
-	            (*(pVal)) = System_Mode_downlink;
-	            break;
-	        case 3:
-	            (*(pVal)) = System_Mode_imaging;
-	            break;
-	        case 4:
-	            (*(pVal)) = System_Mode_processing;
-	            break;
-	    default:                                    /*COVERAGE_IGNORE*/
-	        ret = FALSE;                            /*COVERAGE_IGNORE*/
-	        *pErrCode = ERR_ACN_DECODE_SYSTEM_MODE;                 /*COVERAGE_IGNORE*/
-	    }
-	} /*COVERAGE_IGNORE*/
 
     return ret && System_Mode_IsConstraintValid(pVal, pErrCode);
 }
@@ -990,7 +896,7 @@ flag Subsystem_Address_Equal(const Subsystem_Address* pVal1, const Subsystem_Add
 flag Subsystem_Address_IsConstraintValid(const Subsystem_Address* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = ((((((((((((((*(pVal)) == Subsystem_Address_obc)) || (((*(pVal)) == Subsystem_Address_comms)))) || (((*(pVal)) == Subsystem_Address_electrical)))) || (((*(pVal)) == Subsystem_Address_mechanical)))) || (((*(pVal)) == Subsystem_Address_control)))) || (((*(pVal)) == Subsystem_Address_software)))) || (((*(pVal)) == Subsystem_Address_payload)));
+    ret = ((*(pVal)) <= 6UL);
     *pErrCode = ret ? 0 :  ERR_SUBSYSTEM_ADDRESS; 
 
 	return ret;
@@ -1001,7 +907,7 @@ void Subsystem_Address_Initialize(Subsystem_Address* pVal)
 	(void)pVal;
 
 
-	(*(pVal)) = Subsystem_Address_obc;
+	(*(pVal)) = 0;
 }
 
 flag Subsystem_Address_Encode(const Subsystem_Address* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
@@ -1012,33 +918,7 @@ flag Subsystem_Address_Encode(const Subsystem_Address* pVal, BitStream* pBitStrm
 	*pErrCode = 0;
 	ret = bCheckConstraints ? Subsystem_Address_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
-	    switch((*(pVal))) 
-	    {
-	        case Subsystem_Address_obc:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 6);
-	        	break;
-	        case Subsystem_Address_comms:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 6);
-	        	break;
-	        case Subsystem_Address_electrical:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 6);
-	        	break;
-	        case Subsystem_Address_mechanical:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 6);
-	        	break;
-	        case Subsystem_Address_control:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 6);
-	        	break;
-	        case Subsystem_Address_software:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 6);
-	        	break;
-	        case Subsystem_Address_payload:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 6);
-	        	break;
-	        default:                    /*COVERAGE_IGNORE*/
-	    	    *pErrCode = ERR_UPER_ENCODE_SUBSYSTEM_ADDRESS; /*COVERAGE_IGNORE*/
-	    	    ret = FALSE;            /*COVERAGE_IGNORE*/
-	    }
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 6);
     } /*COVERAGE_IGNORE*/
 
 	
@@ -1051,42 +931,8 @@ flag Subsystem_Address_Decode(Subsystem_Address* pVal, BitStream* pBitStrm, int*
 	*pErrCode = 0;
 
 
-	{
-	    asn1SccSint enumIndex;
-	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 6);
-	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_SUBSYSTEM_ADDRESS;
-	    if (ret) {
-	        switch(enumIndex) 
-	        {
-	            case 0: 
-	                (*(pVal)) = Subsystem_Address_obc;
-	                break;
-	            case 1: 
-	                (*(pVal)) = Subsystem_Address_comms;
-	                break;
-	            case 2: 
-	                (*(pVal)) = Subsystem_Address_electrical;
-	                break;
-	            case 3: 
-	                (*(pVal)) = Subsystem_Address_mechanical;
-	                break;
-	            case 4: 
-	                (*(pVal)) = Subsystem_Address_control;
-	                break;
-	            case 5: 
-	                (*(pVal)) = Subsystem_Address_software;
-	                break;
-	            case 6: 
-	                (*(pVal)) = Subsystem_Address_payload;
-	                break;
-	            default:                        /*COVERAGE_IGNORE*/
-		            *pErrCode = ERR_UPER_DECODE_SUBSYSTEM_ADDRESS;     /*COVERAGE_IGNORE*/
-		            ret = FALSE;                /*COVERAGE_IGNORE*/
-	        }
-	    } else {
-	        (*(pVal)) = Subsystem_Address_obc;             /*COVERAGE_IGNORE*/
-	    }
-	}
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 6);
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_SUBSYSTEM_ADDRESS;
 
 	return ret  && Subsystem_Address_IsConstraintValid(pVal, pErrCode);
 }
@@ -1095,39 +941,10 @@ flag Subsystem_Address_ACN_Encode(const Subsystem_Address* pVal, BitStream* pBit
 {
     flag ret = TRUE;
 
-	asn1SccUint uIntVal;
     *pErrCode = 0;
 	ret = bCheckConstraints ? Subsystem_Address_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
-	    switch((*(pVal))) { 
-	        case Subsystem_Address_obc:
-	            uIntVal = 0;
-	            break;
-	        case Subsystem_Address_comms:
-	            uIntVal = 1;
-	            break;
-	        case Subsystem_Address_electrical:
-	            uIntVal = 2;
-	            break;
-	        case Subsystem_Address_mechanical:
-	            uIntVal = 3;
-	            break;
-	        case Subsystem_Address_control:
-	            uIntVal = 4;
-	            break;
-	        case Subsystem_Address_software:
-	            uIntVal = 5;
-	            break;
-	        case Subsystem_Address_payload:
-	            uIntVal = 6;
-	            break;
-	        default:                                    /*COVERAGE_IGNORE*/
-	            ret = FALSE;                            /*COVERAGE_IGNORE*/
-	            *pErrCode = ERR_ACN_ENCODE_SUBSYSTEM_ADDRESS;                 /*COVERAGE_IGNORE*/
-	    }
-	    if (ret) {
-	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 6);
-	    }
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 6);
     } /*COVERAGE_IGNORE*/
 
 	
@@ -1139,38 +956,9 @@ flag Subsystem_Address_ACN_Decode(Subsystem_Address* pVal, BitStream* pBitStrm, 
     flag ret = TRUE;
 	*pErrCode = 0;
 
-	asn1SccUint uIntVal;
 
-	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 6);
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 6);
 	*pErrCode = ret ? 0 : ERR_ACN_DECODE_SUBSYSTEM_ADDRESS;
-	if (ret) {
-	    switch (uIntVal) {
-	        case 0:
-	            (*(pVal)) = Subsystem_Address_obc;
-	            break;
-	        case 1:
-	            (*(pVal)) = Subsystem_Address_comms;
-	            break;
-	        case 2:
-	            (*(pVal)) = Subsystem_Address_electrical;
-	            break;
-	        case 3:
-	            (*(pVal)) = Subsystem_Address_mechanical;
-	            break;
-	        case 4:
-	            (*(pVal)) = Subsystem_Address_control;
-	            break;
-	        case 5:
-	            (*(pVal)) = Subsystem_Address_software;
-	            break;
-	        case 6:
-	            (*(pVal)) = Subsystem_Address_payload;
-	            break;
-	    default:                                    /*COVERAGE_IGNORE*/
-	        ret = FALSE;                            /*COVERAGE_IGNORE*/
-	        *pErrCode = ERR_ACN_DECODE_SUBSYSTEM_ADDRESS;                 /*COVERAGE_IGNORE*/
-	    }
-	} /*COVERAGE_IGNORE*/
 
     return ret && Subsystem_Address_IsConstraintValid(pVal, pErrCode);
 }
@@ -1347,7 +1135,7 @@ flag T_Int32_Equal(const T_Int32* pVal1, const T_Int32* pVal2)
 flag T_Int32_IsConstraintValid(const T_Int32* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = ((-2147483648LL <= (*(pVal))) && ((*(pVal)) <= 2147483647LL));
+    ret = ((-2147483648L <= (*(pVal))) && ((*(pVal)) <= 2147483647L));
     *pErrCode = ret ? 0 :  ERR_T_INT32; 
 
 	return ret;
@@ -1503,7 +1291,7 @@ flag T_Int8_Equal(const T_Int8* pVal1, const T_Int8* pVal2)
 flag T_Int8_IsConstraintValid(const T_Int8* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = ((-128LL <= (*(pVal))) && ((*(pVal)) <= 127LL));
+    ret = ((-128L <= (*(pVal))) && ((*(pVal)) <= 127L));
     *pErrCode = ret ? 0 :  ERR_T_INT8; 
 
 	return ret;
@@ -1927,41 +1715,41 @@ flag PID_ACN_Encode(const PID* pVal, BitStream* pBitStrm, int* pErrCode, flag bC
 {
     flag ret = TRUE;
 
-	asn1SccUint uIntVal;
+	asn1SccUint intVal;
     *pErrCode = 0;
 	ret = bCheckConstraints ? PID_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
 	    switch((*(pVal))) { 
 	        case PID_gui:
-	            uIntVal = 0;
+	            intVal = 0;
 	            break;
 	        case PID_loc_provider:
-	            uIntVal = 1;
+	            intVal = 1;
 	            break;
 	        case PID_state_handler_entrypoint:
-	            uIntVal = 2;
+	            intVal = 2;
 	            break;
 	        case PID_tc_provider:
-	            uIntVal = 3;
+	            intVal = 3;
 	            break;
 	        case PID_tc_validation:
-	            uIntVal = 4;
+	            intVal = 4;
 	            break;
 	        case PID_tm_collection:
-	            uIntVal = 5;
+	            intVal = 5;
 	            break;
 	        case PID_tm_provider:
-	            uIntVal = 6;
+	            intVal = 6;
 	            break;
 	        case PID_env:
-	            uIntVal = 7;
+	            intVal = 7;
 	            break;
 	        default:                                    /*COVERAGE_IGNORE*/
 	            ret = FALSE;                            /*COVERAGE_IGNORE*/
 	            *pErrCode = ERR_ACN_ENCODE_PID;                 /*COVERAGE_IGNORE*/
 	    }
 	    if (ret) {
-	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 7);
+	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, intVal, 0, 7);
 	    }
     } /*COVERAGE_IGNORE*/
 
@@ -1974,12 +1762,12 @@ flag PID_ACN_Decode(PID* pVal, BitStream* pBitStrm, int* pErrCode)
     flag ret = TRUE;
 	*pErrCode = 0;
 
-	asn1SccUint uIntVal;
+	asn1SccUint intVal;
 
-	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 7);
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(intVal)), 0, 7);
 	*pErrCode = ret ? 0 : ERR_ACN_DECODE_PID;
 	if (ret) {
-	    switch (uIntVal) {
+	    switch (intVal) {
 	        case 0:
 	            (*(pVal)) = PID_gui;
 	            break;

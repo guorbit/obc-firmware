@@ -19,21 +19,21 @@ TARGET = native
 NEED_TRANSPORT = yes
 BUILD_DIR:=$(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 RUNTIME_PATH=$(BUILD_DIR)/../polyorb-hi-c
-USER_SOURCES_DIRS= "-I/home/taste/obc-model/work/build" "-I../.."
+USER_SOURCES_DIRS= "-I/home/taste/obc-firmware/obc-model/work/build" "-I../.."
 ASN_SOURCES=
 include $(RUNTIME_PATH)/make/Makefile.common
 
-VPATH = ../..:/home/taste/obc-model/work/build/
+VPATH = ../..:/home/taste/obc-firmware/obc-model/work/build/
 
 %.o : %.c
-	$(CC) -c $(INCLUDE) $(CFLAGS) -I"$(RUNTIME_PATH)/include" -I"/home/taste/obc-model/work/build"  $< -o $@
+	$(CC) -c $(INCLUDE) $(CFLAGS) -I"$(RUNTIME_PATH)/include" -I"/home/taste/obc-firmware/obc-model/work/build"  $< -o $@
 
 compile-c-files: $(USER_OBJS) $(C_OBJECTS)
 
 
 
 %.o : %.cpp
-	$(CXX) -c $(INCLUDE) $(CFLAGS) -I"$(RUNTIME_PATH)/include" -I"/home/taste/obc-model/work/build"  $< -o $@
+	$(CXX) -c $(INCLUDE) $(CFLAGS) -I"$(RUNTIME_PATH)/include" -I"/home/taste/obc-firmware/obc-model/work/build"  $< -o $@
 
 compile-cpp-files: $(USER_OBJS) $(CPP_OBJECTS)
 

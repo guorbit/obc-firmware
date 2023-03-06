@@ -289,24 +289,12 @@ flag Deployment_Analogue_ACN_Encode(const Deployment_Analogue* pVal, BitStream* 
 
 #define ERR_ACN_DECODE_DEPLOYMENT_ANALOGUE		60  /**/
 flag Deployment_Analogue_ACN_Decode(Deployment_Analogue* pVal, BitStream* pBitStrm, int* pErrCode);
-typedef enum {
-    System_Mode_idle = 0,
-    System_Mode_uplink = 1,
-    System_Mode_downlink = 2,
-    System_Mode_imaging = 3,
-    System_Mode_processing = 4
-} System_Mode;
+typedef asn1SccUint System_Mode;
 
-// please use the following macros to avoid breaking code.
-#define System_Mode_idle System_Mode_idle
-#define System_Mode_uplink System_Mode_uplink
-#define System_Mode_downlink System_Mode_downlink
-#define System_Mode_imaging System_Mode_imaging
-#define System_Mode_processing System_Mode_processing
 
 flag System_Mode_Equal(const System_Mode* pVal1, const System_Mode* pVal2);
 
-#define ERR_SYSTEM_MODE		61  /*idle | uplink | downlink | imaging | processing*/
+#define ERR_SYSTEM_MODE		61  /*(0 .. 4)*/
 flag System_Mode_IsConstraintValid(const System_Mode* pVal, int* pErrCode);
 
 void System_Mode_Initialize(System_Mode* pVal);
@@ -328,28 +316,12 @@ flag System_Mode_ACN_Encode(const System_Mode* pVal, BitStream* pBitStrm, int* p
 
 #define ERR_ACN_DECODE_SYSTEM_MODE		65  /**/
 flag System_Mode_ACN_Decode(System_Mode* pVal, BitStream* pBitStrm, int* pErrCode);
-typedef enum {
-    Subsystem_Address_obc = 0,
-    Subsystem_Address_comms = 1,
-    Subsystem_Address_electrical = 2,
-    Subsystem_Address_mechanical = 3,
-    Subsystem_Address_control = 4,
-    Subsystem_Address_software = 5,
-    Subsystem_Address_payload = 6
-} Subsystem_Address;
+typedef asn1SccUint Subsystem_Address;
 
-// please use the following macros to avoid breaking code.
-#define Subsystem_Address_obc Subsystem_Address_obc
-#define Subsystem_Address_comms Subsystem_Address_comms
-#define Subsystem_Address_electrical Subsystem_Address_electrical
-#define Subsystem_Address_mechanical Subsystem_Address_mechanical
-#define Subsystem_Address_control Subsystem_Address_control
-#define Subsystem_Address_software Subsystem_Address_software
-#define Subsystem_Address_payload Subsystem_Address_payload
 
 flag Subsystem_Address_Equal(const Subsystem_Address* pVal1, const Subsystem_Address* pVal2);
 
-#define ERR_SUBSYSTEM_ADDRESS		66  /*obc | comms | electrical | mechanical | control | software | payload*/
+#define ERR_SUBSYSTEM_ADDRESS		66  /*(0 .. 6)*/
 flag Subsystem_Address_IsConstraintValid(const Subsystem_Address* pVal, int* pErrCode);
 
 void Subsystem_Address_Initialize(Subsystem_Address* pVal);

@@ -1,4 +1,0 @@
-context_tm_provider.ads:39:6:Asn1scccontext_Tm_Providerip	16	static
-context_tm_provider.adb:28:1:Asn1scccontext_Tm_Provider_Equal	16	static
-context_tm_provider.adb:41:1:Asn1scccontext_Tm_Provider_Isconstraintvalid	48	static
-context_tm_provider.adb:51:1:Asn1scccontext_Tm_Provider_Init	32	static

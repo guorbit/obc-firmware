@@ -1,3 +1,0 @@
-tm_provider.c:15:6:tm_provider_startup	16	static
-tm_provider.c:21:6:tm_provider_PI_request_tm	16	static
-tm_provider.c:28:1:_GLOBAL__sub_I_00099_0_tm_provider_startup	16	static

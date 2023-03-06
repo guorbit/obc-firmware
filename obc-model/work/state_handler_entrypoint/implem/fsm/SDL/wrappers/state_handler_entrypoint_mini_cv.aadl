@@ -9,6 +9,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END poll_aoi.Ada;
 
@@ -21,6 +22,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END poll_mcp.Ada;
 
@@ -33,6 +35,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END toggle_pwr.Ada;
 
@@ -45,6 +48,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END trig_aoi.Ada;
 
@@ -57,6 +61,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END trig_mcp.Ada;
 
@@ -69,6 +74,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END trig_pwr.Ada;
 
@@ -80,6 +86,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END collect_tm.Ada;
 
@@ -95,6 +102,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END request_loc.Ada;
 
@@ -110,6 +118,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END request_tc.Ada;
 
@@ -125,6 +134,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END send_tm_aoi.Ada;
 
@@ -140,6 +150,7 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END send_tm_mcp.Ada;
 
@@ -152,5 +163,6 @@ PROPERTIES
    FV_Name => "state_handler_entrypoint";
    Source_Language => Ada;
    Taste::Startup_Priority => "1";
+   TASTE_IV_Properties::Default_CodeGen => "c";
 
 END validate_mc_vs_tm.Ada;

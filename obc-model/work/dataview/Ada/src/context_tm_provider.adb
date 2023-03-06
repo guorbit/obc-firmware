@@ -27,9 +27,9 @@ pragma Warnings (Off, "condition can only be True if invalid values present");
 
 function asn1SccContext_tm_provider_Equal (val1, val2 :  asn1SccContext_tm_provider) return Boolean
 is
-    pragma Warnings (Off, "initialization of ret has no effect");
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");
     ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
+    pragma Warnings (On, "initialization of ""ret"" has no effect");
 
 begin
     ret := (val1.k = val2.k);
@@ -40,25 +40,15 @@ end asn1SccContext_tm_provider_Equal;
 
 function asn1SccContext_tm_provider_IsConstraintValid(val : asn1SccContext_tm_provider) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := OBC_MODEL_DATAVIEW.asn1SccCounterK_IsConstraintValid(val.k);
     return ret;
 end asn1SccContext_tm_provider_IsConstraintValid;
 
-function asn1SccContext_tm_provider_Init return asn1SccContext_tm_provider
-is
-    val: asn1SccContext_tm_provider;
-begin
 
-    --set k 
-    val.k := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccContext_tm_provider_Init;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

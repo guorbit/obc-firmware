@@ -1,12 +1,9 @@
 <InterfaceView asn1file="obc-model.acn" mscfile="/home/taste/obc-model/obc-model.msc">
-<Function name="tm_provider" is_type="NO" language="C" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
-    <Property name="Taste::coordinates" value="69200 57900 89200 66300"/>
-    <ContextParameter name="k" type="CounterK" value="0"/>
-<Provided_Interface name="request_tm" kind="Unprotected" layer="default" required_system_element="NO" wcet="0">
-    <Output_Parameter name="temp" type="Temperature-Generic" encoding="NATIVE"/>
-    <Output_Parameter name="depl_d" type="Deployment-Digital" encoding="NATIVE"/>
-    <Output_Parameter name="depl_a" type="Deployment-Analogue" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="69200 64000"/>
+<Function name="loc_provider" is_type="NO" language="C" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="69100 32200 89100 40200"/>
+<Provided_Interface name="request_loc" kind="Unprotected" layer="default" required_system_element="NO" wcet="800">
+    <Output_Parameter name="lfp" type="Location-Fix-Packet" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="69100 38300"/>
 </Provided_Interface>
 
     <Implementations>
@@ -36,18 +33,6 @@
     </Implementations>
 </Function>
 
-<Function name="tc_validation" is_type="NO" language="CPP" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
-    <Property name="Taste::coordinates" value="11100 53000 31300 70300"/>
-<Provided_Interface name="validate_mc_vs_tm" kind="Unprotected" is_visible="true" layer="default" required_system_element="NO" wcet="0">
-    <Property name="Taste::coordinates" value="14600 53000"/>
-</Provided_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="CPP"/>
-        <Implementation name="fsm" language="SDL"/>
-    </Implementations>
-</Function>
-
 <Function name="tc_provider" is_type="NO" language="C" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="69200 44800 89200 52800"/>
 <Provided_Interface name="request_tc" kind="Unprotected" layer="default" required_system_element="NO" wcet="400">
@@ -61,11 +46,26 @@
     </Implementations>
 </Function>
 
-<Function name="loc_provider" is_type="NO" language="C" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
-    <Property name="Taste::coordinates" value="69100 32200 89100 40200"/>
-<Provided_Interface name="request_loc" kind="Unprotected" layer="default" required_system_element="NO" wcet="800">
-    <Output_Parameter name="lfp" type="Location-Fix-Packet" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="69100 38300"/>
+<Function name="tc_validation" is_type="NO" language="CPP" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="11100 53000 31300 70300"/>
+<Provided_Interface name="validate_mc_vs_tm" kind="Unprotected" is_visible="true" layer="default" required_system_element="NO" wcet="0">
+    <Property name="Taste::coordinates" value="14600 53000"/>
+</Provided_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="CPP"/>
+        <Implementation name="fsm" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function name="tm_provider" is_type="NO" language="C" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="69200 57900 89200 66300"/>
+    <ContextParameter name="k" type="CounterK" value="0"/>
+<Provided_Interface name="request_tm" kind="Unprotected" layer="default" required_system_element="NO" wcet="0">
+    <Output_Parameter name="temp" type="Temperature-Generic" encoding="NATIVE"/>
+    <Output_Parameter name="depl_d" type="Deployment-Digital" encoding="NATIVE"/>
+    <Output_Parameter name="depl_a" type="Deployment-Analogue" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="69200 64000"/>
 </Provided_Interface>
 
     <Implementations>
@@ -74,29 +74,65 @@
     </Implementations>
 </Function>
 
+<Function name="gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="11200 14400 87000 22400"/>
+<Provided_Interface name="send_tm_aoi" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="1" wcet="0" stack_size="1024">
+    <Input_Parameter name="lfp" type="Location-Fix-Packet" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="58900 22400"/>
+</Provided_Interface>
+
+<Provided_Interface name="send_tm_mcp" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="1" wcet="0" stack_size="1024">
+    <Input_Parameter name="mcp" type="Mode-Change-Packet" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="67900 22400"/>
+</Provided_Interface>
+
+<Required_Interface name="trig_pwr" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="11200 19500"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface name="trig_aoi" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="21800 22400"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface name="trig_mcp" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="42500 22400"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="GUI"/>
+    </Implementations>
+</Function>
+
 <Function Comment="" name="state_handler_entrypoint" is_type="NO" language="SDL" default_implementation="fsm" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="10200 32300 56600 47300"/>
-<Provided_Interface name="poll_mcp" kind="Cyclic" is_visible="true" layer="default" required_system_element="NO" stack_size="1024" priority="1" dispatch_offset="0" period="5000" wcet="0">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="c"/>
+<Provided_Interface name="poll_mcp" kind="Cyclic" is_visible="true" layer="default" required_system_element="NO" period="5000" priority="1" wcet="0" stack_size="1024" dispatch_offset="0">
     <Property name="Taste::coordinates" value="35100 32300"/>
 </Provided_Interface>
 
-<Provided_Interface name="poll_aoi" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" priority="1" dispatch_offset="0" period="10000" wcet="0">
+<Provided_Interface name="poll_aoi" kind="Cyclic" layer="default" required_system_element="NO" period="10000" priority="1" wcet="0" stack_size="1024" dispatch_offset="0">
     <Property name="Taste::coordinates" value="14700 32300"/>
 </Provided_Interface>
 
-<Provided_Interface name="toggle_pwr" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" priority="1" dispatch_offset="0" period="30000" wcet="0">
+<Provided_Interface name="toggle_pwr" kind="Cyclic" layer="default" required_system_element="NO" period="30000" priority="1" wcet="0" stack_size="1024" dispatch_offset="0">
     <Property name="Taste::coordinates" value="10200 43200"/>
 </Provided_Interface>
 
-<Provided_Interface name="trig_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
+<Provided_Interface name="trig_aoi" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
     <Property name="Taste::coordinates" value="21700 32300"/>
 </Provided_Interface>
 
-<Provided_Interface name="trig_mcp" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
+<Provided_Interface name="trig_mcp" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
     <Property name="Taste::coordinates" value="42400 32300"/>
 </Provided_Interface>
 
-<Provided_Interface name="trig_pwr" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
+<Provided_Interface name="trig_pwr" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="2" wcet="0" stack_size="1024">
     <Property name="Taste::coordinates" value="10200 39600"/>
 </Provided_Interface>
 
@@ -126,14 +162,14 @@
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface name="send_tm_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="1" wcet="0">
+<Required_Interface name="send_tm_aoi" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="1" wcet="0" stack_size="1024">
     <Input_Parameter name="lfp" type="Location-Fix-Packet" encoding="NATIVE"/>
     <Property name="Taste::coordinates" value="56600 34200"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface name="send_tm_mcp" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="1" wcet="0">
+<Required_Interface name="send_tm_mcp" kind="Sporadic" layer="default" required_system_element="NO" miat="0" priority="1" queue_size="1" wcet="0" stack_size="1024">
     <Input_Parameter name="mcp" type="Mode-Change-Packet" encoding="NATIVE"/>
     <Property name="Taste::coordinates" value="56600 36100"/>
     <Property name="Taste::InheritPI" value="true"/>
@@ -146,45 +182,10 @@
     </Implementations>
 </Function>
 
-<Function name="gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
-    <Property name="Taste::coordinates" value="11200 14400 87000 22400"/>
-<Provided_Interface name="send_tm_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="1" wcet="0">
-    <Input_Parameter name="lfp" type="Location-Fix-Packet" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="58900 22400"/>
-</Provided_Interface>
-
-<Provided_Interface name="send_tm_mcp" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="1" wcet="0">
-    <Input_Parameter name="mcp" type="Mode-Change-Packet" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="67900 22400"/>
-</Provided_Interface>
-
-<Required_Interface name="trig_pwr" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
-    <Property name="Taste::coordinates" value="11200 19500"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="trig_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
-    <Property name="Taste::coordinates" value="21800 22400"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="trig_mcp" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" priority="1" miat="0" queue_size="2" wcet="0">
-    <Property name="Taste::coordinates" value="42500 22400"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="GUI"/>
-    </Implementations>
-</Function>
-
 <Connection  required_system_element="NO">
-    <Source func_name="state_handler_entrypoint" ri_name="send_tm_aoi"/>
-    <Target func_name="gui" pi_name="send_tm_aoi"/>
-    <Property name="Taste::coordinates" value="57200 34200 58900 34200 58900 22700"/>
+    <Source func_name="gui" ri_name="trig_mcp"/>
+    <Target func_name="state_handler_entrypoint" pi_name="trig_mcp"/>
+    <Property name="Taste::coordinates" value="42500 23000 42400 32000"/>
 </Connection>
 
 <Connection  required_system_element="NO">
@@ -200,9 +201,15 @@
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="state_handler_entrypoint" ri_name="collect_tm"/>
-    <Target func_name="tm_collection" pi_name="collect_tm"/>
-    <Property name="Taste::coordinates" value="47200 47900 47200 52300 37900 52300 37900 56800"/>
+    <Source func_name="state_handler_entrypoint" ri_name="send_tm_aoi"/>
+    <Target func_name="gui" pi_name="send_tm_aoi"/>
+    <Property name="Taste::coordinates" value="57200 34200 58900 34200 58900 22700"/>
+</Connection>
+
+<Connection  required_system_element="NO">
+    <Source func_name="state_handler_entrypoint" ri_name="send_tm_mcp"/>
+    <Target func_name="gui" pi_name="send_tm_mcp"/>
+    <Property name="Taste::coordinates" value="57200 36100 67900 36100 67900 22700"/>
 </Connection>
 
 <Connection  required_system_element="NO">
@@ -212,9 +219,9 @@
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="gui" ri_name="trig_mcp"/>
-    <Target func_name="state_handler_entrypoint" pi_name="trig_mcp"/>
-    <Property name="Taste::coordinates" value="42500 23000 42400 32000"/>
+    <Source func_name="state_handler_entrypoint" ri_name="collect_tm"/>
+    <Target func_name="tm_collection" pi_name="collect_tm"/>
+    <Property name="Taste::coordinates" value="47200 47900 47200 52300 37900 52300 37900 56800"/>
 </Connection>
 
 <Connection  required_system_element="NO">
@@ -227,12 +234,6 @@
     <Source func_name="state_handler_entrypoint" ri_name="validate_mc_vs_tm"/>
     <Target func_name="tc_validation" pi_name="validate_mc_vs_tm"/>
     <Property name="Taste::coordinates" value="24100 47900 24100 50300 14600 50300 14600 52700"/>
-</Connection>
-
-<Connection  required_system_element="NO">
-    <Source func_name="state_handler_entrypoint" ri_name="send_tm_mcp"/>
-    <Target func_name="gui" pi_name="send_tm_mcp"/>
-    <Property name="Taste::coordinates" value="57200 36100 67900 36100 67900 22700"/>
 </Connection>
 
 <Connection  required_system_element="NO">

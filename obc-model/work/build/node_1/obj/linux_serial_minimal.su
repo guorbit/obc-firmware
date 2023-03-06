@@ -1,0 +1,13 @@
+linux_serial_minimal.c:32:13:setup_parity_bits	32	static
+linux_serial_minimal.c:67:13:setup_bit_size	32	static
+linux_serial_minimal.c:109:13:setup_termios	48	static
+linux_serial_minimal.c:189:17:encode_packet	80	static
+linux_serial_minimal.c:243:6:__po_hi_c_driver_linux_serial_minimal_init_receiver	304	static
+linux_serial_minimal.c:288:6:__po_hi_c_driver_linux_serial_minimal_init_sender	304	static
+linux_serial_minimal.c:346:6:__po_hi_c_driver_linux_serial_minimal_init	32	static
+linux_serial_minimal.c:368:13:process_packet	160	static
+linux_serial_minimal.c:385:12:process_character	48	static
+linux_serial_minimal.c:433:6:__po_hi_c_driver_linux_serial_minimal_poller	160	static
+linux_serial_minimal.c:459:6:__po_hi_c_driver_linux_serial_minimal_sender	80	static
+linux_serial_minimal.c:549:1:_GLOBAL__sub_D_00099_0___po_hi_c_driver_linux_serial_minimal_init_receiver	16	static
+linux_serial_minimal.c:549:1:_GLOBAL__sub_I_00099_1___po_hi_c_driver_linux_serial_minimal_init_receiver	16	static

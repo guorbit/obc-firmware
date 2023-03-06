@@ -10,7 +10,6 @@
 
 #include "loc_provider.h"
 #include <stdio.h>
-#include <time.h>
 
 static asn1SccCounterK k;
 
@@ -26,11 +25,8 @@ void loc_provider_PI_request_loc
 
 {
    // Write your code here
-    struct timespec tspec;
-    clock_gettime(CLOCK_REALTIME, &tspec);
-    asn1SccTime_UNIX s = tspec.tv_sec;
 
-    OUT_lfp->t = s;
+    OUT_lfp->t = k;
     OUT_lfp->lat = 45;
     OUT_lfp->lon = -10;
 

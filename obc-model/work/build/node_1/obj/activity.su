@@ -1,0 +1,10 @@
+activity.c:48:7:gui_poll_job	144	static
+activity.c:114:6:gui_send_tm_aoi_deliver	32	static
+activity.c:147:7:gui_send_tm_aoi_job	208	static
+activity.c:237:6:gui_send_tm_mcp_deliver	32	static
+activity.c:270:7:gui_send_tm_mcp_job	208	static
+activity.c:345:7:serial_others_receiver_job	16	static
+activity.c:380:6:__po_hi_main_deliver	48	static
+activity.c:407:6:__po_hi_main_initialize	80	dynamic,bounded
+activity.c:413:1:_GLOBAL__sub_D_00099_0___po_hi_gui_poll_outport_state_handler_entrypoint_trig_aoi_local_destinations	16	static
+activity.c:413:1:_GLOBAL__sub_I_00099_1___po_hi_gui_poll_outport_state_handler_entrypoint_trig_aoi_local_destinations	16	static

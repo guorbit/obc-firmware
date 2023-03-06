@@ -201,25 +201,11 @@ void PrintASN1System_Mode(const char *paramName, const asn1SccSystem_Mode *pData
 #ifdef __unix__
     //printf("%s System-Mode ::= ", paramName);
     printf("%s ", paramName);
-    switch((*pData)) {
-    case 0:
-        printf("idle");
-        break;
-    case 1:
-        printf("uplink");
-        break;
-    case 2:
-        printf("downlink");
-        break;
-    case 3:
-        printf("imaging");
-        break;
-    case 4:
-        printf("processing");
-        break;
-    default:
-        printf("Invalid value in ENUMERATED ((*pData))");
-    }
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData));
+    #else
+    printf("%d", (*pData));
+    #endif
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);
@@ -236,31 +222,11 @@ void PrintASN1Subsystem_Address(const char *paramName, const asn1SccSubsystem_Ad
 #ifdef __unix__
     //printf("%s Subsystem-Address ::= ", paramName);
     printf("%s ", paramName);
-    switch((*pData)) {
-    case 0:
-        printf("obc");
-        break;
-    case 1:
-        printf("comms");
-        break;
-    case 2:
-        printf("electrical");
-        break;
-    case 3:
-        printf("mechanical");
-        break;
-    case 4:
-        printf("control");
-        break;
-    case 5:
-        printf("software");
-        break;
-    case 6:
-        printf("payload");
-        break;
-    default:
-        printf("Invalid value in ENUMERATED ((*pData))");
-    }
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData));
+    #else
+    printf("%d", (*pData));
+    #endif
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);
@@ -279,52 +245,18 @@ void PrintASN1Mode_Change_Packet(const char *paramName, const asn1SccMode_Change
     printf("%s ", paramName);
     printf("{");
     printf("target-addr ");
-    switch((*pData).target_addr) {
-    case 0:
-        printf("obc");
-        break;
-    case 1:
-        printf("comms");
-        break;
-    case 2:
-        printf("electrical");
-        break;
-    case 3:
-        printf("mechanical");
-        break;
-    case 4:
-        printf("control");
-        break;
-    case 5:
-        printf("software");
-        break;
-    case 6:
-        printf("payload");
-        break;
-    default:
-        printf("Invalid value in ENUMERATED ((*pData).target_addr)");
-    }
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).target_addr);
+    #else
+    printf("%d", (*pData).target_addr);
+    #endif
     printf(", ");
     printf("target-mode ");
-    switch((*pData).target_mode) {
-    case 0:
-        printf("idle");
-        break;
-    case 1:
-        printf("uplink");
-        break;
-    case 2:
-        printf("downlink");
-        break;
-    case 3:
-        printf("imaging");
-        break;
-    case 4:
-        printf("processing");
-        break;
-    default:
-        printf("Invalid value in ENUMERATED ((*pData).target_mode)");
-    }
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).target_mode);
+    #else
+    printf("%d", (*pData).target_mode);
+    #endif
     printf(", ");
     printf("ttl-ms ");
     #if WORD_SIZE==8

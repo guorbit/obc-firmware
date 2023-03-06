@@ -1,1 +1,0 @@
-./demo & sleep 1 ; ./gui ; pkill -INT demo

@@ -1,9 +1,0 @@
-state_handler_entrypoint_vm_if.c:21:6:init_state_handler_entrypoint	32	static
-state_handler_entrypoint_vm_if.c:47:6:state_handler_entrypoint_poll_aoi	32	static
-state_handler_entrypoint_vm_if.c:74:6:state_handler_entrypoint_poll_mcp	32	static
-state_handler_entrypoint_vm_if.c:101:6:state_handler_entrypoint_toggle_pwr	32	static
-state_handler_entrypoint_vm_if.c:128:6:state_handler_entrypoint_trig_aoi	32	static
-state_handler_entrypoint_vm_if.c:155:6:state_handler_entrypoint_trig_mcp	32	static
-state_handler_entrypoint_vm_if.c:182:6:state_handler_entrypoint_trig_pwr	32	static
-state_handler_entrypoint_vm_if.c:204:1:_GLOBAL__sub_D_00099_0_state_handler_entrypoint_initialized	16	static
-state_handler_entrypoint_vm_if.c:204:1:_GLOBAL__sub_I_00099_1_state_handler_entrypoint_initialized	16	static

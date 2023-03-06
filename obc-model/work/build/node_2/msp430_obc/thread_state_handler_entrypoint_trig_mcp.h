@@ -1,0 +1,6 @@
+#ifndef state_handler_entrypoint_trig_mcp_INCLUDED
+#define state_handler_entrypoint_trig_mcp_INCLUDED
+
+void prv_state_handler_entrypoint_trig_mcp_Task(void* prParameters);
+
+#endif

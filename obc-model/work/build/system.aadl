@@ -105,7 +105,7 @@ properties
    Period                            => 10000 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Poll_Aoi.others;
 
@@ -130,7 +130,7 @@ properties
    Period                            => 5000 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Poll_Mcp.others;
 
@@ -155,7 +155,7 @@ properties
    Period                            => 30000 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Toggle_Pwr.others;
 
@@ -183,7 +183,7 @@ properties
    Period                            => 1 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Trig_Aoi.others;
 
@@ -211,7 +211,7 @@ properties
    Period                            => 1 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Trig_Mcp.others;
 
@@ -239,7 +239,7 @@ properties
    Period                            => 1 ms;
    Dispatch_Offset                   =>  0 ms;
    Compute_Execution_Time            =>  0 ms ..  0 ms;
-   Stack_Size                        => 0 Bytes;
+   Stack_Size                        =>  1024 Bytes;
    Priority                          =>  1;
 end State_Handler_Entrypoint_Trig_Pwr.others;
 
@@ -252,7 +252,8 @@ public
    with DataView;
    with interfaceview::IV;
    with deploymentview::DV;
-   with deploymentview::DV::node_linux;
+   with deploymentview::DV::node_1;
+   with deploymentview::DV::node_2;
    with Gui_Poll_Thread;
    with Gui_Send_Tm_Aoi_Thread;
    with Gui_Send_Tm_Mcp_Thread;
@@ -263,6 +264,8 @@ public
    with State_Handler_Entrypoint_Trig_Mcp_Thread;
    with State_Handler_Entrypoint_Trig_Pwr_Thread;
    with Ocarina_Processors_X86;
+   with Ocarina_Processors_Msp430;
+   with ocarina_buses;
 
 data TASTE_Protected
 properties
@@ -296,24 +299,70 @@ properties
 end Port_Poller.i;
 
 
-processor node_linux_Board extends ocarina_processors_x86::x86
-end node_linux_Board;
+processor node_1_Board extends ocarina_processors_x86::x86
+end node_1_Board;
 
-processor implementation node_linux_Board.final extends ocarina_processors_x86::x86.linux
-end node_linux_Board.final;
+processor implementation node_1_Board.final extends ocarina_processors_x86::x86.linux
+end node_1_Board.final;
 
 
-process Demo extends DeploymentView::DV::Node_Linux::Demo
-end demo;
+process X86_Ground_Station extends DeploymentView::DV::Node_1::X86_Ground_Station
+features
+   INPORT_send_tm_aoi : in event data port DataView::Location_Fix_Packet_Buffer.impl
+      { Queue_Size => 1;};
+   INPORT_send_tm_mcp : in event data port DataView::Mode_Change_Packet_Buffer.impl
+      { Queue_Size => 1;};
+   OUTPORT_state_handler_entrypoint_trig_aoi : out event port
+      { Queue_Size => 1;};
+   OUTPORT_state_handler_entrypoint_trig_mcp : out event port
+      { Queue_Size => 1;};
+   OUTPORT_state_handler_entrypoint_trig_pwr : out event port
+      { Queue_Size => 1;};
+end x86_ground_station;
 
-process implementation Demo.final
+process implementation X86_Ground_Station.final
 subcomponents
    gui_protected : data TASTE_Protected.Object;
-   
+   gui_Poll        : thread gui_Poll_Thread::gui_Poll.others;
+   gui_send_tm_aoi : thread gui_send_tm_aoi_Thread::gui_send_tm_aoi.others;
+   gui_send_tm_mcp : thread gui_send_tm_mcp_Thread::gui_send_tm_mcp.others;
+connections
+   port INPORT_send_tm_aoi -> gui_send_tm_aoi.INPORT_send_tm_aoi;
+   port INPORT_send_tm_mcp -> gui_send_tm_mcp.INPORT_send_tm_mcp;
+   port gui_Poll.OUTPORT_state_handler_entrypoint_trig_aoi        -> OUTPORT_state_handler_entrypoint_trig_aoi;
+   port gui_send_tm_aoi.OUTPORT_state_handler_entrypoint_trig_aoi -> OUTPORT_state_handler_entrypoint_trig_aoi;
+   port gui_send_tm_mcp.OUTPORT_state_handler_entrypoint_trig_aoi -> OUTPORT_state_handler_entrypoint_trig_aoi;
+   port gui_Poll.OUTPORT_state_handler_entrypoint_trig_mcp        -> OUTPORT_state_handler_entrypoint_trig_mcp;
+   port gui_send_tm_aoi.OUTPORT_state_handler_entrypoint_trig_mcp -> OUTPORT_state_handler_entrypoint_trig_mcp;
+   port gui_send_tm_mcp.OUTPORT_state_handler_entrypoint_trig_mcp -> OUTPORT_state_handler_entrypoint_trig_mcp;
+   port gui_Poll.OUTPORT_state_handler_entrypoint_trig_pwr        -> OUTPORT_state_handler_entrypoint_trig_pwr;
+   port gui_send_tm_aoi.OUTPORT_state_handler_entrypoint_trig_pwr -> OUTPORT_state_handler_entrypoint_trig_pwr;
+   port gui_send_tm_mcp.OUTPORT_state_handler_entrypoint_trig_pwr -> OUTPORT_state_handler_entrypoint_trig_pwr;
+end X86_Ground_Station.final;
+processor node_2_Board extends ocarina_processors_msp430::msp430fr5969
+end node_2_Board;
+
+processor implementation node_2_Board.final extends ocarina_processors_msp430::msp430fr5969.freertos
+end node_2_Board.final;
+
+
+process Msp430_Obc extends DeploymentView::DV::Node_2::Msp430_Obc
+features
+   INPORT_trig_aoi : in event port
+      { Queue_Size => 1;};
+   INPORT_trig_mcp : in event port
+      { Queue_Size => 1;};
+   INPORT_trig_pwr : in event port
+      { Queue_Size => 1;};
+   OUTPORT_gui_send_tm_aoi : out event data port DataView::Location_Fix_Packet_Buffer.impl
+      { Queue_Size => 1;};
+   OUTPORT_gui_send_tm_mcp : out event data port DataView::Mode_Change_Packet_Buffer.impl
+      { Queue_Size => 1;};
+end msp430_obc;
+
+process implementation Msp430_Obc.final
+subcomponents
    state_handler_entrypoint_protected : data TASTE_Protected.Object;
-   gui_Poll                            : thread gui_Poll_Thread::gui_Poll.others;
-   gui_send_tm_aoi                     : thread gui_send_tm_aoi_Thread::gui_send_tm_aoi.others;
-   gui_send_tm_mcp                     : thread gui_send_tm_mcp_Thread::gui_send_tm_mcp.others;
    state_handler_entrypoint_poll_aoi   : thread state_handler_entrypoint_poll_aoi_Thread::state_handler_entrypoint_poll_aoi.others;
    state_handler_entrypoint_poll_mcp   : thread state_handler_entrypoint_poll_mcp_Thread::state_handler_entrypoint_poll_mcp.others;
    state_handler_entrypoint_toggle_pwr : thread state_handler_entrypoint_toggle_pwr_Thread::state_handler_entrypoint_toggle_pwr.others;
@@ -321,38 +370,62 @@ subcomponents
    state_handler_entrypoint_trig_mcp   : thread state_handler_entrypoint_trig_mcp_Thread::state_handler_entrypoint_trig_mcp.others;
    state_handler_entrypoint_trig_pwr   : thread state_handler_entrypoint_trig_pwr_Thread::state_handler_entrypoint_trig_pwr.others;
 connections
-   port Gui_Poll.OUTPORT_State_Handler_Entrypoint_Trig_Aoi          -> State_Handler_Entrypoint_Trig_Aoi.INPORT_Trig_Aoi;
-   port Gui_Poll.OUTPORT_State_Handler_Entrypoint_Trig_Mcp          -> State_Handler_Entrypoint_Trig_Mcp.INPORT_Trig_Mcp;
-   port Gui_Poll.OUTPORT_State_Handler_Entrypoint_Trig_Pwr          -> State_Handler_Entrypoint_Trig_Pwr.INPORT_Trig_Pwr;
-   port Gui_Send_Tm_Aoi.OUTPORT_State_Handler_Entrypoint_Trig_Aoi   -> State_Handler_Entrypoint_Trig_Aoi.INPORT_Trig_Aoi;
-   port Gui_Send_Tm_Aoi.OUTPORT_State_Handler_Entrypoint_Trig_Mcp   -> State_Handler_Entrypoint_Trig_Mcp.INPORT_Trig_Mcp;
-   port Gui_Send_Tm_Aoi.OUTPORT_State_Handler_Entrypoint_Trig_Pwr   -> State_Handler_Entrypoint_Trig_Pwr.INPORT_Trig_Pwr;
-   port Gui_Send_Tm_Mcp.OUTPORT_State_Handler_Entrypoint_Trig_Aoi   -> State_Handler_Entrypoint_Trig_Aoi.INPORT_Trig_Aoi;
-   port Gui_Send_Tm_Mcp.OUTPORT_State_Handler_Entrypoint_Trig_Mcp   -> State_Handler_Entrypoint_Trig_Mcp.INPORT_Trig_Mcp;
-   port Gui_Send_Tm_Mcp.OUTPORT_State_Handler_Entrypoint_Trig_Pwr   -> State_Handler_Entrypoint_Trig_Pwr.INPORT_Trig_Pwr;
-   port State_Handler_Entrypoint_Poll_Aoi.OUTPORT_Gui_Send_Tm_Aoi   -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Poll_Aoi.OUTPORT_Gui_Send_Tm_Mcp   -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-   port State_Handler_Entrypoint_Poll_Mcp.OUTPORT_Gui_Send_Tm_Aoi   -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Poll_Mcp.OUTPORT_Gui_Send_Tm_Mcp   -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-   port State_Handler_Entrypoint_Toggle_Pwr.OUTPORT_Gui_Send_Tm_Aoi -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Toggle_Pwr.OUTPORT_Gui_Send_Tm_Mcp -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-   port State_Handler_Entrypoint_Trig_Aoi.OUTPORT_Gui_Send_Tm_Aoi   -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Trig_Aoi.OUTPORT_Gui_Send_Tm_Mcp   -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-   port State_Handler_Entrypoint_Trig_Mcp.OUTPORT_Gui_Send_Tm_Aoi   -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Trig_Mcp.OUTPORT_Gui_Send_Tm_Mcp   -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-   port State_Handler_Entrypoint_Trig_Pwr.OUTPORT_Gui_Send_Tm_Aoi   -> Gui_Send_Tm_Aoi.INPORT_Send_Tm_Aoi;
-   port State_Handler_Entrypoint_Trig_Pwr.OUTPORT_Gui_Send_Tm_Mcp   -> Gui_Send_Tm_Mcp.INPORT_Send_Tm_Mcp;
-end Demo.final;
+   port INPORT_trig_aoi -> state_handler_entrypoint_trig_aoi.INPORT_trig_aoi;
+   port INPORT_trig_mcp -> state_handler_entrypoint_trig_mcp.INPORT_trig_mcp;
+   port INPORT_trig_pwr -> state_handler_entrypoint_trig_pwr.INPORT_trig_pwr;
+   port state_handler_entrypoint_poll_aoi.OUTPORT_gui_send_tm_aoi   -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_poll_mcp.OUTPORT_gui_send_tm_aoi   -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_toggle_pwr.OUTPORT_gui_send_tm_aoi -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_trig_aoi.OUTPORT_gui_send_tm_aoi   -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_trig_mcp.OUTPORT_gui_send_tm_aoi   -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_trig_pwr.OUTPORT_gui_send_tm_aoi   -> OUTPORT_gui_send_tm_aoi;
+   port state_handler_entrypoint_poll_aoi.OUTPORT_gui_send_tm_mcp   -> OUTPORT_gui_send_tm_mcp;
+   port state_handler_entrypoint_poll_mcp.OUTPORT_gui_send_tm_mcp   -> OUTPORT_gui_send_tm_mcp;
+   port state_handler_entrypoint_toggle_pwr.OUTPORT_gui_send_tm_mcp -> OUTPORT_gui_send_tm_mcp;
+   port state_handler_entrypoint_trig_aoi.OUTPORT_gui_send_tm_mcp   -> OUTPORT_gui_send_tm_mcp;
+   port state_handler_entrypoint_trig_mcp.OUTPORT_gui_send_tm_mcp   -> OUTPORT_gui_send_tm_mcp;
+   port state_handler_entrypoint_trig_pwr.OUTPORT_gui_send_tm_mcp   -> OUTPORT_gui_send_tm_mcp;
+end Msp430_Obc.final;
 
 system DeploymentView
 end DeploymentView;
 
 system implementation DeploymentView.final
 subcomponents
-   Demo : process Demo.final;
-   Node_Linux_x86_linux : processor Node_Linux_Board.final;
+   X86_Ground_Station : process X86_Ground_Station.final;
+   Msp430_Obc         : process Msp430_Obc.final;
+   Node_1_p1 : processor Node_1_Board.final;
+   Node_2_p1 : processor Node_2_Board.final;
+   bus_1 : bus ocarina_buses::serial.minimal;
+   
+   node_1_serial                        : device deploymentview::dv::node_1::serial.others
+      {
+         Source_Text      => ("../DriversConfig/x86_ground_station/DeviceConfig-node_1-serial.c");
+         Type_Source_Name => "pohidrv_node_1_serial";
+      };
+   node_2_msp430_eusci_a_serial_minimal : device deploymentview::dv::node_2::msp430_eusci_a_serial_minimal.others
+      {
+         Source_Text      => ("../DriversConfig/msp430_obc/DeviceConfig-node_2-msp430_eusci_a_serial_minimal.c");
+         Type_Source_Name => "pohidrv_node_2_msp430_eusci_a_serial_minimal";
+      };
+connections
+   x86_ground_station_state_handler_entrypoint_trig_aoi : port x86_ground_station.OUTPORT_state_handler_entrypoint_trig_aoi -> msp430_obc.INPORT_trig_aoi;
+   x86_ground_station_state_handler_entrypoint_trig_mcp : port x86_ground_station.OUTPORT_state_handler_entrypoint_trig_mcp -> msp430_obc.INPORT_trig_mcp;
+   x86_ground_station_state_handler_entrypoint_trig_pwr : port x86_ground_station.OUTPORT_state_handler_entrypoint_trig_pwr -> msp430_obc.INPORT_trig_pwr;
+   msp430_obc_gui_send_tm_aoi                           : port msp430_obc.OUTPORT_gui_send_tm_aoi                           -> x86_ground_station.INPORT_send_tm_aoi;
+   msp430_obc_gui_send_tm_mcp                           : port msp430_obc.OUTPORT_gui_send_tm_mcp                           -> x86_ground_station.INPORT_send_tm_mcp;
+   bus access bus_1 -> node_1_serial.link;
+   bus access bus_1 -> node_2_msp430_eusci_a_serial_minimal.link;
 properties
-   Actual_Processor_Binding => (reference (Node_Linux_x86_linux)) applies to Demo;
+   Actual_Processor_Binding => (reference (Node_1_p1)) applies to X86_Ground_Station;
+   Actual_Processor_Binding => (reference (Node_2_p1)) applies to Msp430_Obc;
+   Actual_Processor_Binding => (reference (Node_1_p1)) applies to node_1_serial;
+   Actual_Processor_Binding => (reference (Node_2_p1)) applies to node_2_msp430_eusci_a_serial_minimal;
+   Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_pwr;
+   Actual_Connection_Binding => (reference (bus_1)) applies to msp430_obc_gui_send_tm_mcp;
+   Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_aoi;
+   Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_mcp;
+   Actual_Connection_Binding => (reference (bus_1)) applies to msp430_obc_gui_send_tm_aoi;
 --  patchable area (do not remove this line):
 end DeploymentView.final;
 

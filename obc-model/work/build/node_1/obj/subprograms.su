@@ -1,0 +1,3 @@
+subprograms.c:13:6:ocarina_drivers_serial__spg_serial_linux_minimal_poller	32	static
+subprograms.c:22:6:ocarina_drivers_serial__spg_serial_linux_minimal_sender	32	static
+subprograms.c:27:1:_GLOBAL__sub_I_00099_0_ocarina_drivers_serial__spg_serial_linux_minimal_poller	16	static

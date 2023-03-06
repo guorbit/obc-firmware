@@ -1,9 +1,6 @@
 // Implementation of the glue code in C handling required interfaces
 
 #include <stdlib.h>
-#include <stdio.h>
-#include "PrintTypesAsASN1.h"
-#include "timeInMS.h"
 #include "C_ASN1_Types.h"
 #include "dataview-uniq.h"
 
@@ -18,16 +15,6 @@ void tm_collection_RI_request_tm
        asn1SccDeployment_Digital  *OUT_depl_d,
        asn1SccDeployment_Analogue *OUT_depl_a)
 {
-   // Log MSC data on Linux when environment variable is set
-   static int innerMsc = -1;
-   if (-1 == innerMsc)
-      innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
-   if (1 == innerMsc) {
-      long long msc_time = getTimeInMilliseconds();
-      // Log message to tm_provider (corresponding PI: request_tm)
-      printf ("INNER_RI: tm_collection,tm_provider,request_tm,request_tm,%lld\n", msc_time);
-      fflush(stdout);
-   }
 
    size_t      size_OUT_buf_temp = 0;
    size_t      size_OUT_buf_depl_d = 0;

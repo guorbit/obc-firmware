@@ -25,8 +25,8 @@ void tc_provider_PI_request_tc
 
 {
    // Write your code here
-    OUT_mcp->target_addr = asn1SccSubsystem_Address_obc;
-    OUT_mcp->target_mode = asn1SccSystem_Mode_idle;
+    OUT_mcp->target_addr = 0;
+    OUT_mcp->target_mode = 0;
     OUT_mcp->ttl_ms = 1000;
 
     k++;

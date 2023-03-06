@@ -289,24 +289,12 @@ flag asn1SccDeployment_Analogue_ACN_Encode(const asn1SccDeployment_Analogue* pVa
 
 #define ERR_ACN_DECODE_DEPLOYMENT_ANALOGUE		60  /**/
 flag asn1SccDeployment_Analogue_ACN_Decode(asn1SccDeployment_Analogue* pVal, BitStream* pBitStrm, int* pErrCode);
-typedef enum {
-    System_Mode_idle = 0,
-    System_Mode_uplink = 1,
-    System_Mode_downlink = 2,
-    System_Mode_imaging = 3,
-    System_Mode_processing = 4
-} asn1SccSystem_Mode;
+typedef asn1SccUint asn1SccSystem_Mode;
 
-// please use the following macros to avoid breaking code.
-#define asn1SccSystem_Mode_idle System_Mode_idle
-#define asn1SccSystem_Mode_uplink System_Mode_uplink
-#define asn1SccSystem_Mode_downlink System_Mode_downlink
-#define asn1SccSystem_Mode_imaging System_Mode_imaging
-#define asn1SccSystem_Mode_processing System_Mode_processing
 
 flag asn1SccSystem_Mode_Equal(const asn1SccSystem_Mode* pVal1, const asn1SccSystem_Mode* pVal2);
 
-#define ERR_SYSTEM_MODE		61  /*idle | uplink | downlink | imaging | processing*/
+#define ERR_SYSTEM_MODE		61  /*(0 .. 4)*/
 flag asn1SccSystem_Mode_IsConstraintValid(const asn1SccSystem_Mode* pVal, int* pErrCode);
 
 void asn1SccSystem_Mode_Initialize(asn1SccSystem_Mode* pVal);
@@ -328,28 +316,12 @@ flag asn1SccSystem_Mode_ACN_Encode(const asn1SccSystem_Mode* pVal, BitStream* pB
 
 #define ERR_ACN_DECODE_SYSTEM_MODE		65  /**/
 flag asn1SccSystem_Mode_ACN_Decode(asn1SccSystem_Mode* pVal, BitStream* pBitStrm, int* pErrCode);
-typedef enum {
-    Subsystem_Address_obc = 0,
-    Subsystem_Address_comms = 1,
-    Subsystem_Address_electrical = 2,
-    Subsystem_Address_mechanical = 3,
-    Subsystem_Address_control = 4,
-    Subsystem_Address_software = 5,
-    Subsystem_Address_payload = 6
-} asn1SccSubsystem_Address;
+typedef asn1SccUint asn1SccSubsystem_Address;
 
-// please use the following macros to avoid breaking code.
-#define asn1SccSubsystem_Address_obc Subsystem_Address_obc
-#define asn1SccSubsystem_Address_comms Subsystem_Address_comms
-#define asn1SccSubsystem_Address_electrical Subsystem_Address_electrical
-#define asn1SccSubsystem_Address_mechanical Subsystem_Address_mechanical
-#define asn1SccSubsystem_Address_control Subsystem_Address_control
-#define asn1SccSubsystem_Address_software Subsystem_Address_software
-#define asn1SccSubsystem_Address_payload Subsystem_Address_payload
 
 flag asn1SccSubsystem_Address_Equal(const asn1SccSubsystem_Address* pVal1, const asn1SccSubsystem_Address* pVal2);
 
-#define ERR_SUBSYSTEM_ADDRESS		66  /*obc | comms | electrical | mechanical | control | software | payload*/
+#define ERR_SUBSYSTEM_ADDRESS		66  /*(0 .. 6)*/
 flag asn1SccSubsystem_Address_IsConstraintValid(const asn1SccSubsystem_Address* pVal, int* pErrCode);
 
 void asn1SccSubsystem_Address_Initialize(asn1SccSubsystem_Address* pVal);

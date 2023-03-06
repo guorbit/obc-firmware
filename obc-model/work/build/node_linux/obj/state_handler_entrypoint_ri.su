@@ -1,7 +1,0 @@
-state_handler_entrypoint_ri.ads:32:4:To_C_Pointer	32	static
-state_handler_entrypoint_ri.adb:6:4:Collect_Tm	16	static
-state_handler_entrypoint_ri.adb:17:4:Request_Loc	32	static
-state_handler_entrypoint_ri.adb:30:4:Request_Tc	32	static
-state_handler_entrypoint_ri.adb:43:4:Send_Tm_Aoi	32	static
-state_handler_entrypoint_ri.adb:56:4:Send_Tm_Mcp	32	static
-state_handler_entrypoint_ri.adb:69:4:Validate_Mc_Vs_Tm	16	static

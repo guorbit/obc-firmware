@@ -1,166 +1,238 @@
-PACKAGE deploymentview::DV::Node_Linux
-PUBLIC
+--  This file was generated automatically - do not modify it manually
+--  If you wish to modify the template used to create this file, it is located
+--  in ~/tool-src/misc/space-creator/dv2aadl/deploymentview.tmplt
+--  After modifications, install it by running ~/tool-src/install/90_misc
+--  Template written by Maxime Perrotin (maxime.perrotin@esa.int) 2021-09
+package deploymentview::DV::Node_2
+public
 
-WITH Taste;
-WITH Deployment;
-WITH TASTE_DV_Properties;
-WITH deploymentview::DV;
-WITH Memory_Properties;
-WITH ARINC653;
+ with Deployment;
+ with TASTE;
+ with TASTE_DV_Properties;
 
-PROCESS demo
-END demo;
+    with ocarina_buses; 
+    with ocarina_drivers; 
 
-PROCESS IMPLEMENTATION demo.others
-END demo.others;
+ --  Declare partition(s) of node "Node_2" (aka "CubeSat").
+ process MSP430_OBC
+ end MSP430_OBC;
 
-END deploymentview::DV::Node_Linux;
+ process implementation MSP430_OBC.others
+ end MSP430_OBC.others;
 
-PACKAGE deploymentview::DV
-PUBLIC
+ device msp430_eusci_a_serial_minimal
+    extends ocarina_drivers::MSP430_eUSCI_A_serial 
+ features
+    link : refined to requires bus access ocarina_buses::serial.minimal;
+ properties 
+    Deployment::Configuration => "{ devname  &quot; &quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }"; 
+    Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn";
+ end msp430_eusci_a_serial_minimal;
 
-WITH interfaceview::IV::tc_validation;
+ device implementation msp430_eusci_a_serial_minimal.others
+    extends ocarina_drivers::MSP430_eUSCI_A_serial.minimal 
+ end msp430_eusci_a_serial_minimal.others;
 
-WITH interfaceview::IV::loc_provider;
+end deploymentview::DV::Node_2;
+--  This file was generated automatically - do not modify it manually
+--  If you wish to modify the template used to create this file, it is located
+--  in ~/tool-src/misc/space-creator/dv2aadl/deploymentview.tmplt
+--  After modifications, install it by running ~/tool-src/install/90_misc
+--  Template written by Maxime Perrotin (maxime.perrotin@esa.int) 2021-09
+package deploymentview::DV::Node_1
+public
 
-WITH interfaceview::IV::tm_collection;
+ with Deployment;
+ with TASTE;
+ with TASTE_DV_Properties;
 
-WITH interfaceview::IV::state_handler_entrypoint;
+    with ocarina_buses; 
+    with ocarina_drivers; 
+    with ocarina_buses; 
+    with ocarina_drivers; 
+    with ocarina_buses; 
+    with ocarina_drivers; 
+    with ocarina_buses; 
+    with ocarina_drivers; 
 
-WITH interfaceview::IV::gui;
+ --  Declare partition(s) of node "Node_1" (aka "Ground_Station").
+ process x86_ground_station
+ end x86_ground_station;
 
-WITH interfaceview::IV::tc_provider;
+ process implementation x86_ground_station.others
+ end x86_ground_station.others;
 
-WITH interfaceview::IV::tm_provider;
+ device ethernet1
+    extends ocarina_drivers::generic_sockets_ip 
+ features
+    link : refined to requires bus access ocarina_buses::ip.i;
+ properties
+    Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+ end ethernet1;
+
+ device implementation ethernet1.others
+    extends ocarina_drivers::generic_sockets_ip.pohic 
+ end ethernet1.others;
+
+ device ethernet2
+    extends ocarina_drivers::generic_sockets_ip 
+ features
+    link : refined to requires bus access ocarina_buses::ip.i;
+ properties
+    Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+ end ethernet2;
+
+ device implementation ethernet2.others
+    extends ocarina_drivers::generic_sockets_ip.pohic 
+ end ethernet2.others;
+
+ device ethernet3
+    extends ocarina_drivers::generic_sockets_ip 
+ features
+    link : refined to requires bus access ocarina_buses::ip.i;
+ properties
+    Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+ end ethernet3;
+
+ device implementation ethernet3.others
+    extends ocarina_drivers::generic_sockets_ip.pohic 
+ end ethernet3.others;
+
+ device serial
+    extends ocarina_drivers::linux_serial 
+ features
+    link : refined to requires bus access ocarina_buses::serial.minimal;
+ properties 
+    Deployment::Configuration => "{ devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }"; 
+    Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn";
+ end serial;
+
+ device implementation serial.others
+    extends ocarina_drivers::linux_serial.minimal 
+ end serial.others;
+
+end deploymentview::DV::Node_1;
+
+package deploymentview::DV
+public
+
+ with TASTE;
+ with Deployment;
+ with Interfaceview::IV;
+ with TASTE_DV_Properties;
+
+ --  Dependencies of node Node_2
+ with interfaceview::IV::loc_provider;
+ with interfaceview::IV::tm_collection;
+ with interfaceview::IV::tc_provider;
+ with interfaceview::IV::tc_validation;
+ with interfaceview::IV::tm_provider;
+ with interfaceview::IV::state_handler_entrypoint;
+    with ocarina_buses; 
+ with deploymentview::DV::Node_2;
+ with ocarina_processors_msp430;
+ --  Dependencies of node Node_1
+ with interfaceview::IV::gui;
+    with ocarina_buses; 
+    with ocarina_buses; 
+    with ocarina_buses; 
+    with ocarina_buses; 
+ with deploymentview::DV::Node_1;
+ with ocarina_processors_x86;
+
+ --  Node Node_2
+ system Node_2
+ features
+    msp430_eusci_a_serial_minimal_msp430_eusci_a_serial_minimal : requires bus access ocarina_buses::serial.minimal;
+ end Node_2;
+
+ system implementation Node_2.others
+ subcomponents
+    IV_loc_provider : system Interfaceview::IV::loc_provider::loc_provider.others {
+       Taste::ImplementationName => "";
+    };
+    IV_tm_collection : system Interfaceview::IV::tm_collection::tm_collection.others {
+       Taste::ImplementationName => "";
+    };
+    IV_tc_provider : system Interfaceview::IV::tc_provider::tc_provider.others {
+       Taste::ImplementationName => "";
+    };
+    IV_tc_validation : system Interfaceview::IV::tc_validation::tc_validation.others {
+       Taste::ImplementationName => "";
+    };
+    IV_tm_provider : system Interfaceview::IV::tm_provider::tm_provider.others {
+       Taste::ImplementationName => "";
+    };
+    IV_state_handler_entrypoint : system Interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others {
+       Taste::ImplementationName => "";
+    };
+    MSP430_OBC : process deploymentview::DV::Node_2::MSP430_OBC.others { 
+       TASTE_DV_Properties::CoverageEnabled => false;
+    };
+    p1 : processor ocarina_processors_msp430::msp430fr5969.freertos;
+    msp430_eusci_a_serial_minimal : device deploymentview::DV::Node_2::msp430_eusci_a_serial_minimal.others;
+ connections
+    msp430_eusci_a_serial_minimal_msp430_eusci_a_serial_minimal_link : bus access msp430_eusci_a_serial_minimal_msp430_eusci_a_serial_minimal -> msp430_eusci_a_serial_minimal.link;
+ properties
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_loc_provider;
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_tm_collection;
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_tc_provider;
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_tc_validation;
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_tm_provider;
+    TASTE::APLC_Binding => (reference (MSP430_OBC)) applies to IV_state_handler_entrypoint;
+    Actual_Processor_Binding => (reference (p1)) applies to MSP430_OBC;
+    Actual_Processor_Binding => (reference (p1)) applies to msp430_eusci_a_serial_minimal;
+ end Node_2.others;
+
+ --  Node Node_1
+ system Node_1
+ features
+    serial_serial : requires bus access ocarina_buses::serial.minimal;
+ end Node_1;
+
+ system implementation Node_1.others
+ subcomponents
+    IV_gui : system Interfaceview::IV::gui::gui.others {
+       Taste::ImplementationName => "";
+    };
+    x86_ground_station : process deploymentview::DV::Node_1::x86_ground_station.others { 
+       TASTE_DV_Properties::CoverageEnabled => false;
+    };
+    p1 : processor ocarina_processors_x86::x86.linux;
+    ethernet1 : device deploymentview::DV::Node_1::ethernet1.others;
+    ethernet2 : device deploymentview::DV::Node_1::ethernet2.others;
+    ethernet3 : device deploymentview::DV::Node_1::ethernet3.others;
+    serial : device deploymentview::DV::Node_1::serial.others;
+ connections
+    serial_serial_link : bus access serial_serial -> serial.link;
+ properties
+    TASTE::APLC_Binding => (reference (x86_ground_station)) applies to IV_gui;
+    Actual_Processor_Binding => (reference (p1)) applies to x86_ground_station;
+    Actual_Processor_Binding => (reference (p1)) applies to ethernet1;
+    Actual_Processor_Binding => (reference (p1)) applies to ethernet2;
+    Actual_Processor_Binding => (reference (p1)) applies to ethernet3;
+    Actual_Processor_Binding => (reference (p1)) applies to serial;
+ end Node_1.others;
 
 
-WITH ocarina_processors_x86;
-WITH deploymentview::DV::Node_Linux;
-WITH Taste;
-WITH Deployment;
-WITH interfaceview::IV;
-WITH TASTE_DV_Properties;
+system deploymentview
+end deploymentview;
 
-SYSTEM Node_Linux
-END Node_Linux;
+system implementation deploymentview.others
+subcomponents
+   interfaceview : system interfaceview::IV::interfaceview.others;
+   Node_2 : system Node_2.others;
+   Node_1 : system Node_1.others;
+   bus_1 : bus ocarina_buses::serial.minimal;
+ connections
+   Node_2_bus_1 : bus access bus_1 -> Node_2.msp430_eusci_a_serial_minimal_msp430_eusci_a_serial_minimal;
+   Node_1_bus_1 : bus access bus_1 -> Node_1.serial_serial;
+ properties
+   Actual_Connection_Binding => (reference (bus_1)) applies to interfaceview.gui_RI_trig_mcp;
+   Actual_Connection_Binding => (reference (bus_1)) applies to interfaceview.gui_RI_trig_pwr;
+   Actual_Connection_Binding => (reference (bus_1)) applies to interfaceview.gui_RI_trig_aoi;
+   Actual_Connection_Binding => (reference (bus_1)) applies to interfaceview.state_handler_entrypoint_RI_send_tm_aoi;
+   Actual_Connection_Binding => (reference (bus_1)) applies to interfaceview.state_handler_entrypoint_RI_send_tm_mcp;
+end deploymentview.others;
 
-SYSTEM IMPLEMENTATION Node_Linux.others
-SUBCOMPONENTS
-   IV_tc_validation : SYSTEM interfaceview::IV::tc_validation::tc_validation.others {
-      Taste::FunctionName => "tc_validation";
-   };
-
-   IV_loc_provider : SYSTEM interfaceview::IV::loc_provider::loc_provider.others {
-      Taste::FunctionName => "loc_provider";
-   };
-
-   IV_tm_collection : SYSTEM interfaceview::IV::tm_collection::tm_collection.others {
-      Taste::FunctionName => "tm_collection";
-   };
-
-   IV_state_handler_entrypoint : SYSTEM interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others {
-      Taste::FunctionName => "state_handler_entrypoint";
-   };
-
-   IV_gui : SYSTEM interfaceview::IV::gui::gui.others {
-      Taste::FunctionName => "gui";
-   };
-
-   IV_tc_provider : SYSTEM interfaceview::IV::tc_provider::tc_provider.others {
-      Taste::FunctionName => "tc_provider";
-   };
-
-   IV_tm_provider : SYSTEM interfaceview::IV::tm_provider::tm_provider.others {
-      Taste::FunctionName => "tm_provider";
-   };
-
-   demo : PROCESS deploymentview::DV::Node_Linux::demo.others {
-      Deployment::Port_Number => 0;
-      TASTE_DV_Properties::CoverageEnabled => false;
-      TASTE::CFlags => "-no-pie";
-      TASTE::LDFlags => "-no-pie";
-   };
-   x86_linux : PROCESSOR ocarina_processors_x86::x86.linux;
-PROPERTIES
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tc_validation;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_loc_provider;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tm_collection;
-   
-   
-   
-   
-   
-   
-
-   
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_state_handler_entrypoint;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_gui;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tc_provider;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tm_provider;
-   
-   
-   
-   
-   
-   
-
-   Actual_Processor_Binding => (reference (x86_linux)) APPLIES TO demo;
-END Node_Linux.others;
-
-SYSTEM deploymentview
-END deploymentview;
-
-SYSTEM IMPLEMENTATION deploymentview.others
-SUBCOMPONENTS
-  Node_Linux : SYSTEM Node_Linux.others;
-  interfaceview : SYSTEM interfaceview::IV::interfaceview.others;
-END deploymentview.others;
-
-PROPERTIES
-  Taste::coordinates => "0 0 297000 210000";
-  Taste::version => "3.0";
-  Taste::interfaceView => "InterfaceView.aadl";
-  Taste::HWLibraries => ("ocarina_components.aadl");
-END deploymentview::DV;
+end deploymentview::DV;

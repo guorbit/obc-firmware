@@ -21,24 +21,16 @@ end asn1SccCounterK_Equal;
 
 function asn1SccCounterK_IsConstraintValid(val : asn1SccCounterK) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := (val <= 1000);
     ret.ErrorCode := (if ret.Success then 0 else ERR_COUNTERK);
     return ret;
 end asn1SccCounterK_IsConstraintValid;
 
-function asn1SccCounterK_Init return asn1SccCounterK
-is
-    val: asn1SccCounterK;
-begin
-    val := 0;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccCounterK_Init;
+
 
 
 
@@ -52,24 +44,16 @@ end asn1SccTime_UNIX_Equal;
 
 function asn1SccTime_UNIX_IsConstraintValid(val : asn1SccTime_UNIX) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := (val <= 4294967294);
     ret.ErrorCode := (if ret.Success then 0 else ERR_TIME_UNIX);
     return ret;
 end asn1SccTime_UNIX_IsConstraintValid;
 
-function asn1SccTime_UNIX_Init return asn1SccTime_UNIX
-is
-    val: asn1SccTime_UNIX;
-begin
-    val := 0;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTime_UNIX_Init;
+
 
 
 
@@ -83,24 +67,16 @@ end asn1SccLatitude_WGS84_Equal;
 
 function asn1SccLatitude_WGS84_IsConstraintValid(val : asn1SccLatitude_WGS84) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := ((-9.0000000000000000000E+001 <= val) AND (val <= 9.0000000000000000000E+001));
     ret.ErrorCode := (if ret.Success then 0 else ERR_LATITUDE_WGS84);
     return ret;
 end asn1SccLatitude_WGS84_IsConstraintValid;
 
-function asn1SccLatitude_WGS84_Init return asn1SccLatitude_WGS84
-is
-    val: asn1SccLatitude_WGS84;
-begin
-    val := 0.0000000000000000000E+000;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccLatitude_WGS84_Init;
+
 
 
 
@@ -114,32 +90,24 @@ end asn1SccLongitude_WGS84_Equal;
 
 function asn1SccLongitude_WGS84_IsConstraintValid(val : asn1SccLongitude_WGS84) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := ((-1.8000000000000000000E+002 <= val) AND (val <= 1.8000000000000000000E+002));
     ret.ErrorCode := (if ret.Success then 0 else ERR_LONGITUDE_WGS84);
     return ret;
 end asn1SccLongitude_WGS84_IsConstraintValid;
 
-function asn1SccLongitude_WGS84_Init return asn1SccLongitude_WGS84
-is
-    val: asn1SccLongitude_WGS84;
-begin
-    val := 0.0000000000000000000E+000;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccLongitude_WGS84_Init;
+
 
 
 
 function asn1SccLocation_Equal (val1, val2 :  asn1SccLocation) return Boolean
 is
-    pragma Warnings (Off, "initialization of ret has no effect");
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");
     ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
+    pragma Warnings (On, "initialization of ""ret"" has no effect");
 
 begin
     ret := (adaasn1rtl.Asn1Real_Equal(val1.lat, val2.lat));
@@ -154,9 +122,9 @@ end asn1SccLocation_Equal;
 
 function asn1SccLocation_IsConstraintValid(val : asn1SccLocation) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := asn1SccLatitude_WGS84_IsConstraintValid(val.lat);
     if ret.Success then
@@ -165,27 +133,15 @@ begin
     return ret;
 end asn1SccLocation_IsConstraintValid;
 
-function asn1SccLocation_Init return asn1SccLocation
-is
-    val: asn1SccLocation;
-begin
 
-    --set lat 
-    val.lat := asn1SccLatitude_WGS84_Init;
-    --set lon 
-    val.lon := asn1SccLongitude_WGS84_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccLocation_Init;
 
 
 
 function asn1SccLocation_Fix_Packet_Equal (val1, val2 :  asn1SccLocation_Fix_Packet) return Boolean
 is
-    pragma Warnings (Off, "initialization of ret has no effect");
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");
     ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
+    pragma Warnings (On, "initialization of ""ret"" has no effect");
 
 begin
     ret := (val1.t = val2.t);
@@ -204,9 +160,9 @@ end asn1SccLocation_Fix_Packet_Equal;
 
 function asn1SccLocation_Fix_Packet_IsConstraintValid(val : asn1SccLocation_Fix_Packet) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := asn1SccTime_UNIX_IsConstraintValid(val.t);
     if ret.Success then
@@ -218,21 +174,7 @@ begin
     return ret;
 end asn1SccLocation_Fix_Packet_IsConstraintValid;
 
-function asn1SccLocation_Fix_Packet_Init return asn1SccLocation_Fix_Packet
-is
-    val: asn1SccLocation_Fix_Packet;
-begin
 
-    --set t 
-    val.t := asn1SccTime_UNIX_Init;
-    --set lat 
-    val.lat := asn1SccLatitude_WGS84_Init;
-    --set lon 
-    val.lon := asn1SccLongitude_WGS84_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccLocation_Fix_Packet_Init;
 
 
 
@@ -246,24 +188,16 @@ end asn1SccTemperature_Generic_Equal;
 
 function asn1SccTemperature_Generic_IsConstraintValid(val : asn1SccTemperature_Generic) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := ((-2.0000000000000000000E+002 <= val) AND (val <= 2.0000000000000000000E+002));
     ret.ErrorCode := (if ret.Success then 0 else ERR_TEMPERATURE_GENERIC);
     return ret;
 end asn1SccTemperature_Generic_IsConstraintValid;
 
-function asn1SccTemperature_Generic_Init return asn1SccTemperature_Generic
-is
-    val: asn1SccTemperature_Generic;
-begin
-    val := 0.0000000000000000000E+000;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTemperature_Generic_Init;
+
 
 
 
@@ -278,23 +212,15 @@ end asn1SccDeployment_Digital_Equal;
 function asn1SccDeployment_Digital_IsConstraintValid(val : asn1SccDeployment_Digital) return adaasn1rtl.ASN1_RESULT
 is
     pragma Unreferenced (val);
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     return ret;
 end asn1SccDeployment_Digital_IsConstraintValid;
 
-function asn1SccDeployment_Digital_Init return asn1SccDeployment_Digital
-is
-    val: asn1SccDeployment_Digital;
-begin
-    val := FALSE;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccDeployment_Digital_Init;
+
 
 
 
@@ -308,24 +234,16 @@ end asn1SccDeployment_Analogue_Equal;
 
 function asn1SccDeployment_Analogue_IsConstraintValid(val : asn1SccDeployment_Analogue) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := ((0.0000000000000000000E+000 <= val) AND (val <= 1.0000000000000000000E+002));
     ret.ErrorCode := (if ret.Success then 0 else ERR_DEPLOYMENT_ANALOGUE);
     return ret;
 end asn1SccDeployment_Analogue_IsConstraintValid;
 
-function asn1SccDeployment_Analogue_Init return asn1SccDeployment_Analogue
-is
-    val: asn1SccDeployment_Analogue;
-begin
-    val := 0.0000000000000000000E+000;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccDeployment_Analogue_Init;
+
 
 
 
@@ -339,24 +257,16 @@ end asn1SccSystem_Mode_Equal;
 
 function asn1SccSystem_Mode_IsConstraintValid(val : asn1SccSystem_Mode) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
-    ret.Success := (((((((((val = asn1Sccidle)) OR ((val = asn1Sccuplink)))) OR ((val = asn1Sccdownlink)))) OR ((val = asn1Sccimaging)))) OR ((val = asn1Sccprocessing)));
+    ret.Success := (val <= 4);
     ret.ErrorCode := (if ret.Success then 0 else ERR_SYSTEM_MODE);
     return ret;
 end asn1SccSystem_Mode_IsConstraintValid;
 
-function asn1SccSystem_Mode_Init return asn1SccSystem_Mode
-is
-    val: asn1SccSystem_Mode;
-begin
-    val := asn1Sccidle;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccSystem_Mode_Init;
+
 
 
 
@@ -370,24 +280,16 @@ end asn1SccSubsystem_Address_Equal;
 
 function asn1SccSubsystem_Address_IsConstraintValid(val : asn1SccSubsystem_Address) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
-    ret.Success := (((((((((((((val = asn1Sccobc)) OR ((val = asn1Scccomms)))) OR ((val = asn1Sccelectrical)))) OR ((val = asn1Sccmechanical)))) OR ((val = asn1Scccontrol)))) OR ((val = asn1Sccsoftware)))) OR ((val = asn1Sccpayload)));
+    ret.Success := (val <= 6);
     ret.ErrorCode := (if ret.Success then 0 else ERR_SUBSYSTEM_ADDRESS);
     return ret;
 end asn1SccSubsystem_Address_IsConstraintValid;
 
-function asn1SccSubsystem_Address_Init return asn1SccSubsystem_Address
-is
-    val: asn1SccSubsystem_Address;
-begin
-    val := asn1Sccobc;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccSubsystem_Address_Init;
+
 
 
 
@@ -401,9 +303,9 @@ end asn1SccMode_Change_Packet_ttl_ms_Equal;
 
 function asn1SccMode_Change_Packet_Equal (val1, val2 :  asn1SccMode_Change_Packet) return Boolean
 is
-    pragma Warnings (Off, "initialization of ret has no effect");
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");
     ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
+    pragma Warnings (On, "initialization of ""ret"" has no effect");
 
 begin
     ret := (val1.target_addr = val2.target_addr);
@@ -422,9 +324,9 @@ end asn1SccMode_Change_Packet_Equal;
 
 function asn1SccMode_Change_Packet_ttl_ms_IsConstraintValid(val : asn1SccMode_Change_Packet_ttl_ms) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := (val <= 10000);
     ret.ErrorCode := (if ret.Success then 0 else ERR_MODE_CHANGE_PACKET_TTL_MS);
@@ -433,9 +335,9 @@ end asn1SccMode_Change_Packet_ttl_ms_IsConstraintValid;
 
 function asn1SccMode_Change_Packet_IsConstraintValid(val : asn1SccMode_Change_Packet) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := asn1SccSubsystem_Address_IsConstraintValid(val.target_addr);
     if ret.Success then
@@ -447,30 +349,8 @@ begin
     return ret;
 end asn1SccMode_Change_Packet_IsConstraintValid;
 
-function asn1SccMode_Change_Packet_ttl_ms_Init return asn1SccMode_Change_Packet_ttl_ms
-is
-    val: asn1SccMode_Change_Packet_ttl_ms;
-begin
-    val := 0;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccMode_Change_Packet_ttl_ms_Init;
-function asn1SccMode_Change_Packet_Init return asn1SccMode_Change_Packet
-is
-    val: asn1SccMode_Change_Packet;
-begin
 
-    --set target_addr 
-    val.target_addr := asn1SccSubsystem_Address_Init;
-    --set target_mode 
-    val.target_mode := asn1SccSystem_Mode_Init;
-    --set ttl_ms 
-    val.ttl_ms := asn1SccMode_Change_Packet_ttl_ms_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccMode_Change_Packet_Init;
+
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

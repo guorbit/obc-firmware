@@ -51,23 +51,25 @@ Temperature-Generic     ::= REAL (-200.0 .. 200.0)
 Deployment-Digital      ::= BOOLEAN
 Deployment-Analogue     ::= REAL (0.0 .. 100.0)
 
-System-Mode             ::= ENUMERATED {
-    idle,
-    uplink,
-    downlink,
-    imaging,
-    processing
-}
+System-Mode             ::= INTEGER (0 .. 4)
+-- ENUMERATED {
+--    idle,
+--    uplink,
+--    downlink,
+--    imaging,
+--    processing
+-- }
 
-Subsystem-Address       ::= ENUMERATED {
-    obc,
-    comms,
-    electrical,
-    mechanical,
-    control,
-    software,
-    payload
-}
+Subsystem-Address       ::= INTEGER (0 .. 6)
+-- ENUMERATED {
+--    obc,
+--    comms,
+--    electrical,
+--    mechanical,
+--    control,
+--    software,
+--    payload
+-- }
 
 Mode-Change-Packet      ::= SEQUENCE {
     target-addr     Subsystem-Address,
