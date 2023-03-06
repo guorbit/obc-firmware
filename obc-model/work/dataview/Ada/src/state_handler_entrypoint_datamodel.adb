@@ -43,32 +43,24 @@ end asn1SccState_handler_entrypoint_States_Equal;
 
 function asn1SccState_handler_entrypoint_States_IsConstraintValid(val : asn1SccState_handler_entrypoint_States) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := (((val = asn1Sccwait)) OR ((val = asn1Sccsleep)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_STATE_HANDLER_ENTRYPOINT_STATES);
     return ret;
 end asn1SccState_handler_entrypoint_States_IsConstraintValid;
 
-function asn1SccState_handler_entrypoint_States_Init return asn1SccState_handler_entrypoint_States
-is
-    val: asn1SccState_handler_entrypoint_States;
-begin
-    val := asn1Sccwait;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccState_handler_entrypoint_States_Init;
+
 
 
 
 function asn1SccState_handler_entrypoint_Context_Equal (val1, val2 :  asn1SccState_handler_entrypoint_Context) return Boolean
 is
-    pragma Warnings (Off, "initialization of ret has no effect");
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");
     ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
+    pragma Warnings (On, "initialization of ""ret"" has no effect");
 
 begin
     ret := (val1.state = val2.state);
@@ -115,9 +107,9 @@ end asn1SccState_handler_entrypoint_Context_Equal;
 
 function asn1SccState_handler_entrypoint_Context_IsConstraintValid(val : asn1SccState_handler_entrypoint_Context) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret := asn1SccState_handler_entrypoint_States_IsConstraintValid(val.state);
     if ret.Success then
@@ -147,35 +139,7 @@ begin
     return ret;
 end asn1SccState_handler_entrypoint_Context_IsConstraintValid;
 
-function asn1SccState_handler_entrypoint_Context_Init return asn1SccState_handler_entrypoint_Context
-is
-    val: asn1SccState_handler_entrypoint_Context;
-begin
 
-    --set state 
-    val.state := asn1SccState_handler_entrypoint_States_Init;
-    --set init_done 
-    val.init_done := FALSE;
-    --set k 
-    val.k := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set s 
-    val.s := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set w 
-    val.w := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set k_max 
-    val.k_max := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set s_max 
-    val.s_max := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set w_max 
-    val.w_max := OBC_MODEL_DATAVIEW.asn1SccCounterK_Init;
-    --set mcp 
-    val.mcp := OBC_MODEL_DATAVIEW.asn1SccMode_Change_Packet_Init;
-    --set lfp 
-    val.lfp := OBC_MODEL_DATAVIEW.asn1SccLocation_Fix_Packet_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccState_handler_entrypoint_Context_Init;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

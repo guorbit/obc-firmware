@@ -13,16 +13,16 @@ void DestroyStream(BitStream *pBitStrm);
 
 
 /* INTEGER */
-asn1SccSint CounterK__Get(CounterK* root);
+asn1SccUint CounterK__Get(CounterK* root);
 
 /* INTEGER */
-void CounterK__Set(CounterK* root, asn1SccSint value);
+void CounterK__Set(CounterK* root, asn1SccUint value);
 
 /* INTEGER */
-asn1SccSint Time_UNIX__Get(Time_UNIX* root);
+asn1SccUint Time_UNIX__Get(Time_UNIX* root);
 
 /* INTEGER */
-void Time_UNIX__Set(Time_UNIX* root, asn1SccSint value);
+void Time_UNIX__Set(Time_UNIX* root, asn1SccUint value);
 
 /* REAL */
 double Latitude_WGS84__Get(Latitude_WGS84* root);
@@ -49,10 +49,10 @@ double Location__lon_Get(Location* root);
 void Location__lon_Set(Location* root, double value);
 
 /* INTEGER */
-asn1SccSint Location_Fix_Packet__t_Get(Location_Fix_Packet* root);
+asn1SccUint Location_Fix_Packet__t_Get(Location_Fix_Packet* root);
 
 /* INTEGER */
-void Location_Fix_Packet__t_Set(Location_Fix_Packet* root, asn1SccSint value);
+void Location_Fix_Packet__t_Set(Location_Fix_Packet* root, asn1SccUint value);
 
 /* REAL */
 double Location_Fix_Packet__lat_Get(Location_Fix_Packet* root);
@@ -84,35 +84,35 @@ double Deployment_Analogue__Get(Deployment_Analogue* root);
 /* REAL */
 void Deployment_Analogue__Set(Deployment_Analogue* root, double value);
 
-/* ENUMERATED */
-int System_Mode__Get(System_Mode* root);
-
-/* ENUMERATED */
-void System_Mode__Set(System_Mode* root, int value);
-
-/* ENUMERATED */
-int Subsystem_Address__Get(Subsystem_Address* root);
-
-/* ENUMERATED */
-void Subsystem_Address__Set(Subsystem_Address* root, int value);
-
-/* ENUMERATED */
-int Mode_Change_Packet__target_addr_Get(Mode_Change_Packet* root);
-
-/* ENUMERATED */
-void Mode_Change_Packet__target_addr_Set(Mode_Change_Packet* root, int value);
-
-/* ENUMERATED */
-int Mode_Change_Packet__target_mode_Get(Mode_Change_Packet* root);
-
-/* ENUMERATED */
-void Mode_Change_Packet__target_mode_Set(Mode_Change_Packet* root, int value);
+/* INTEGER */
+asn1SccUint System_Mode__Get(System_Mode* root);
 
 /* INTEGER */
-asn1SccSint Mode_Change_Packet__ttl_ms_Get(Mode_Change_Packet* root);
+void System_Mode__Set(System_Mode* root, asn1SccUint value);
 
 /* INTEGER */
-void Mode_Change_Packet__ttl_ms_Set(Mode_Change_Packet* root, asn1SccSint value);
+asn1SccUint Subsystem_Address__Get(Subsystem_Address* root);
+
+/* INTEGER */
+void Subsystem_Address__Set(Subsystem_Address* root, asn1SccUint value);
+
+/* INTEGER */
+asn1SccUint Mode_Change_Packet__target_addr_Get(Mode_Change_Packet* root);
+
+/* INTEGER */
+void Mode_Change_Packet__target_addr_Set(Mode_Change_Packet* root, asn1SccUint value);
+
+/* INTEGER */
+asn1SccUint Mode_Change_Packet__target_mode_Get(Mode_Change_Packet* root);
+
+/* INTEGER */
+void Mode_Change_Packet__target_mode_Set(Mode_Change_Packet* root, asn1SccUint value);
+
+/* INTEGER */
+asn1SccUint Mode_Change_Packet__ttl_ms_Get(Mode_Change_Packet* root);
+
+/* INTEGER */
+void Mode_Change_Packet__ttl_ms_Set(Mode_Change_Packet* root, asn1SccUint value);
 
 /* INTEGER */
 asn1SccSint T_Int32__Get(T_Int32* root);
@@ -121,10 +121,10 @@ asn1SccSint T_Int32__Get(T_Int32* root);
 void T_Int32__Set(T_Int32* root, asn1SccSint value);
 
 /* INTEGER */
-asn1SccSint T_UInt32__Get(T_UInt32* root);
+asn1SccUint T_UInt32__Get(T_UInt32* root);
 
 /* INTEGER */
-void T_UInt32__Set(T_UInt32* root, asn1SccSint value);
+void T_UInt32__Set(T_UInt32* root, asn1SccUint value);
 
 /* INTEGER */
 asn1SccSint T_Int8__Get(T_Int8* root);
@@ -133,10 +133,10 @@ asn1SccSint T_Int8__Get(T_Int8* root);
 void T_Int8__Set(T_Int8* root, asn1SccSint value);
 
 /* INTEGER */
-asn1SccSint T_UInt8__Get(T_UInt8* root);
+asn1SccUint T_UInt8__Get(T_UInt8* root);
 
 /* INTEGER */
-void T_UInt8__Set(T_UInt8* root, asn1SccSint value);
+void T_UInt8__Set(T_UInt8* root, asn1SccUint value);
 
 /* BOOLEAN */
 flag T_Boolean__Get(T_Boolean* root);

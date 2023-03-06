@@ -70,38 +70,62 @@ END interfaceview::IV::tm_provider;
 
 
 
-PACKAGE interfaceview::IV::loc_provider
+PACKAGE interfaceview::IV::tm_collection
 PUBLIC
 
 WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 WITH interfaceview::IV::state_handler_entrypoint;
+WITH interfaceview::IV::tm_provider;
 
-SUBPROGRAM PI_request_loc
+SUBPROGRAM PI_collect_tm
+END PI_collect_tm;
+
+SUBPROGRAM IMPLEMENTATION PI_collect_tm.others
+END PI_collect_tm.others;
+
+
+SUBPROGRAM RI_request_tm
 FEATURES
-    lfp : OUT PARAMETER DataView::Location_Fix_Packet {
+    temp : OUT PARAMETER DataView::Temperature_Generic {
        Taste::encoding => NATIVE;
     };
-END PI_request_loc;
+    depl_d : OUT PARAMETER DataView::Deployment_Digital {
+       Taste::encoding => NATIVE;
+    };
+    depl_a : OUT PARAMETER DataView::Deployment_Analogue {
+       Taste::encoding => NATIVE;
+    };
+END RI_request_tm;
 
-SUBPROGRAM IMPLEMENTATION PI_request_loc.others
-END PI_request_loc.others;
+SUBPROGRAM IMPLEMENTATION RI_request_tm.others
+END RI_request_tm.others;
 
 
 
-SYSTEM loc_provider
+SYSTEM tm_collection
 FEATURES
-   PI_request_loc : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: loc_provider:: PI_request_loc.others {
-      Taste::InterfaceName           => "request_loc";            
+   PI_collect_tm : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: tm_collection:: PI_collect_tm.others {
+      Taste::InterfaceName           => "collect_tm";            
+      Taste::RCMoperationKind        => unprotected;      
+      -- Unrecognized property: is_visible => true      
+      -- Unrecognized property: enable_multicast => false      
+      -- Unrecognized property: layer => default      
+      -- Unrecognized property: required_system_element => NO      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
+   };
+   RI_request_tm : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: tm_provider:: PI_request_tm.others {
+      Taste::labelInheritance        => "true";
+      Taste::InterfaceName           => "request_tm";            
       Taste::RCMoperationKind        => unprotected;      
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
-      Compute_Execution_Time => 800 ms .. 800 ms;      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
    };
 PROPERTIES
-   -- ignored property: name = loc_provider
+   -- ignored property: name = tm_collection
    -- ignored property: is_type = NO
    Source_Language => (C);
    -- ignored property: default_implementation = default
@@ -109,12 +133,12 @@ PROPERTIES
    -- ignored property: required_system_element = NO
    Taste::Startup_Priority => 1;
    -- ignored property: FPGA_Configurations = 
-END loc_provider;
+END tm_collection;
 
-SYSTEM IMPLEMENTATION loc_provider.others
-END loc_provider.others;
+SYSTEM IMPLEMENTATION tm_collection.others
+END tm_collection.others;
 
-END interfaceview::IV::loc_provider;
+END interfaceview::IV::tm_collection;
 
 
 
@@ -241,10 +265,10 @@ FEATURES
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
       Taste::RCMperiod               => 5000 ms;      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-      Taste::Interface_Priority      => 1;      
       Taste::Interface_Stack_Size    => 1024;      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::Interface_Cyclic_Offset => 0;      
+      Taste::Interface_Priority      => 1;      
    };
    PI_poll_aoi : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_poll_aoi.others {
       Taste::InterfaceName           => "poll_aoi";            
@@ -253,10 +277,10 @@ FEATURES
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
       Taste::RCMperiod               => 10000 ms;      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-      Taste::Interface_Priority      => 1;      
       Taste::Interface_Stack_Size    => 1024;      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::Interface_Cyclic_Offset => 0;      
+      Taste::Interface_Priority      => 1;      
    };
    PI_toggle_pwr : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_toggle_pwr.others {
       Taste::InterfaceName           => "toggle_pwr";            
@@ -265,10 +289,10 @@ FEATURES
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
       Taste::RCMperiod               => 30000 ms;      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-      Taste::Interface_Priority      => 1;      
       Taste::Interface_Stack_Size    => 1024;      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::Interface_Cyclic_Offset => 0;      
+      Taste::Interface_Priority      => 1;      
    };
    PI_trig_aoi : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_aoi.others {
       Taste::InterfaceName           => "trig_aoi";            
@@ -276,11 +300,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    PI_trig_mcp : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_mcp.others {
       Taste::InterfaceName           => "trig_mcp";            
@@ -288,11 +312,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    PI_trig_pwr : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_pwr.others {
       Taste::InterfaceName           => "trig_pwr";            
@@ -300,11 +324,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    RI_request_tc : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: tc_provider:: PI_request_tc.others {
       Taste::labelInheritance        => "true";
@@ -351,11 +375,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 1;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 1;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    RI_send_tm_mcp : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: gui:: PI_send_tm_mcp.others {
       Taste::labelInheritance        => "true";
@@ -364,11 +388,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 1;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 1;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
 PROPERTIES
    -- ignored property: Comment = 
@@ -380,12 +404,106 @@ PROPERTIES
    -- ignored property: required_system_element = NO
    Taste::Startup_Priority => 1;
    -- ignored property: FPGA_Configurations = 
+   TASTE_IV_Properties::Default_CodeGen => c;
 END state_handler_entrypoint;
 
 SYSTEM IMPLEMENTATION state_handler_entrypoint.others
 END state_handler_entrypoint.others;
 
 END interfaceview::IV::state_handler_entrypoint;
+
+
+
+PACKAGE interfaceview::IV::loc_provider
+PUBLIC
+
+WITH Taste;
+WITH DataView;
+WITH TASTE_IV_Properties;
+WITH interfaceview::IV::state_handler_entrypoint;
+
+SUBPROGRAM PI_request_loc
+FEATURES
+    lfp : OUT PARAMETER DataView::Location_Fix_Packet {
+       Taste::encoding => NATIVE;
+    };
+END PI_request_loc;
+
+SUBPROGRAM IMPLEMENTATION PI_request_loc.others
+END PI_request_loc.others;
+
+
+
+SYSTEM loc_provider
+FEATURES
+   PI_request_loc : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: loc_provider:: PI_request_loc.others {
+      Taste::InterfaceName           => "request_loc";            
+      Taste::RCMoperationKind        => unprotected;      
+      -- Unrecognized property: enable_multicast => false      
+      -- Unrecognized property: layer => default      
+      -- Unrecognized property: required_system_element => NO      
+      Compute_Execution_Time => 800 ms .. 800 ms;      
+   };
+PROPERTIES
+   -- ignored property: name = loc_provider
+   -- ignored property: is_type = NO
+   Source_Language => (C);
+   -- ignored property: default_implementation = default
+   -- ignored property: fixed_system_element = NO
+   -- ignored property: required_system_element = NO
+   Taste::Startup_Priority => 1;
+   -- ignored property: FPGA_Configurations = 
+END loc_provider;
+
+SYSTEM IMPLEMENTATION loc_provider.others
+END loc_provider.others;
+
+END interfaceview::IV::loc_provider;
+
+
+
+PACKAGE interfaceview::IV::tc_validation
+PUBLIC
+
+WITH Taste;
+WITH DataView;
+WITH TASTE_IV_Properties;
+WITH interfaceview::IV::state_handler_entrypoint;
+
+SUBPROGRAM PI_validate_mc_vs_tm
+END PI_validate_mc_vs_tm;
+
+SUBPROGRAM IMPLEMENTATION PI_validate_mc_vs_tm.others
+END PI_validate_mc_vs_tm.others;
+
+
+
+SYSTEM tc_validation
+FEATURES
+   PI_validate_mc_vs_tm : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: tc_validation:: PI_validate_mc_vs_tm.others {
+      Taste::InterfaceName           => "validate_mc_vs_tm";            
+      Taste::RCMoperationKind        => unprotected;      
+      -- Unrecognized property: is_visible => true      
+      -- Unrecognized property: enable_multicast => false      
+      -- Unrecognized property: layer => default      
+      -- Unrecognized property: required_system_element => NO      
+      Compute_Execution_Time => 0 ms .. 0 ms;      
+   };
+PROPERTIES
+   -- ignored property: name = tc_validation
+   -- ignored property: is_type = NO
+   Source_Language => (CPP);
+   -- ignored property: default_implementation = default
+   -- ignored property: fixed_system_element = NO
+   -- ignored property: required_system_element = NO
+   Taste::Startup_Priority => 1;
+   -- ignored property: FPGA_Configurations = 
+END tc_validation;
+
+SYSTEM IMPLEMENTATION tc_validation.others
+END tc_validation.others;
+
+END interfaceview::IV::tc_validation;
 
 
 
@@ -449,11 +567,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 1;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 1;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    PI_send_tm_mcp : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: gui:: PI_send_tm_mcp.others {
       Taste::InterfaceName           => "send_tm_mcp";            
@@ -461,11 +579,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 1;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 1;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    RI_trig_pwr : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_pwr.others {
       Taste::labelInheritance        => "true";
@@ -474,11 +592,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    RI_trig_aoi : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_aoi.others {
       Taste::labelInheritance        => "true";
@@ -487,11 +605,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
    RI_trig_mcp : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: state_handler_entrypoint:: PI_trig_mcp.others {
       Taste::labelInheritance        => "true";
@@ -500,11 +618,11 @@ FEATURES
       -- Unrecognized property: enable_multicast => false      
       -- Unrecognized property: layer => default      
       -- Unrecognized property: required_system_element => NO      
+      Taste::Interface_Stack_Size    => 1024;      
+      Taste::Associated_Queue_Size   => 2;      
       Compute_Execution_Time => 0 ms .. 0 ms;      
       Taste::RCMperiod               => 0 ms;      
       Taste::Interface_Priority      => 1;      
-      Taste::Associated_Queue_Size   => 2;      
-      Taste::Interface_Stack_Size    => 1024;      
    };
 PROPERTIES
    -- ignored property: name = gui
@@ -521,51 +639,6 @@ SYSTEM IMPLEMENTATION gui.others
 END gui.others;
 
 END interfaceview::IV::gui;
-
-
-
-PACKAGE interfaceview::IV::tc_validation
-PUBLIC
-
-WITH Taste;
-WITH DataView;
-WITH TASTE_IV_Properties;
-WITH interfaceview::IV::state_handler_entrypoint;
-
-SUBPROGRAM PI_validate_mc_vs_tm
-END PI_validate_mc_vs_tm;
-
-SUBPROGRAM IMPLEMENTATION PI_validate_mc_vs_tm.others
-END PI_validate_mc_vs_tm.others;
-
-
-
-SYSTEM tc_validation
-FEATURES
-   PI_validate_mc_vs_tm : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: tc_validation:: PI_validate_mc_vs_tm.others {
-      Taste::InterfaceName           => "validate_mc_vs_tm";            
-      Taste::RCMoperationKind        => unprotected;      
-      -- Unrecognized property: is_visible => true      
-      -- Unrecognized property: enable_multicast => false      
-      -- Unrecognized property: layer => default      
-      -- Unrecognized property: required_system_element => NO      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-   };
-PROPERTIES
-   -- ignored property: name = tc_validation
-   -- ignored property: is_type = NO
-   Source_Language => (CPP);
-   -- ignored property: default_implementation = default
-   -- ignored property: fixed_system_element = NO
-   -- ignored property: required_system_element = NO
-   Taste::Startup_Priority => 1;
-   -- ignored property: FPGA_Configurations = 
-END tc_validation;
-
-SYSTEM IMPLEMENTATION tc_validation.others
-END tc_validation.others;
-
-END interfaceview::IV::tc_validation;
 
 
 
@@ -616,88 +689,16 @@ END tc_provider.others;
 END interfaceview::IV::tc_provider;
 
 
-
-PACKAGE interfaceview::IV::tm_collection
-PUBLIC
-
-WITH Taste;
-WITH DataView;
-WITH TASTE_IV_Properties;
-WITH interfaceview::IV::state_handler_entrypoint;
-WITH interfaceview::IV::tm_provider;
-
-SUBPROGRAM PI_collect_tm
-END PI_collect_tm;
-
-SUBPROGRAM IMPLEMENTATION PI_collect_tm.others
-END PI_collect_tm.others;
-
-
-SUBPROGRAM RI_request_tm
-FEATURES
-    temp : OUT PARAMETER DataView::Temperature_Generic {
-       Taste::encoding => NATIVE;
-    };
-    depl_d : OUT PARAMETER DataView::Deployment_Digital {
-       Taste::encoding => NATIVE;
-    };
-    depl_a : OUT PARAMETER DataView::Deployment_Analogue {
-       Taste::encoding => NATIVE;
-    };
-END RI_request_tm;
-
-SUBPROGRAM IMPLEMENTATION RI_request_tm.others
-END RI_request_tm.others;
-
-
-
-SYSTEM tm_collection
-FEATURES
-   PI_collect_tm : PROVIDES SUBPROGRAM ACCESS interfaceview::IV:: tm_collection:: PI_collect_tm.others {
-      Taste::InterfaceName           => "collect_tm";            
-      Taste::RCMoperationKind        => unprotected;      
-      -- Unrecognized property: is_visible => true      
-      -- Unrecognized property: enable_multicast => false      
-      -- Unrecognized property: layer => default      
-      -- Unrecognized property: required_system_element => NO      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-   };
-   RI_request_tm : REQUIRES SUBPROGRAM ACCESS interfaceview::IV:: tm_provider:: PI_request_tm.others {
-      Taste::labelInheritance        => "true";
-      Taste::InterfaceName           => "request_tm";            
-      Taste::RCMoperationKind        => unprotected;      
-      -- Unrecognized property: enable_multicast => false      
-      -- Unrecognized property: layer => default      
-      -- Unrecognized property: required_system_element => NO      
-      Compute_Execution_Time => 0 ms .. 0 ms;      
-   };
-PROPERTIES
-   -- ignored property: name = tm_collection
-   -- ignored property: is_type = NO
-   Source_Language => (C);
-   -- ignored property: default_implementation = default
-   -- ignored property: fixed_system_element = NO
-   -- ignored property: required_system_element = NO
-   Taste::Startup_Priority => 1;
-   -- ignored property: FPGA_Configurations = 
-END tm_collection;
-
-SYSTEM IMPLEMENTATION tm_collection.others
-END tm_collection.others;
-
-END interfaceview::IV::tm_collection;
-
-
 PACKAGE interfaceview::IV
 PUBLIC
 
 WITH interfaceview::IV::tm_provider;
-WITH interfaceview::IV::loc_provider;
-WITH interfaceview::IV::state_handler_entrypoint;
-WITH interfaceview::IV::gui;
-WITH interfaceview::IV::tc_validation;
-WITH interfaceview::IV::tc_provider;
 WITH interfaceview::IV::tm_collection;
+WITH interfaceview::IV::state_handler_entrypoint;
+WITH interfaceview::IV::loc_provider;
+WITH interfaceview::IV::tc_validation;
+WITH interfaceview::IV::gui;
+WITH interfaceview::IV::tc_provider;
 WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
@@ -711,23 +712,23 @@ END interfaceview;
 SYSTEM IMPLEMENTATION interfaceview.others
 SUBCOMPONENTS
   tm_provider : SYSTEM interfaceview::IV::tm_provider::tm_provider.others;
-  loc_provider : SYSTEM interfaceview::IV::loc_provider::loc_provider.others;
-  state_handler_entrypoint : SYSTEM interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others;
-  gui : SYSTEM interfaceview::IV::gui::gui.others;
-  tc_validation : SYSTEM interfaceview::IV::tc_validation::tc_validation.others;
-  tc_provider : SYSTEM interfaceview::IV::tc_provider::tc_provider.others;
   tm_collection : SYSTEM interfaceview::IV::tm_collection::tm_collection.others;
+  state_handler_entrypoint : SYSTEM interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others;
+  loc_provider : SYSTEM interfaceview::IV::loc_provider::loc_provider.others;
+  tc_validation : SYSTEM interfaceview::IV::tc_validation::tc_validation.others;
+  gui : SYSTEM interfaceview::IV::gui::gui.others;
+  tc_provider : SYSTEM interfaceview::IV::tc_provider::tc_provider.others;
 CONNECTIONS
-   gui_RI_trig_aoi : SUBPROGRAM ACCESS state_handler_entrypoint.PI_trig_aoi -> gui.RI_trig_aoi;
-   state_handler_entrypoint_RI_collect_tm : SUBPROGRAM ACCESS tm_collection.PI_collect_tm -> state_handler_entrypoint.RI_collect_tm;
-   tm_collection_RI_request_tm : SUBPROGRAM ACCESS tm_provider.PI_request_tm -> tm_collection.RI_request_tm;
-   state_handler_entrypoint_RI_request_loc : SUBPROGRAM ACCESS loc_provider.PI_request_loc -> state_handler_entrypoint.RI_request_loc;
-   state_handler_entrypoint_RI_send_tm_aoi : SUBPROGRAM ACCESS gui.PI_send_tm_aoi -> state_handler_entrypoint.RI_send_tm_aoi;
    gui_RI_trig_pwr : SUBPROGRAM ACCESS state_handler_entrypoint.PI_trig_pwr -> gui.RI_trig_pwr;
-   state_handler_entrypoint_RI_validate_mc_vs_tm : SUBPROGRAM ACCESS tc_validation.PI_validate_mc_vs_tm -> state_handler_entrypoint.RI_validate_mc_vs_tm;
    state_handler_entrypoint_RI_send_tm_mcp : SUBPROGRAM ACCESS gui.PI_send_tm_mcp -> state_handler_entrypoint.RI_send_tm_mcp;
-   gui_RI_trig_mcp : SUBPROGRAM ACCESS state_handler_entrypoint.PI_trig_mcp -> gui.RI_trig_mcp;
+   gui_RI_trig_aoi : SUBPROGRAM ACCESS state_handler_entrypoint.PI_trig_aoi -> gui.RI_trig_aoi;
+   tm_collection_RI_request_tm : SUBPROGRAM ACCESS tm_provider.PI_request_tm -> tm_collection.RI_request_tm;
    state_handler_entrypoint_RI_request_tc : SUBPROGRAM ACCESS tc_provider.PI_request_tc -> state_handler_entrypoint.RI_request_tc;
+   state_handler_entrypoint_RI_validate_mc_vs_tm : SUBPROGRAM ACCESS tc_validation.PI_validate_mc_vs_tm -> state_handler_entrypoint.RI_validate_mc_vs_tm;
+   gui_RI_trig_mcp : SUBPROGRAM ACCESS state_handler_entrypoint.PI_trig_mcp -> gui.RI_trig_mcp;
+   state_handler_entrypoint_RI_collect_tm : SUBPROGRAM ACCESS tm_collection.PI_collect_tm -> state_handler_entrypoint.RI_collect_tm;
+   state_handler_entrypoint_RI_send_tm_aoi : SUBPROGRAM ACCESS gui.PI_send_tm_aoi -> state_handler_entrypoint.RI_send_tm_aoi;
+   state_handler_entrypoint_RI_request_loc : SUBPROGRAM ACCESS loc_provider.PI_request_loc -> state_handler_entrypoint.RI_request_loc;
 END interfaceview.others;
 
 PROPERTIES

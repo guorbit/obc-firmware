@@ -110,7 +110,8 @@ Function state_handler_entrypoint in context _Root
 ├─ Simulink Tuneable Parameters:
 ├─ Implementations:
 ├─ User properties:
-│  └─ Taste::Startup_Priority = 1
+│  ├─ Taste::Startup_Priority = 1
+│  └─ TASTE_IV_Properties::Default_CodeGen = c
 ├─ Timers:
 ├─ Provided interfaces:
 │  ├─ Name : poll_aoi - in FV: state_handler_entrypoint

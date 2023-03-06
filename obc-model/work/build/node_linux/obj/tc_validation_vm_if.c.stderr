@@ -1,4 +1,0 @@
-[01m[K/home/taste/obc-model/obc-model/work/tc_validation/CPP/wrappers/tc_validation_vm_if.c:[m[K In function ‘[01m[Kinit_tc_validation[m[K’:
-[01m[K/home/taste/obc-model/obc-model/work/tc_validation/CPP/wrappers/tc_validation_vm_if.c:16:17:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kunused[m[K’ [[01;35m[K-Wunused-variable[m[K]
-       long long [01;35m[Kunused[m[K = getTimeInMilliseconds();
-                 [01;35m[K^~~~~~[m[K

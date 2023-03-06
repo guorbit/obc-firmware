@@ -171,20 +171,13 @@ class Deployment_Analogue(COMMON):
 
 
 class System_Mode(COMMON):
-    # Allowed enumerants:
-    idle = 0
-    uplink = 1
-    downlink = 2
-    imaging = 3
-    processing = 4
-    allowed = [idle, uplink, downlink, imaging, processing]
     def __init__(self, ptr=None):
         super(System_Mode, self).__init__("System_Mode", ptr)
 
     def GSER(self):
         ''' Return the GSER representation of the value '''
         lines = []
-        lines.append(""+{'0': 'idle', '1': 'uplink', '2': 'downlink', '3': 'imaging', '4': 'processing'}[str(self.Get())])
+        lines.append(""+str(self.Get()))
 
         return ' '.join(lines)
 
@@ -194,22 +187,13 @@ class System_Mode(COMMON):
 
 
 class Subsystem_Address(COMMON):
-    # Allowed enumerants:
-    obc = 0
-    comms = 1
-    electrical = 2
-    mechanical = 3
-    control = 4
-    software = 5
-    payload = 6
-    allowed = [obc, comms, electrical, mechanical, control, software, payload]
     def __init__(self, ptr=None):
         super(Subsystem_Address, self).__init__("Subsystem_Address", ptr)
 
     def GSER(self):
         ''' Return the GSER representation of the value '''
         lines = []
-        lines.append(""+{'0': 'obc', '1': 'comms', '2': 'electrical', '3': 'mechanical', '4': 'control', '5': 'software', '6': 'payload'}[str(self.Get())])
+        lines.append(""+str(self.Get()))
 
         return ' '.join(lines)
 
@@ -230,10 +214,10 @@ class Mode_Change_Packet(COMMON):
         lines = []
         lines.append("{")
         lines.append("target-addr ")
-        lines.append(" "+{'0': 'obc', '1': 'comms', '2': 'electrical', '3': 'mechanical', '4': 'control', '5': 'software', '6': 'payload'}[str(self.target_addr.Get())])
+        lines.append(" "+str(self.target_addr.Get()))
         lines.append(', ')
         lines.append("target-mode ")
-        lines.append(" "+{'0': 'idle', '1': 'uplink', '2': 'downlink', '3': 'imaging', '4': 'processing'}[str(self.target_mode.Get())])
+        lines.append(" "+str(self.target_mode.Get()))
         lines.append(', ')
         lines.append("ttl-ms ")
         lines.append(" "+str(self.ttl_ms.Get()))

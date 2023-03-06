@@ -1,0 +1,8 @@
+In file included from /home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.c:12:
+/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.h:536:9: warning: struct has no members [-Wpedantic]
+ typedef struct {
+         ^~~~~~
+/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.c: In function 'asn1SccT_Int32_IsConstraintValid':
+/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.c:1138:26: warning: comparison is always true due to limited range of data type [-Wtype-limits]
+     ret = ((-2147483648L <= (*(pVal))) && ((*(pVal)) <= 2147483647L));
+                          ^~

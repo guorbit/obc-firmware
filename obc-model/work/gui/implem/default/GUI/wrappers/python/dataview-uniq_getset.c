@@ -48,25 +48,25 @@ void DestroyStream(BitStream *pBitStrm) {
 
 
 /* INTEGER */
-asn1SccSint CounterK__Get(CounterK* root)
+asn1SccUint CounterK__Get(CounterK* root)
 {
     return (*root);
 }
 
 /* INTEGER */
-void CounterK__Set(CounterK* root, asn1SccSint value)
+void CounterK__Set(CounterK* root, asn1SccUint value)
 {
     (*root) = value;
 }
 
 /* INTEGER */
-asn1SccSint Time_UNIX__Get(Time_UNIX* root)
+asn1SccUint Time_UNIX__Get(Time_UNIX* root)
 {
     return (*root);
 }
 
 /* INTEGER */
-void Time_UNIX__Set(Time_UNIX* root, asn1SccSint value)
+void Time_UNIX__Set(Time_UNIX* root, asn1SccUint value)
 {
     (*root) = value;
 }
@@ -120,13 +120,13 @@ void Location__lon_Set(Location* root, double value)
 }
 
 /* INTEGER */
-asn1SccSint Location_Fix_Packet__t_Get(Location_Fix_Packet* root)
+asn1SccUint Location_Fix_Packet__t_Get(Location_Fix_Packet* root)
 {
     return (*root).t;
 }
 
 /* INTEGER */
-void Location_Fix_Packet__t_Set(Location_Fix_Packet* root, asn1SccSint value)
+void Location_Fix_Packet__t_Set(Location_Fix_Packet* root, asn1SccUint value)
 {
     (*root).t = value;
 }
@@ -191,62 +191,62 @@ void Deployment_Analogue__Set(Deployment_Analogue* root, double value)
     (*root) = value;
 }
 
-/* ENUMERATED */
-int System_Mode__Get(System_Mode* root)
+/* INTEGER */
+asn1SccUint System_Mode__Get(System_Mode* root)
 {
     return (*root);
 }
 
-/* ENUMERATED */
-void System_Mode__Set(System_Mode* root, int value)
+/* INTEGER */
+void System_Mode__Set(System_Mode* root, asn1SccUint value)
 {
     (*root) = value;
 }
 
-/* ENUMERATED */
-int Subsystem_Address__Get(Subsystem_Address* root)
+/* INTEGER */
+asn1SccUint Subsystem_Address__Get(Subsystem_Address* root)
 {
     return (*root);
 }
 
-/* ENUMERATED */
-void Subsystem_Address__Set(Subsystem_Address* root, int value)
+/* INTEGER */
+void Subsystem_Address__Set(Subsystem_Address* root, asn1SccUint value)
 {
     (*root) = value;
 }
 
-/* ENUMERATED */
-int Mode_Change_Packet__target_addr_Get(Mode_Change_Packet* root)
+/* INTEGER */
+asn1SccUint Mode_Change_Packet__target_addr_Get(Mode_Change_Packet* root)
 {
     return (*root).target_addr;
 }
 
-/* ENUMERATED */
-void Mode_Change_Packet__target_addr_Set(Mode_Change_Packet* root, int value)
+/* INTEGER */
+void Mode_Change_Packet__target_addr_Set(Mode_Change_Packet* root, asn1SccUint value)
 {
     (*root).target_addr = value;
 }
 
-/* ENUMERATED */
-int Mode_Change_Packet__target_mode_Get(Mode_Change_Packet* root)
+/* INTEGER */
+asn1SccUint Mode_Change_Packet__target_mode_Get(Mode_Change_Packet* root)
 {
     return (*root).target_mode;
 }
 
-/* ENUMERATED */
-void Mode_Change_Packet__target_mode_Set(Mode_Change_Packet* root, int value)
+/* INTEGER */
+void Mode_Change_Packet__target_mode_Set(Mode_Change_Packet* root, asn1SccUint value)
 {
     (*root).target_mode = value;
 }
 
 /* INTEGER */
-asn1SccSint Mode_Change_Packet__ttl_ms_Get(Mode_Change_Packet* root)
+asn1SccUint Mode_Change_Packet__ttl_ms_Get(Mode_Change_Packet* root)
 {
     return (*root).ttl_ms;
 }
 
 /* INTEGER */
-void Mode_Change_Packet__ttl_ms_Set(Mode_Change_Packet* root, asn1SccSint value)
+void Mode_Change_Packet__ttl_ms_Set(Mode_Change_Packet* root, asn1SccUint value)
 {
     (*root).ttl_ms = value;
 }
@@ -264,13 +264,13 @@ void T_Int32__Set(T_Int32* root, asn1SccSint value)
 }
 
 /* INTEGER */
-asn1SccSint T_UInt32__Get(T_UInt32* root)
+asn1SccUint T_UInt32__Get(T_UInt32* root)
 {
     return (*root);
 }
 
 /* INTEGER */
-void T_UInt32__Set(T_UInt32* root, asn1SccSint value)
+void T_UInt32__Set(T_UInt32* root, asn1SccUint value)
 {
     (*root) = value;
 }
@@ -288,13 +288,13 @@ void T_Int8__Set(T_Int8* root, asn1SccSint value)
 }
 
 /* INTEGER */
-asn1SccSint T_UInt8__Get(T_UInt8* root)
+asn1SccUint T_UInt8__Get(T_UInt8* root)
 {
     return (*root);
 }
 
 /* INTEGER */
-void T_UInt8__Set(T_UInt8* root, asn1SccSint value)
+void T_UInt8__Set(T_UInt8* root, asn1SccUint value)
 {
     (*root) = value;
 }

@@ -1,2 +1,0 @@
-gui_subtype.adb:19:28: warning: "Long_Float" is already use-visible inside package "Standard"
-gui_subtype.adb:20:28: warning: "Long_Float" is already use-visible inside package "Standard"

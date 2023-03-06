@@ -1,4 +1,0 @@
-tc_provider.c:17:6:tc_provider_startup	16	static
-tc_provider.c:23:6:tc_provider_PI_request_tc	32	static
-tc_provider.c:33:1:_GLOBAL__sub_D_00099_0_tc_provider_startup	16	static
-tc_provider.c:33:1:_GLOBAL__sub_I_00099_1_tc_provider_startup	16	static

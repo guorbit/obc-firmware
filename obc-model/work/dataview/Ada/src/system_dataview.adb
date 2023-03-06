@@ -21,24 +21,16 @@ end asn1SccPID_Equal;
 
 function asn1SccPID_IsConstraintValid(val : asn1SccPID) return adaasn1rtl.ASN1_RESULT
 is
-    pragma Warnings (Off, "initialization of ret has no effect");        
+    pragma Warnings (Off, "initialization of ""ret"" has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
+    pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
     ret.Success := (((((((((((((((val = asn1Sccgui)) OR ((val = asn1Sccloc_provider)))) OR ((val = asn1Sccstate_handler_entrypoint)))) OR ((val = asn1Scctc_provider)))) OR ((val = asn1Scctc_validation)))) OR ((val = asn1Scctm_collection)))) OR ((val = asn1Scctm_provider)))) OR ((val = asn1Sccenv)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_PID);
     return ret;
 end asn1SccPID_IsConstraintValid;
 
-function asn1SccPID_Init return asn1SccPID
-is
-    val: asn1SccPID;
-begin
-    val := asn1Sccgui;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccPID_Init;
+
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

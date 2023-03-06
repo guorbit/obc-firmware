@@ -1,0 +1,10 @@
+/home/taste/obc-firmware/obc-model/work/build/node_2/FreeRTOS/Source/portable/GCC/MSP430FR5969/port.c: In function 'pxPortInitialiseStack':
+/home/taste/obc-firmware/obc-model/work/build/node_2/FreeRTOS/Source/portable/GCC/MSP430FR5969/port.c:163:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         ulTemp = ( uint32_t ) pxCode;
+                  ^
+/home/taste/obc-firmware/obc-model/work/build/node_2/FreeRTOS/Source/portable/GCC/MSP430FR5969/port.c:172:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         *pulTopOfStack = ( uint32_t ) pxCode;
+                          ^
+/home/taste/obc-firmware/obc-model/work/build/node_2/FreeRTOS/Source/portable/GCC/MSP430FR5969/port.c:210:25: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         *pxTopOfStack = ( StackType_t ) pvParameters;
+                         ^

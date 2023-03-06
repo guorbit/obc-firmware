@@ -1,0 +1,6 @@
+#ifndef state_handler_entrypoint_toggle_pwr_INCLUDED
+#define state_handler_entrypoint_toggle_pwr_INCLUDED
+
+void prv_state_handler_entrypoint_toggle_pwr_Task(void* prParameters);
+
+#endif

@@ -1,8 +1,74 @@
-Node : node_linux
-  |_ Partition        : demo
+Node : node_1
+  |_ Partition        : x86_ground_station
     |_ Coverage       : FALSE
     |_ Package        : ocarina_processors_x86
-    |_ CPU Name       : x86_linux
+    |_ CPU Name       : p1
     |_ CPU Platform   : PLATFORM_NATIVE
     |_ CPU Classifier : ocarina_processors_x86::x86.linux
-    |_ Contains       : tc_validation loc_provider tm_collection state_handler_entrypoint gui tc_provider tm_provider 
+    |_ Contains       : gui 
+  |_ Driver : serial.others
+    |_ Name          : linux_serial_minimal
+    |_ Package       : deploymentview::dv::node_1
+    |_ Classifier    : deploymentview::dv::node_1::serial.others
+    |_ Processor     : p1
+    |_ Configuration : { devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }
+    |_ Packetizer : default
+    |_ Bus_Name      : bus_1
+    |_ Port_Name     : link
+    |_ ASN.1 File    : /home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn
+    |_ ASN.1 Type    : Serial-Conf-T
+    |_ ASN.1 Module  : POHICDRIVER-UART
+    |_ Init function : __po_hi_c_driver_linux_serial_minimal_init
+    |_ Init function : __po_hi_c_driver_linux_serial_minimal_sender
+    |_ Language : c
+Node : node_2
+  |_ Partition        : msp430_obc
+    |_ Coverage       : FALSE
+    |_ Package        : ocarina_processors_msp430
+    |_ CPU Name       : p1
+    |_ CPU Platform   : PLATFORM_MSP430_FREERTOS
+    |_ CPU Classifier : ocarina_processors_msp430::msp430fr5969.freertos
+    |_ Contains       : loc_provider tm_collection tc_provider tc_validation tm_provider state_handler_entrypoint 
+  |_ Driver : msp430_eusci_a_serial_minimal.others
+    |_ Name          : MSP430_eUSCI_A_serial_minimal
+    |_ Package       : deploymentview::dv::node_2
+    |_ Classifier    : deploymentview::dv::node_2::msp430_eusci_a_serial_minimal.others
+    |_ Processor     : p1
+    |_ Configuration : { devname  &quot; &quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }
+    |_ Packetizer : default
+    |_ Bus_Name      : bus_1
+    |_ Port_Name     : link
+    |_ ASN.1 File    : /home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn
+    |_ ASN.1 Type    : Serial-Conf-T
+    |_ ASN.1 Module  : POHICDRIVER-UART
+    |_ Init function : msp430_eusci_a_serial_minimal_init
+    |_ Init function : msp430_eusci_a_serial_minimal_sender
+    |_ Language : c
+Bus : bus_1
+  |_ Package    : ocarina_buses
+  |_ Classifier : ocarina_buses::serial.minimal
+Connection on bus : bus_1
+  |_ Source Function : gui
+  |_ Source Port : state_handler_entrypoint_trig_pwr
+  |_ Dest Function : state_handler_entrypoint
+  |_ Dest Port   : trig_pwr
+Connection on bus : bus_1
+  |_ Source Function : state_handler_entrypoint
+  |_ Source Port : gui_send_tm_mcp
+  |_ Dest Function : gui
+  |_ Dest Port   : send_tm_mcp
+Connection on bus : bus_1
+  |_ Source Function : gui
+  |_ Source Port : state_handler_entrypoint_trig_aoi
+  |_ Dest Function : state_handler_entrypoint
+  |_ Dest Port   : trig_aoi
+Connection on bus : bus_1
+  |_ Source Function : gui
+  |_ Source Port : state_handler_entrypoint_trig_mcp
+  |_ Dest Function : state_handler_entrypoint
+  |_ Dest Port   : trig_mcp
+Connection on bus : bus_1
+  |_ Source Function : state_handler_entrypoint
+  |_ Source Port : gui_send_tm_aoi
+  |_ Dest Function : gui
+  |_ Dest Port   : send_tm_aoi
