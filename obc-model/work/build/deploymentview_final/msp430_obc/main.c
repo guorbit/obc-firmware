@@ -12,6 +12,7 @@
 /**************************************************** */
 extern void msp430_eusci_a_serial_minimal_init 
     (__po_hi_device_id id);
+process_package__taste_protected_object hal_protected;
 process_package__taste_protected_object state_handler_entrypoint_protected;
 
 /*!
@@ -58,7 +59,24 @@ __PO_HI_MAIN_TYPE __PO_HI_MAIN_NAME (void)
  * Initialize the runtime
  */
   __po_hi_initialize ();
-  state_handler_entrypoint_protected.protected_id = 0;
+  hal_protected.protected_id = 0;
+  state_handler_entrypoint_protected.protected_id = 1;
+  
+/*!
+ * Store the period time for task hal_blink_led
+ */
+  __po_hi_milliseconds (&(period), 2000);
+  
+/*!
+ * \brief Making Periodic Task hal_blink_led
+ *
+ * Make a periodic task according to AADL model requirements. The first 
+ * parameter is the task identifier defined in deployment.h 
+ * (msp430_obc_hal_blink_led_k) the second is the period defined in the AADL
+ *  model. Third is the task priority ( 1), fourth is the stack size ( 1024 
+ * bytes) and last is the subprogram executed by the task
+ */
+  __po_hi_create_periodic_task (msp430_obc_hal_blink_led_k, &(period), 1, 1024, 0, hal_blink_led_job);
   
 /*!
  * Store the period time for task state_handler_entrypoint_poll_aoi

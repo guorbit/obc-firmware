@@ -113,13 +113,12 @@ BEGIN
 
 -- List of functions (instances) present in the system
 PID ::= ENUMERATED {
+    hal,
     gui,
     loc-provider,
     state-handler-entrypoint,
     tc-provider,
-    tc-validation,
     tm-collection,
-    tm-provider,
     
     env
 }

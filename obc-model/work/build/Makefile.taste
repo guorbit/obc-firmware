@@ -81,7 +81,7 @@ node_2_p1: msp430_obc_glue DriversConfig/drivers_config.h
 
 
 # CPU PLATFORM: PLATFORM_MSP430_FREERTOS
-msp430_obc_glue:	loc_provider  state_handler_entrypoint  tc_provider  tc_validation  tm_collection  tm_provider
+msp430_obc_glue:	hal  loc_provider  state_handler_entrypoint  tc_provider  tm_collection
 	args=$$(python3 -c "import os, sys; print(' '.join({os.path.basename(f):f for f in sys.argv[1:]}.values()))" ${wildcard ../state_handler_entrypoint/SDL/code/state_handler_entrypoint_datamodel.asn} ${wildcard ../state_handler_entrypoint/SDL/Context-state-handler-entrypoint.asn} ../dataview/dataview-uniq.asn); \
 	mkdir -p ../dataview/Ada; asn1scc -Ada -equal --target allboards -typePrefix asn1Scc -o ../dataview/Ada $$args 
 	touch $@
@@ -90,6 +90,14 @@ msp430_obc_glue:	loc_provider  state_handler_entrypoint  tc_provider  tc_validat
 
 run_msp430_obc_partition:
 	echo "Execution platform PLATFORM_MSP430_FREERTOS is not compatible with the host OS"
+
+
+hal:
+	touch $@
+	@# If you need to add a call to a code generator, or anything else
+	@# related to functions in C, edit the following template:
+	@# $(KAZOO_SRC)/templates/concurrency_view/aadl_4_makefile/block.tmplt
+	@# Placeholder if anything has to be done for this function coded in C
 
 
 loc_provider:
@@ -115,23 +123,7 @@ tc_provider:
 	@# Placeholder if anything has to be done for this function coded in C
 
 
-tc_validation:
-	touch $@
-	@# If you need to add a call to a code generator, or anything else
-	@# related to functions in CPP, edit the following template:
-	@# $(KAZOO_SRC)/templates/concurrency_view/aadl_4_makefile/block.tmplt
-	@# Placeholder if anything has to be done for this function coded in CPP
-
-
 tm_collection:
-	touch $@
-	@# If you need to add a call to a code generator, or anything else
-	@# related to functions in C, edit the following template:
-	@# $(KAZOO_SRC)/templates/concurrency_view/aadl_4_makefile/block.tmplt
-	@# Placeholder if anything has to be done for this function coded in C
-
-
-tm_provider:
 	touch $@
 	@# If you need to add a call to a code generator, or anything else
 	@# related to functions in C, edit the following template:

@@ -2,6 +2,11 @@
 #include <stddef.h>
 
 
+// Protected provided interfaces of function HAL
+
+void pro_HAL_blink_led(void);
+// End of the protected provided interfaces of function HAL
+
 // Protected provided interfaces of function state_handler_entrypoint
 
 void pro_state_handler_entrypoint_poll_aoi(void);
@@ -33,22 +38,12 @@ void vm_state_handler_entrypoint_send_tm_aoi
 // This RI is connected to: gui
 void vm_state_handler_entrypoint_send_tm_mcp
         (const char *IN_buf_mcp, size_t size_IN_buf_mcp);
-// Required interface validate_mc_vs_tm in function state_handler_entrypoint
-// This RI is connected to: tc_validation
-void vm_state_handler_entrypoint_validate_mc_vs_tm(void);
 // End of the required interfaces of function state_handler_entrypoint
 
 
-// Required interfaces of function tm_collection
+void call_hal_blink_led (const char* buf, size_t len);
 
-// Required interface request_tm in function tm_collection
-// This RI is connected to: tm_provider
-void vm_tm_collection_request_tm
-        (char *OUT_buf_temp, size_t *size_OUT_buf_temp,
-         char *OUT_buf_depl_d, size_t *size_OUT_buf_depl_d,
-         char *OUT_buf_depl_a, size_t *size_OUT_buf_depl_a);
-// End of the required interfaces of function tm_collection
-
+// This is the list of remote threads/RIs :
 
 void call_state_handler_entrypoint_poll_aoi (const char* buf, size_t len);
 

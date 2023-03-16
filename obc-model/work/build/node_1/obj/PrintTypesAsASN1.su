@@ -17,5 +17,5 @@ PrintTypesAsASN1.c:337:6:PrintASN1T_UInt8	32	static
 PrintTypesAsASN1.c:358:6:PrintASN1T_Boolean	32	static
 PrintTypesAsASN1.c:375:6:PrintASN1T_Null_Record	32	static
 PrintTypesAsASN1.c:393:6:PrintASN1PID	32	static
-PrintTypesAsASN1.c:435:1:_GLOBAL__sub_D_00099_0_PrintASN1CounterK	16	static
-PrintTypesAsASN1.c:435:1:_GLOBAL__sub_I_00099_1_PrintASN1CounterK	16	static
+PrintTypesAsASN1.c:432:1:_GLOBAL__sub_D_00099_0_PrintASN1CounterK	16	static
+PrintTypesAsASN1.c:432:1:_GLOBAL__sub_I_00099_1_PrintASN1CounterK	16	static

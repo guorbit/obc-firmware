@@ -153,16 +153,3 @@ PROPERTIES
    TASTE_IV_Properties::Default_CodeGen => "c";
 
 END send_tm_mcp.Ada;
-
-
-SUBPROGRAM validate_mc_vs_tm
-END validate_mc_vs_tm;
-
-SUBPROGRAM IMPLEMENTATION validate_mc_vs_tm.Ada
-PROPERTIES
-   FV_Name => "state_handler_entrypoint";
-   Source_Language => Ada;
-   Taste::Startup_Priority => "1";
-   TASTE_IV_Properties::Default_CodeGen => "c";
-
-END validate_mc_vs_tm.Ada;

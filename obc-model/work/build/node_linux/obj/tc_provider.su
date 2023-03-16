@@ -1,0 +1,2 @@
+tc_provider.c:17:6:tc_provider_startup	8	static
+tc_provider.c:23:6:tc_provider_PI_request_tc	8	static

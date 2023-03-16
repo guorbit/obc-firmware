@@ -1,0 +1,16 @@
+Blinker-Datamodel DEFINITIONS ::=
+BEGIN
+--  This file was generated automatically by OpenGEODE
+IMPORTS
+   CounterK, Time-UNIX, Latitude-WGS84, Longitude-WGS84, Location, Temperature-Generic, Deployment-Digital, Deployment-Analogue, System-Mode, Subsystem-Address, Mode-Change-Packet, Location-Fix-Packet FROM OBC-MODEL-DATAVIEW
+   T-Int32, T-UInt32, T-Int8, T-UInt8, T-Boolean, T-Null-Record FROM TASTE-BasicTypes
+   PID FROM System-Dataview;
+
+Blinker-States ::= ENUMERATED {wait}
+
+Blinker-Context ::= SEQUENCE {
+   state Blinker-States,
+   init-done BOOLEAN
+}
+
+END

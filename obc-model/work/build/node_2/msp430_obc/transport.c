@@ -77,6 +77,14 @@ void deliver_to_gui_send_tm_mcp(struct Request* task)
     }
 }
 
+void deliver_to_hal_blink_led(struct Request* task)
+{
+    extern QueueHandle_t hal_blink_led_Global_Queue;
+	xQueueSend(hal_blink_led_Global_Queue,
+	           task,
+			   0);
+
+}
 void deliver_to_state_handler_entrypoint_poll_aoi(struct Request* task)
 {
     extern QueueHandle_t state_handler_entrypoint_poll_aoi_Global_Queue;

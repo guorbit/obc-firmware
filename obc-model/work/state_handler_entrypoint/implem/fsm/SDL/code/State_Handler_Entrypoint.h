@@ -20,5 +20,3 @@ void state_handler_entrypoint_RI_collect_tm();
 void state_handler_entrypoint_RI_request_loc(asn1SccLocation_Fix_Packet * Lfp);
 //  Sync required interface "request_tc
 void state_handler_entrypoint_RI_request_tc(asn1SccMode_Change_Packet * Mcp);
-//  Sync required interface "validate_mc_vs_tm
-void state_handler_entrypoint_RI_validate_mc_vs_tm();

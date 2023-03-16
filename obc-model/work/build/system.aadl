@@ -37,7 +37,7 @@ thread Gui_Send_Tm_Aoi
 features
    INPORT_Send_Tm_Aoi : in event data port DataView::Location_Fix_Packet_Buffer.impl
       { Compute_Execution_Time =>  0 ms ..  0 ms;
-        Queue_Size =>  1;
+        Queue_Size =>  10;
         Compute_Entrypoint_Source_Text => "call_gui_send_tm_aoi"; };
    OUTPORT_State_Handler_Entrypoint_Trig_Aoi : out event port;
    OUTPORT_State_Handler_Entrypoint_Trig_Mcp : out event port;
@@ -66,7 +66,7 @@ thread Gui_Send_Tm_Mcp
 features
    INPORT_Send_Tm_Mcp : in event data port DataView::Mode_Change_Packet_Buffer.impl
       { Compute_Execution_Time =>  0 ms ..  0 ms;
-        Queue_Size =>  1;
+        Queue_Size =>  10;
         Compute_Entrypoint_Source_Text => "call_gui_send_tm_mcp"; };
    OUTPORT_State_Handler_Entrypoint_Trig_Aoi : out event port;
    OUTPORT_State_Handler_Entrypoint_Trig_Mcp : out event port;
@@ -85,6 +85,28 @@ properties
 end Gui_Send_Tm_Mcp.others;
 
 end Gui_Send_Tm_Mcp_Thread;
+package Hal_Blink_Led_Thread
+public
+   with Deployment;
+   with Process_Package;
+   with Dataview;
+
+thread Hal_Blink_Led
+end Hal_Blink_Led;
+
+thread implementation Hal_Blink_Led.others
+properties
+   Activate_Entrypoint_Source_Text => "init_hal";
+   Compute_Entrypoint_Source_Text    => "call_hal_blink_led";
+   Dispatch_Protocol                 => Periodic;
+   Period                            => 2000 ms;
+   Dispatch_Offset                   =>  0 ms;
+   Compute_Execution_Time            =>  0 ms ..  0 ms;
+   Stack_Size                        =>  1024 Bytes;
+   Priority                          =>  1;
+end Hal_Blink_Led.others;
+
+end Hal_Blink_Led_Thread;
 package State_Handler_Entrypoint_Poll_Aoi_Thread
 public
    with Deployment;
@@ -170,7 +192,7 @@ thread State_Handler_Entrypoint_Trig_Aoi
 features
    INPORT_Trig_Aoi : in event port
       { Compute_Execution_Time =>  0 ms ..  0 ms;
-        Queue_Size =>  2;
+        Queue_Size =>  10;
         Compute_Entrypoint_Source_Text => "call_state_handler_entrypoint_trig_aoi"; };
    OUTPORT_Gui_Send_Tm_Aoi : out event data port DataView::Location_Fix_Packet_Buffer.impl;
    OUTPORT_Gui_Send_Tm_Mcp : out event data port DataView::Mode_Change_Packet_Buffer.impl;
@@ -198,7 +220,7 @@ thread State_Handler_Entrypoint_Trig_Mcp
 features
    INPORT_Trig_Mcp : in event port
       { Compute_Execution_Time =>  0 ms ..  0 ms;
-        Queue_Size =>  2;
+        Queue_Size =>  10;
         Compute_Entrypoint_Source_Text => "call_state_handler_entrypoint_trig_mcp"; };
    OUTPORT_Gui_Send_Tm_Aoi : out event data port DataView::Location_Fix_Packet_Buffer.impl;
    OUTPORT_Gui_Send_Tm_Mcp : out event data port DataView::Mode_Change_Packet_Buffer.impl;
@@ -226,7 +248,7 @@ thread State_Handler_Entrypoint_Trig_Pwr
 features
    INPORT_Trig_Pwr : in event port
       { Compute_Execution_Time =>  0 ms ..  0 ms;
-        Queue_Size =>  2;
+        Queue_Size =>  10;
         Compute_Entrypoint_Source_Text => "call_state_handler_entrypoint_trig_pwr"; };
    OUTPORT_Gui_Send_Tm_Aoi : out event data port DataView::Location_Fix_Packet_Buffer.impl;
    OUTPORT_Gui_Send_Tm_Mcp : out event data port DataView::Mode_Change_Packet_Buffer.impl;
@@ -257,6 +279,7 @@ public
    with Gui_Poll_Thread;
    with Gui_Send_Tm_Aoi_Thread;
    with Gui_Send_Tm_Mcp_Thread;
+   with Hal_Blink_Led_Thread;
    with State_Handler_Entrypoint_Poll_Aoi_Thread;
    with State_Handler_Entrypoint_Poll_Mcp_Thread;
    with State_Handler_Entrypoint_Toggle_Pwr_Thread;
@@ -362,7 +385,10 @@ end msp430_obc;
 
 process implementation Msp430_Obc.final
 subcomponents
+   hal_protected : data TASTE_Protected.Object;
+   
    state_handler_entrypoint_protected : data TASTE_Protected.Object;
+   hal_blink_led                       : thread hal_blink_led_Thread::hal_blink_led.others;
    state_handler_entrypoint_poll_aoi   : thread state_handler_entrypoint_poll_aoi_Thread::state_handler_entrypoint_poll_aoi.others;
    state_handler_entrypoint_poll_mcp   : thread state_handler_entrypoint_poll_mcp_Thread::state_handler_entrypoint_poll_mcp.others;
    state_handler_entrypoint_toggle_pwr : thread state_handler_entrypoint_toggle_pwr_Thread::state_handler_entrypoint_toggle_pwr.others;
@@ -421,11 +447,11 @@ properties
    Actual_Processor_Binding => (reference (Node_2_p1)) applies to Msp430_Obc;
    Actual_Processor_Binding => (reference (Node_1_p1)) applies to node_1_serial;
    Actual_Processor_Binding => (reference (Node_2_p1)) applies to node_2_msp430_eusci_a_serial_minimal;
-   Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_pwr;
+   Actual_Connection_Binding => (reference (bus_1)) applies to msp430_obc_gui_send_tm_aoi;
    Actual_Connection_Binding => (reference (bus_1)) applies to msp430_obc_gui_send_tm_mcp;
    Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_aoi;
    Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_mcp;
-   Actual_Connection_Binding => (reference (bus_1)) applies to msp430_obc_gui_send_tm_aoi;
+   Actual_Connection_Binding => (reference (bus_1)) applies to x86_ground_station_state_handler_entrypoint_trig_pwr;
 --  patchable area (do not remove this line):
 end DeploymentView.final;
 

@@ -1,0 +1,4 @@
+In file included from /home/taste/obc-firmware/obc-model/work/blinker/SDL/code/Blinker.c:1:
+/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.h:536:9: warning: struct has no members [-Wpedantic]
+ typedef struct {
+         ^~~~~~

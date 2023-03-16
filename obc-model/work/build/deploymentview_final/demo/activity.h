@@ -13,6 +13,11 @@
 
 /**************************************************** */
 
+void blinker_blink_trigger_deliver 
+    (__po_hi_request_t* request);
+
+void* blinker_blink_trigger_job (void);
+
 void gui_poll_deliver 
     (__po_hi_request_t* request);
 
@@ -27,6 +32,11 @@ void gui_send_tm_mcp_deliver
     (__po_hi_request_t* request);
 
 void* gui_send_tm_mcp_job (void);
+
+void hal_toggle_led_deliver 
+    (__po_hi_request_t* request);
+
+void* hal_toggle_led_job (void);
 
 void state_handler_entrypoint_poll_aoi_deliver 
     (__po_hi_request_t* request);

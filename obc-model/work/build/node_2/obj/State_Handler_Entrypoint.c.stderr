@@ -3,39 +3,39 @@ In file included from /home/taste/obc-firmware/obc-model/work/state_handler_entr
  typedef struct {
          ^~~~~~
 /home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c: In function 'runTransitionState_Handler_Entrypoint':
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:187:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccCounterK' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:186:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccCounterK' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.k);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:192:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccTime_UNIX' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:191:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccTime_UNIX' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.lfp.t);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:203:20: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:202:20: warning: zero-length gnu_printf format string [-Wformat-zero-length]
              printf("");
                     ^~
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:225:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccCounterK' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:224:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccCounterK' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.k);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:230:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccSubsystem_Address' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:229:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccSubsystem_Address' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.mcp.target_addr);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:235:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccSystem_Mode' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:234:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccSystem_Mode' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.mcp.target_mode);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:240:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccMode_Change_Packet_ttl_ms' {aka 'long unsigned int'} [-Wformat=]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:239:22: warning: format '%d' expects argument of type 'int', but argument 2 has type 'asn1SccMode_Change_Packet_ttl_ms' {aka 'long unsigned int'} [-Wformat=]
              printf("%d", state_handler_entrypoint_context.mcp.ttl_ms);
                      ~^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      %ld
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:243:20: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:242:20: warning: zero-length gnu_printf format string [-Wformat-zero-length]
              printf("");
                     ^~
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:326:14: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:325:14: warning: zero-length gnu_printf format string [-Wformat-zero-length]
        printf("");
               ^~
-/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:338:14: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:337:14: warning: zero-length gnu_printf format string [-Wformat-zero-length]
        printf("");
               ^~

@@ -8,13 +8,19 @@
 /*  Do NOT hand-modify this file, as your             */
 /*  changes will be lost when you re-run Ocarina      */
 /**************************************************** */
-const char* __po_hi_ports_names[__PO_HI_NB_PORTS] = {"gui_poll_global_outport_state_handler_entrypoint_trig_aoi","gui_poll_global_outport_state_handler_entrypoint_trig_mcp","gui_poll_global_outport_state_handler_entrypoint_trig_pwr","gui_send_tm_aoi_global_inport_send_tm_aoi","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_aoi","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_mcp","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_pwr","gui_send_tm_mcp_global_inport_send_tm_mcp","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_aoi","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_mcp","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_pwr","state_handler_entrypoint_poll_aoi_global_outport_gui_send_tm_aoi","state_handler_entrypoint_poll_aoi_global_outport_gui_send_tm_mcp","state_handler_entrypoint_poll_mcp_global_outport_gui_send_tm_aoi","state_handler_entrypoint_poll_mcp_global_outport_gui_send_tm_mcp","state_handler_entrypoint_toggle_pwr_global_outport_gui_send_tm_aoi","state_handler_entrypoint_toggle_pwr_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_aoi_global_inport_trig_aoi","state_handler_entrypoint_trig_aoi_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_aoi_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_mcp_global_inport_trig_mcp","state_handler_entrypoint_trig_mcp_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_mcp_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_pwr_global_inport_trig_pwr","state_handler_entrypoint_trig_pwr_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_pwr_global_outport_gui_send_tm_mcp"};
+const char* __po_hi_ports_names[__PO_HI_NB_PORTS] = {"blinker_blink_trigger_global_outport_hal_toggle_led","gui_poll_global_outport_state_handler_entrypoint_trig_aoi","gui_poll_global_outport_state_handler_entrypoint_trig_mcp","gui_poll_global_outport_state_handler_entrypoint_trig_pwr","gui_send_tm_aoi_global_inport_send_tm_aoi","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_aoi","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_mcp","gui_send_tm_aoi_global_outport_state_handler_entrypoint_trig_pwr","gui_send_tm_mcp_global_inport_send_tm_mcp","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_aoi","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_mcp","gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_pwr","hal_toggle_led_global_inport_toggle_led","state_handler_entrypoint_poll_aoi_global_outport_gui_send_tm_aoi","state_handler_entrypoint_poll_aoi_global_outport_gui_send_tm_mcp","state_handler_entrypoint_poll_mcp_global_outport_gui_send_tm_aoi","state_handler_entrypoint_poll_mcp_global_outport_gui_send_tm_mcp","state_handler_entrypoint_toggle_pwr_global_outport_gui_send_tm_aoi","state_handler_entrypoint_toggle_pwr_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_aoi_global_inport_trig_aoi","state_handler_entrypoint_trig_aoi_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_aoi_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_mcp_global_inport_trig_mcp","state_handler_entrypoint_trig_mcp_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_mcp_global_outport_gui_send_tm_mcp","state_handler_entrypoint_trig_pwr_global_inport_trig_pwr","state_handler_entrypoint_trig_pwr_global_outport_gui_send_tm_aoi","state_handler_entrypoint_trig_pwr_global_outport_gui_send_tm_mcp"};
 __po_hi_request_t* __po_hi_new_request_payload 
     (__po_hi_port_t port)
 {
 
   switch (port)
   {
+    case blinker_blink_trigger_global_outport_hal_toggle_led:
+    {
+      return (malloc (sizeof (__po_hi_port_t) + sizeof (__po_hi_bool_t)));
+
+      break;
+    }
     case gui_poll_global_outport_state_handler_entrypoint_trig_aoi:
     {
       return (malloc (sizeof (__po_hi_port_t) + sizeof (__po_hi_bool_t)));
@@ -76,6 +82,12 @@ __po_hi_request_t* __po_hi_new_request_payload
       break;
     }
     case gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_pwr:
+    {
+      return (malloc (sizeof (__po_hi_port_t) + sizeof (__po_hi_bool_t)));
+
+      break;
+    }
+    case hal_toggle_led_global_inport_toggle_led:
     {
       return (malloc (sizeof (__po_hi_port_t) + sizeof (__po_hi_bool_t)));
 

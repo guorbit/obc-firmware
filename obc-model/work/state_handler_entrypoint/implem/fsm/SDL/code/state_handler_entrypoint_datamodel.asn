@@ -6,7 +6,7 @@ IMPORTS
    T-Int32, T-UInt32, T-Int8, T-UInt8, T-Boolean, T-Null-Record FROM TASTE-BasicTypes
    PID FROM System-Dataview;
 
-State-handler-entrypoint-States ::= ENUMERATED {wait, sleep}
+State-handler-entrypoint-States ::= ENUMERATED {sleep, wait}
 
 State-handler-entrypoint-Context ::= SEQUENCE {
    state State-handler-entrypoint-States,

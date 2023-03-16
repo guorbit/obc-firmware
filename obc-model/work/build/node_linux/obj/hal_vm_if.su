@@ -1,0 +1,2 @@
+hal_vm_if.c:11:6:init_hal	16	static
+hal_vm_if.c:22:6:hal_toggle_led	8	static

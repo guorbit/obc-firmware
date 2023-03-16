@@ -43,17 +43,17 @@ is
 
 
 subtype asn1SccState_handler_entrypoint_States_index_range is Integer range 0..1;
-type asn1SccState_handler_entrypoint_States is (asn1Sccwait, asn1Sccsleep) with Size => adaasn1rtl.Enumerated_Size;
+type asn1SccState_handler_entrypoint_States is (asn1Sccsleep, asn1Sccwait) with Size => adaasn1rtl.Enumerated_Size;
 for asn1SccState_handler_entrypoint_States use
-    (asn1Sccwait => 0, asn1Sccsleep => 1);
+    (asn1Sccsleep => 0, asn1Sccwait => 1);
 
 function asn1SccState_handler_entrypoint_States_Equal(val1, val2 : asn1SccState_handler_entrypoint_States) return Boolean;
 
-ERR_STATE_HANDLER_ENTRYPOINT_STATES:constant Integer := 1; -- wait | sleep
+ERR_STATE_HANDLER_ENTRYPOINT_STATES:constant Integer := 1; -- sleep | wait
 function asn1SccState_handler_entrypoint_States_IsConstraintValid(val : asn1SccState_handler_entrypoint_States) return adaasn1rtl.ASN1_RESULT;
 
 function asn1SccState_handler_entrypoint_States_Init  return asn1SccState_handler_entrypoint_States is
-(asn1Sccwait);
+(asn1Sccsleep);
 -- asn1SccState_handler_entrypoint_Context --------------------------------------------
 
 type asn1SccState_handler_entrypoint_Context is record 
@@ -86,7 +86,7 @@ ERR_STATE_HANDLER_ENTRYPOINT_CONTEXT_LFP_2:constant Integer := 151; --
 function asn1SccState_handler_entrypoint_Context_IsConstraintValid(val : asn1SccState_handler_entrypoint_Context) return adaasn1rtl.ASN1_RESULT;
 
 function asn1SccState_handler_entrypoint_Context_Init  return asn1SccState_handler_entrypoint_Context is
-((state => asn1Sccwait, init_done => False, k => 0, s => 0, w => 0, k_max => 0, s_max => 0, w_max => 0, mcp => OBC_MODEL_DATAVIEW.asn1SccMode_Change_Packet_Init, lfp => OBC_MODEL_DATAVIEW.asn1SccLocation_Fix_Packet_Init));
+((state => asn1Sccsleep, init_done => False, k => 0, s => 0, w => 0, k_max => 0, s_max => 0, w_max => 0, mcp => OBC_MODEL_DATAVIEW.asn1SccMode_Change_Packet_Init, lfp => OBC_MODEL_DATAVIEW.asn1SccLocation_Fix_Packet_Init));
 pragma Warnings (Off, "there are no others");
  
 pragma Warnings (On, "there are no others");

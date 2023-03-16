@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "dataview-uniq.h"
 #include "State_Handler_Entrypoint.h"
-typedef enum {wait, sleep} states_t;
+typedef enum {sleep, wait} states_t;
 typedef struct
 {
    states_t state;
@@ -24,13 +24,13 @@ void state_handler_entrypoint_PI_poll_aoi()
 {
    switch(state_handler_entrypoint_context.state)
    {
+      case sleep:
+      {
+         break;
+      }
       case wait:
       {
          runTransitionState_Handler_Entrypoint(1);
-         break;
-      }
-      case sleep:
-      {
          break;
       }
       default:
@@ -44,13 +44,13 @@ void state_handler_entrypoint_PI_poll_mcp()
 {
    switch(state_handler_entrypoint_context.state)
    {
+      case sleep:
+      {
+         break;
+      }
       case wait:
       {
          runTransitionState_Handler_Entrypoint(2);
-         break;
-      }
-      case sleep:
-      {
          break;
       }
       default:
@@ -64,14 +64,14 @@ void state_handler_entrypoint_PI_toggle_pwr()
 {
    switch(state_handler_entrypoint_context.state)
    {
-      case wait:
-      {
-         runTransitionState_Handler_Entrypoint(3);
-         break;
-      }
       case sleep:
       {
          runTransitionState_Handler_Entrypoint(6);
+         break;
+      }
+      case wait:
+      {
+         runTransitionState_Handler_Entrypoint(3);
          break;
       }
       default:
@@ -85,13 +85,13 @@ void state_handler_entrypoint_PI_trig_aoi()
 {
    switch(state_handler_entrypoint_context.state)
    {
+      case sleep:
+      {
+         break;
+      }
       case wait:
       {
          runTransitionState_Handler_Entrypoint(1);
-         break;
-      }
-      case sleep:
-      {
          break;
       }
       default:
@@ -105,13 +105,13 @@ void state_handler_entrypoint_PI_trig_mcp()
 {
    switch(state_handler_entrypoint_context.state)
    {
+      case sleep:
+      {
+         break;
+      }
       case wait:
       {
          runTransitionState_Handler_Entrypoint(2);
-         break;
-      }
-      case sleep:
-      {
          break;
       }
       default:
@@ -125,14 +125,14 @@ void state_handler_entrypoint_PI_trig_pwr()
 {
    switch(state_handler_entrypoint_context.state)
    {
-      case wait:
-      {
-         runTransitionState_Handler_Entrypoint(4);
-         break;
-      }
       case sleep:
       {
          runTransitionState_Handler_Entrypoint(5);
+         break;
+      }
+      case wait:
+      {
+         runTransitionState_Handler_Entrypoint(4);
          break;
       }
       default:
@@ -149,7 +149,6 @@ void state_handler_entrypoint_PI_trig_pwr()
 #define collect_tm state_handler_entrypoint_RI_collect_tm
 #define request_loc state_handler_entrypoint_RI_request_loc
 #define request_tc state_handler_entrypoint_RI_request_tc
-#define validate_mc_vs_tm state_handler_entrypoint_RI_validate_mc_vs_tm
 void runTransitionState_Handler_Entrypoint(int Id)
 {
    int trId = Id;
@@ -206,7 +205,7 @@ void runTransitionState_Handler_Entrypoint(int Id)
             send_tm_aoi(&state_handler_entrypoint_context.lfp);
             // k := (k+1) mod (k_max+1) (45,17)
             state_handler_entrypoint_context.k = ((state_handler_entrypoint_context.k + 1) % (state_handler_entrypoint_context.k_max + 1));
-            // NEXT_STATE Wait (47,22) at 1160, 781
+            // NEXT_STATE Wait (47,22) at 1158, 786
             trId = -1;
             state_handler_entrypoint_context.state = wait;
             goto next_transition;
@@ -246,7 +245,7 @@ void runTransitionState_Handler_Entrypoint(int Id)
             send_tm_mcp(&state_handler_entrypoint_context.mcp);
             // k := (k+1) mod (k_max+1) (67,17)
             state_handler_entrypoint_context.k = ((state_handler_entrypoint_context.k + 1) % (state_handler_entrypoint_context.k_max + 1));
-            // NEXT_STATE Wait (69,22) at 757, 781
+            // NEXT_STATE Wait (69,22) at 755, 786
             trId = -1;
             state_handler_entrypoint_context.state = wait;
             goto next_transition;
@@ -268,7 +267,7 @@ void runTransitionState_Handler_Entrypoint(int Id)
                // JOIN sleep (None,None) at None, None
                goto sleep;
             }
-            // NEXT_STATE Wait (93,22) at 1636, 713
+            // NEXT_STATE Wait (93,22) at 1634, 713
             trId = -1;
             state_handler_entrypoint_context.state = wait;
             goto next_transition;
@@ -276,13 +275,13 @@ void runTransitionState_Handler_Entrypoint(int Id)
          }
          case 4:
          {
-            // JOIN sleep (97,17) at 1836, 340
+            // JOIN sleep (97,17) at 1834, 340
             goto sleep;
             break;
          }
          case 5:
          {
-            // JOIN wake (104,17) at 2312, 340
+            // JOIN wake (104,17) at 2310, 340
             goto wake;
             break;
          }
@@ -305,7 +304,7 @@ void runTransitionState_Handler_Entrypoint(int Id)
                // JOIN wake (None,None) at None, None
                goto wake;
             }
-            // NEXT_STATE Wait (125,22) at 2102, 714
+            // NEXT_STATE Wait (125,22) at 2100, 714
             trId = -1;
             state_handler_entrypoint_context.state = wait;
             goto next_transition;
@@ -337,7 +336,7 @@ void runTransitionState_Handler_Entrypoint(int Id)
       // writeln("") (122,25)
       printf("");
       printf("\n");
-      // NEXT_STATE Wait (125,22) at 2102, 714
+      // NEXT_STATE Wait (125,22) at 2100, 714
       trId = -1;
       state_handler_entrypoint_context.state = wait;
       goto next_transition;

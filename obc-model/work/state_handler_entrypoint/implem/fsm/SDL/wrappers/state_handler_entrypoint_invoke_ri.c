@@ -95,16 +95,3 @@ void state_handler_entrypoint_RI_send_tm_mcp
 
 }
 
-
-
-void state_handler_entrypoint_RI_validate_mc_vs_tm(void);
-void state_handler_entrypoint_RI_validate_mc_vs_tm(void)
-{
-
-
-   // Send the message via the middleware API
-   extern void vm_state_handler_entrypoint_validate_mc_vs_tm(void);
-   vm_state_handler_entrypoint_validate_mc_vs_tm();
-
-}
-

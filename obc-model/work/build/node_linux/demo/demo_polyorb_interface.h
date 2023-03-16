@@ -47,25 +47,11 @@ void vm_state_handler_entrypoint_send_tm_aoi
 // This RI is connected to: gui
 void vm_state_handler_entrypoint_send_tm_mcp
         (const char *IN_buf_mcp, size_t size_IN_buf_mcp);
-// Required interface validate_mc_vs_tm in function state_handler_entrypoint
-// This RI is connected to: tc_validation
-void vm_state_handler_entrypoint_validate_mc_vs_tm(void);
 // End of the required interfaces of function state_handler_entrypoint
 
 //  SDL Functions need to know if a message is pending in their queues
 //  to know if they can execute the continuous signals
 void state_handler_entrypoint_check_queue(bool *OUT_pending_message);
-
-
-// Required interfaces of function tm_collection
-
-// Required interface request_tm in function tm_collection
-// This RI is connected to: tm_provider
-void vm_tm_collection_request_tm
-        (char *OUT_buf_temp, size_t *size_OUT_buf_temp,
-         char *OUT_buf_depl_d, size_t *size_OUT_buf_depl_d,
-         char *OUT_buf_depl_a, size_t *size_OUT_buf_depl_a);
-// End of the required interfaces of function tm_collection
 
 
 void call_gui_poll (__po_hi_task_id);
@@ -75,6 +61,9 @@ void call_gui_send_tm_aoi (__po_hi_task_id, dataview__location_fix_packet_buffer
 
 
 void call_gui_send_tm_mcp (__po_hi_task_id, dataview__mode_change_packet_buffer_impl *);
+
+
+void call_hal_blink_led (__po_hi_task_id);
 
 
 void call_state_handler_entrypoint_poll_aoi (__po_hi_task_id);

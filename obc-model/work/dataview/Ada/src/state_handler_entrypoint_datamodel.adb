@@ -47,7 +47,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ""ret"" has no effect");        
 begin
-    ret.Success := (((val = asn1Sccwait)) OR ((val = asn1Sccsleep)));
+    ret.Success := (((val = asn1Sccsleep)) OR ((val = asn1Sccwait)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_STATE_HANDLER_ENTRYPOINT_STATES);
     return ret;
 end asn1SccState_handler_entrypoint_States_IsConstraintValid;

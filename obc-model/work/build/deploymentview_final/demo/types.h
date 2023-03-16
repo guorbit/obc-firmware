@@ -34,7 +34,7 @@ typedef struct
 
 } dataview__location_fix_packet_buffer_impl;
 
-typedef dataview__stream_element_buffer dataview__mode_change_packet_buffer_max_impl[16];
+typedef dataview__stream_element_buffer dataview__mode_change_packet_buffer_max_impl[24];
 
 typedef struct
 {

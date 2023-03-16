@@ -28,7 +28,7 @@ Node : node_2
     |_ CPU Name       : p1
     |_ CPU Platform   : PLATFORM_MSP430_FREERTOS
     |_ CPU Classifier : ocarina_processors_msp430::msp430fr5969.freertos
-    |_ Contains       : loc_provider tm_collection tc_provider tc_validation tm_provider state_handler_entrypoint 
+    |_ Contains       : hal state_handler_entrypoint loc_provider tm_collection tc_provider 
   |_ Driver : msp430_eusci_a_serial_minimal.others
     |_ Name          : MSP430_eUSCI_A_serial_minimal
     |_ Package       : deploymentview::dv::node_2
@@ -48,10 +48,10 @@ Bus : bus_1
   |_ Package    : ocarina_buses
   |_ Classifier : ocarina_buses::serial.minimal
 Connection on bus : bus_1
-  |_ Source Function : gui
-  |_ Source Port : state_handler_entrypoint_trig_pwr
-  |_ Dest Function : state_handler_entrypoint
-  |_ Dest Port   : trig_pwr
+  |_ Source Function : state_handler_entrypoint
+  |_ Source Port : gui_send_tm_aoi
+  |_ Dest Function : gui
+  |_ Dest Port   : send_tm_aoi
 Connection on bus : bus_1
   |_ Source Function : state_handler_entrypoint
   |_ Source Port : gui_send_tm_mcp
@@ -68,7 +68,7 @@ Connection on bus : bus_1
   |_ Dest Function : state_handler_entrypoint
   |_ Dest Port   : trig_mcp
 Connection on bus : bus_1
-  |_ Source Function : state_handler_entrypoint
-  |_ Source Port : gui_send_tm_aoi
-  |_ Dest Function : gui
-  |_ Dest Port   : send_tm_aoi
+  |_ Source Function : gui
+  |_ Source Port : state_handler_entrypoint_trig_pwr
+  |_ Dest Function : state_handler_entrypoint
+  |_ Dest Port   : trig_pwr

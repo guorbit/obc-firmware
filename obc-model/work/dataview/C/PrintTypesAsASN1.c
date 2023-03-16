@@ -402,27 +402,24 @@ void PrintASN1PID(const char *paramName, const asn1SccPID *pData)
     printf("%s ", paramName);
     switch((*pData)) {
     case 0:
-        printf("gui");
+        printf("hal");
         break;
     case 1:
-        printf("loc-provider");
+        printf("gui");
         break;
     case 2:
-        printf("state-handler-entrypoint");
+        printf("loc-provider");
         break;
     case 3:
-        printf("tc-provider");
+        printf("state-handler-entrypoint");
         break;
     case 4:
-        printf("tc-validation");
+        printf("tc-provider");
         break;
     case 5:
         printf("tm-collection");
         break;
     case 6:
-        printf("tm-provider");
-        break;
-    case 7:
         printf("env");
         break;
     default:

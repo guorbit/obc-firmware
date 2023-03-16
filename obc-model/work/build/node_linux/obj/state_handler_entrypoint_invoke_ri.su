@@ -1,0 +1,5 @@
+state_handler_entrypoint_invoke_ri.c:13:6:state_handler_entrypoint_RI_collect_tm	16	static
+state_handler_entrypoint_invoke_ri.c:37:6:state_handler_entrypoint_RI_request_loc	32	static
+state_handler_entrypoint_invoke_ri.c:67:6:state_handler_entrypoint_RI_request_tc	32	static
+state_handler_entrypoint_invoke_ri.c:97:6:state_handler_entrypoint_RI_send_tm_aoi	16	static
+state_handler_entrypoint_invoke_ri.c:126:6:state_handler_entrypoint_RI_send_tm_mcp	16	static

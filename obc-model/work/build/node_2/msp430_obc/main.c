@@ -12,6 +12,7 @@
 
 #include "drivers/msp430_eusci_a_serial_minimal/msp430_eusci_a_serial_minimal.h"
 
+#include "thread_hal_blink_led.h"
 #include "thread_state_handler_entrypoint_poll_aoi.h"
 #include "thread_state_handler_entrypoint_poll_mcp.h"
 #include "thread_state_handler_entrypoint_toggle_pwr.h"
@@ -19,12 +20,11 @@
 #include "thread_state_handler_entrypoint_trig_mcp.h"
 #include "thread_state_handler_entrypoint_trig_pwr.h"
 
+extern void init_hal(void);
+extern void init_state_handler_entrypoint(void);
 extern void init_loc_provider(void);
 extern void init_tm_collection(void);
 extern void init_tc_provider(void);
-extern void init_tc_validation(void);
-extern void init_tm_provider(void);
-extern void init_state_handler_entrypoint(void);
 
 // function to setup hardware
 static void prvSetupHardware()
@@ -123,20 +123,41 @@ void vApplicationGetTimerTaskMemory(StaticTask_t** ppxTimerTaskPCBBuffer,
     *pulTimerTaskStackSize = configMINIMAL_STACK_SIZE;
 }
 
+__attribute__ ((persistent)) SemaphoreHandle_t hal_Semaphore = {0};
+__attribute__ ((persistent)) StaticSemaphore_t prv_hal_Semaphore_Buffer = {0};
+__attribute__ ((persistent)) SemaphoreHandle_t state_handler_entrypoint_Semaphore = {0};
+__attribute__ ((persistent)) StaticSemaphore_t prv_state_handler_entrypoint_Semaphore_Buffer = {0};
 __attribute__ ((persistent)) SemaphoreHandle_t loc_provider_Semaphore = {0};
 __attribute__ ((persistent)) StaticSemaphore_t prv_loc_provider_Semaphore_Buffer = {0};
 __attribute__ ((persistent)) SemaphoreHandle_t tm_collection_Semaphore = {0};
 __attribute__ ((persistent)) StaticSemaphore_t prv_tm_collection_Semaphore_Buffer = {0};
 __attribute__ ((persistent)) SemaphoreHandle_t tc_provider_Semaphore = {0};
 __attribute__ ((persistent)) StaticSemaphore_t prv_tc_provider_Semaphore_Buffer = {0};
-__attribute__ ((persistent)) SemaphoreHandle_t tc_validation_Semaphore = {0};
-__attribute__ ((persistent)) StaticSemaphore_t prv_tc_validation_Semaphore_Buffer = {0};
-__attribute__ ((persistent)) SemaphoreHandle_t tm_provider_Semaphore = {0};
-__attribute__ ((persistent)) StaticSemaphore_t prv_tm_provider_Semaphore_Buffer = {0};
-__attribute__ ((persistent)) SemaphoreHandle_t state_handler_entrypoint_Semaphore = {0};
-__attribute__ ((persistent)) StaticSemaphore_t prv_state_handler_entrypoint_Semaphore_Buffer = {0};
 
 
+
+__attribute__ ((persistent)) QueueHandle_t hal_blink_led_Global_Queue = NULL;
+__attribute__ ((persistent)) static StaticQueue_t prv_hal_blink_led_Static_Queue = {0};
+__attribute__ ((persistent)) static uint8_t prv_hal_blink_led_Queue_Buffer[ 1 * sizeof(struct Request)] = {0};
+
+__attribute__ ((persistent)) static StaticTask_t prv_hal_blink_led_TCB = {0};
+__attribute__ ((persistent)) static StackType_t prv_hal_blink_led_Stack[ 1024 / sizeof(StackType_t)] = {0};
+
+static void Initialize_Thread_hal_blink_led()
+{
+    hal_blink_led_Global_Queue = xQueueCreateStatic( 1,
+                                                      sizeof(struct Request),
+                                                      prv_hal_blink_led_Queue_Buffer,
+                                                      &prv_hal_blink_led_Static_Queue);
+
+    xTaskCreateStatic(prv_hal_blink_led_Task,
+                "hal_blink_led",
+                 1024 / sizeof(StackType_t),
+                NULL,
+                 1,
+                prv_hal_blink_led_Stack,
+                &prv_hal_blink_led_TCB);
+}
 
 __attribute__ ((persistent)) QueueHandle_t state_handler_entrypoint_poll_aoi_Global_Queue = NULL;
 __attribute__ ((persistent)) static StaticQueue_t prv_state_handler_entrypoint_poll_aoi_Static_Queue = {0};
@@ -209,14 +230,14 @@ static void Initialize_Thread_state_handler_entrypoint_toggle_pwr()
 
 __attribute__ ((persistent)) QueueHandle_t state_handler_entrypoint_trig_aoi_Global_Queue = NULL;
 __attribute__ ((persistent)) static StaticQueue_t prv_state_handler_entrypoint_trig_aoi_Static_Queue = {0};
-__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_aoi_Queue_Buffer[ 2 * sizeof(struct Request)] = {0};
+__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_aoi_Queue_Buffer[ 10 * sizeof(struct Request)] = {0};
 
 __attribute__ ((persistent)) static StaticTask_t prv_state_handler_entrypoint_trig_aoi_TCB = {0};
 __attribute__ ((persistent)) static StackType_t prv_state_handler_entrypoint_trig_aoi_Stack[ 1024 / sizeof(StackType_t)] = {0};
 
 static void Initialize_Thread_state_handler_entrypoint_trig_aoi()
 {
-    state_handler_entrypoint_trig_aoi_Global_Queue = xQueueCreateStatic( 2,
+    state_handler_entrypoint_trig_aoi_Global_Queue = xQueueCreateStatic( 10,
                                                       sizeof(struct Request),
                                                       prv_state_handler_entrypoint_trig_aoi_Queue_Buffer,
                                                       &prv_state_handler_entrypoint_trig_aoi_Static_Queue);
@@ -232,14 +253,14 @@ static void Initialize_Thread_state_handler_entrypoint_trig_aoi()
 
 __attribute__ ((persistent)) QueueHandle_t state_handler_entrypoint_trig_mcp_Global_Queue = NULL;
 __attribute__ ((persistent)) static StaticQueue_t prv_state_handler_entrypoint_trig_mcp_Static_Queue = {0};
-__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_mcp_Queue_Buffer[ 2 * sizeof(struct Request)] = {0};
+__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_mcp_Queue_Buffer[ 10 * sizeof(struct Request)] = {0};
 
 __attribute__ ((persistent)) static StaticTask_t prv_state_handler_entrypoint_trig_mcp_TCB = {0};
 __attribute__ ((persistent)) static StackType_t prv_state_handler_entrypoint_trig_mcp_Stack[ 1024 / sizeof(StackType_t)] = {0};
 
 static void Initialize_Thread_state_handler_entrypoint_trig_mcp()
 {
-    state_handler_entrypoint_trig_mcp_Global_Queue = xQueueCreateStatic( 2,
+    state_handler_entrypoint_trig_mcp_Global_Queue = xQueueCreateStatic( 10,
                                                       sizeof(struct Request),
                                                       prv_state_handler_entrypoint_trig_mcp_Queue_Buffer,
                                                       &prv_state_handler_entrypoint_trig_mcp_Static_Queue);
@@ -255,14 +276,14 @@ static void Initialize_Thread_state_handler_entrypoint_trig_mcp()
 
 __attribute__ ((persistent)) QueueHandle_t state_handler_entrypoint_trig_pwr_Global_Queue = NULL;
 __attribute__ ((persistent)) static StaticQueue_t prv_state_handler_entrypoint_trig_pwr_Static_Queue = {0};
-__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_pwr_Queue_Buffer[ 2 * sizeof(struct Request)] = {0};
+__attribute__ ((persistent)) static uint8_t prv_state_handler_entrypoint_trig_pwr_Queue_Buffer[ 10 * sizeof(struct Request)] = {0};
 
 __attribute__ ((persistent)) static StaticTask_t prv_state_handler_entrypoint_trig_pwr_TCB = {0};
 __attribute__ ((persistent)) static StackType_t prv_state_handler_entrypoint_trig_pwr_Stack[ 1024 / sizeof(StackType_t)] = {0};
 
 static void Initialize_Thread_state_handler_entrypoint_trig_pwr()
 {
-    state_handler_entrypoint_trig_pwr_Global_Queue = xQueueCreateStatic( 2,
+    state_handler_entrypoint_trig_pwr_Global_Queue = xQueueCreateStatic( 10,
                                                       sizeof(struct Request),
                                                       prv_state_handler_entrypoint_trig_pwr_Queue_Buffer,
                                                       &prv_state_handler_entrypoint_trig_pwr_Static_Queue);
@@ -281,19 +302,18 @@ int main(void)
 {
     prvSetupHardware();
 
+    hal_Semaphore = xSemaphoreCreateMutexStatic(&prv_hal_Semaphore_Buffer);
+    init_hal();
+    state_handler_entrypoint_Semaphore = xSemaphoreCreateMutexStatic(&prv_state_handler_entrypoint_Semaphore_Buffer);
+    init_state_handler_entrypoint();
     loc_provider_Semaphore = xSemaphoreCreateMutexStatic(&prv_loc_provider_Semaphore_Buffer);
     init_loc_provider();
     tm_collection_Semaphore = xSemaphoreCreateMutexStatic(&prv_tm_collection_Semaphore_Buffer);
     init_tm_collection();
     tc_provider_Semaphore = xSemaphoreCreateMutexStatic(&prv_tc_provider_Semaphore_Buffer);
     init_tc_provider();
-    tc_validation_Semaphore = xSemaphoreCreateMutexStatic(&prv_tc_validation_Semaphore_Buffer);
-    init_tc_validation();
-    tm_provider_Semaphore = xSemaphoreCreateMutexStatic(&prv_tm_provider_Semaphore_Buffer);
-    init_tm_provider();
-    state_handler_entrypoint_Semaphore = xSemaphoreCreateMutexStatic(&prv_state_handler_entrypoint_Semaphore_Buffer);
-    init_state_handler_entrypoint();
 
+    Initialize_Thread_hal_blink_led();
     Initialize_Thread_state_handler_entrypoint_poll_aoi();
     Initialize_Thread_state_handler_entrypoint_poll_mcp();
     Initialize_Thread_state_handler_entrypoint_toggle_pwr();

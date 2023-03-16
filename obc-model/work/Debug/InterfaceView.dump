@@ -16,7 +16,7 @@ Function gui in context _Root
 │  │  ├─ RCM Kind    : SPORADIC_OPERATION
 │  │  ├─ Period/MIAT :  0
 │  │  ├─ WCET (ms)   :  0
-│  │  ├─ Queue Size  :  1
+│  │  ├─ Queue Size  :  10
 │  │  ├─ Parameters  :
 │  │  │  ├─ Name            : lfp
 │  │  │  │  ├─ Type         : Location-Fix-Packet
@@ -31,7 +31,7 @@ Function gui in context _Root
 │     ├─ RCM Kind    : SPORADIC_OPERATION
 │     ├─ Period/MIAT :  0
 │     ├─ WCET (ms)   :  0
-│     ├─ Queue Size  :  1
+│     ├─ Queue Size  :  10
 │     ├─ Parameters  :
 │     │  ├─ Name            : mcp
 │     │  │  ├─ Type         : Mode-Change-Packet
@@ -47,7 +47,7 @@ Function gui in context _Root
    │  ├─ RCM Kind    : SPORADIC_OPERATION
    │  ├─ Period/MIAT :  0
    │  ├─ WCET (ms)   :  0
-   │  ├─ Queue Size  :  2
+   │  ├─ Queue Size  :  10
    │  ├─ Parameters  :
    │  └─ Connections :
    │     └─ Function state_handler_entrypoint, interface trig_aoi
@@ -55,7 +55,7 @@ Function gui in context _Root
    │  ├─ RCM Kind    : SPORADIC_OPERATION
    │  ├─ Period/MIAT :  0
    │  ├─ WCET (ms)   :  0
-   │  ├─ Queue Size  :  2
+   │  ├─ Queue Size  :  10
    │  ├─ Parameters  :
    │  └─ Connections :
    │     └─ Function state_handler_entrypoint, interface trig_mcp
@@ -63,10 +63,33 @@ Function gui in context _Root
       ├─ RCM Kind    : SPORADIC_OPERATION
       ├─ Period/MIAT :  0
       ├─ WCET (ms)   :  0
-      ├─ Queue Size  :  2
+      ├─ Queue Size  :  10
       ├─ Parameters  :
       └─ Connections :
          └─ Function state_handler_entrypoint, interface trig_pwr
+
+Function HAL in context _Root
+├─ Full Prefix : (none)
+├─ Language    : c
+├─ Zip file    : (none)
+├─ Is type     : FALSE
+├─ Instance of : 
+├─ Context Parameters :
+├─ Directives:
+├─ Simulink Tuneable Parameters:
+├─ Implementations:
+├─ User properties:
+│  └─ Taste::Startup_Priority = 1
+├─ Timers:
+├─ Provided interfaces:
+│  └─ Name : blink_led - in FV: HAL
+│     ├─ RCM Kind    : CYCLIC_OPERATION
+│     ├─ Period/MIAT :  2000
+│     ├─ WCET (ms)   :  0
+│     ├─ Queue Size  :  1
+│     ├─ Parameters  :
+│     └─ Connections :
+└─ Required interfaces:
 
 Function loc_provider in context _Root
 ├─ Full Prefix : (none)
@@ -139,7 +162,7 @@ Function state_handler_entrypoint in context _Root
 │  │  ├─ RCM Kind    : SPORADIC_OPERATION
 │  │  ├─ Period/MIAT :  0
 │  │  ├─ WCET (ms)   :  0
-│  │  ├─ Queue Size  :  2
+│  │  ├─ Queue Size  :  10
 │  │  ├─ Parameters  :
 │  │  └─ Connections :
 │  │     └─ Function gui, interface trig_aoi
@@ -147,7 +170,7 @@ Function state_handler_entrypoint in context _Root
 │  │  ├─ RCM Kind    : SPORADIC_OPERATION
 │  │  ├─ Period/MIAT :  0
 │  │  ├─ WCET (ms)   :  0
-│  │  ├─ Queue Size  :  2
+│  │  ├─ Queue Size  :  10
 │  │  ├─ Parameters  :
 │  │  └─ Connections :
 │  │     └─ Function gui, interface trig_mcp
@@ -155,7 +178,7 @@ Function state_handler_entrypoint in context _Root
 │     ├─ RCM Kind    : SPORADIC_OPERATION
 │     ├─ Period/MIAT :  0
 │     ├─ WCET (ms)   :  0
-│     ├─ Queue Size  :  2
+│     ├─ Queue Size  :  10
 │     ├─ Parameters  :
 │     └─ Connections :
 │        └─ Function gui, interface trig_pwr
@@ -202,7 +225,7 @@ Function state_handler_entrypoint in context _Root
    │  ├─ RCM Kind    : SPORADIC_OPERATION
    │  ├─ Period/MIAT :  0
    │  ├─ WCET (ms)   :  0
-   │  ├─ Queue Size  :  1
+   │  ├─ Queue Size  :  10
    │  ├─ Parameters  :
    │  │  ├─ Name            : lfp
    │  │  │  ├─ Type         : Location-Fix-Packet
@@ -213,29 +236,21 @@ Function state_handler_entrypoint in context _Root
    │  │  │  └─ Direction    : PARAM_IN
    │  └─ Connections :
    │     └─ Function gui, interface send_tm_aoi
-   ├─ Name : send_tm_mcp - in FV: state_handler_entrypoint
-   │  ├─ RCM Kind    : SPORADIC_OPERATION
-   │  ├─ Period/MIAT :  0
-   │  ├─ WCET (ms)   :  0
-   │  ├─ Queue Size  :  1
-   │  ├─ Parameters  :
-   │  │  ├─ Name            : mcp
-   │  │  │  ├─ Type         : Mode-Change-Packet
-   │  │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-   │  │  │  ├─ ASN.1 File   : obc-model.asn
-   │  │  │  ├─ Basic type   : ASN1_SEQUENCE
-   │  │  │  ├─ Encoding     : NATIVE
-   │  │  │  └─ Direction    : PARAM_IN
-   │  └─ Connections :
-   │     └─ Function gui, interface send_tm_mcp
-   └─ Name : validate_mc_vs_tm - in FV: state_handler_entrypoint
-      ├─ RCM Kind    : UNPROTECTED_OPERATION
+   └─ Name : send_tm_mcp - in FV: state_handler_entrypoint
+      ├─ RCM Kind    : SPORADIC_OPERATION
       ├─ Period/MIAT :  0
       ├─ WCET (ms)   :  0
-      ├─ Queue Size  :  1
+      ├─ Queue Size  :  10
       ├─ Parameters  :
+      │  ├─ Name            : mcp
+      │  │  ├─ Type         : Mode-Change-Packet
+      │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
+      │  │  ├─ ASN.1 File   : obc-model.asn
+      │  │  ├─ Basic type   : ASN1_SEQUENCE
+      │  │  ├─ Encoding     : NATIVE
+      │  │  └─ Direction    : PARAM_IN
       └─ Connections :
-         └─ Function tc_validation, interface validate_mc_vs_tm
+         └─ Function gui, interface send_tm_mcp
 
 Function tc_provider in context _Root
 ├─ Full Prefix : (none)
@@ -268,30 +283,6 @@ Function tc_provider in context _Root
 │        └─ Function state_handler_entrypoint, interface request_tc
 └─ Required interfaces:
 
-Function tc_validation in context _Root
-├─ Full Prefix : (none)
-├─ Language    : cpp
-├─ Zip file    : (none)
-├─ Is type     : FALSE
-├─ Instance of : 
-├─ Context Parameters :
-├─ Directives:
-├─ Simulink Tuneable Parameters:
-├─ Implementations:
-├─ User properties:
-│  └─ Taste::Startup_Priority = 1
-├─ Timers:
-├─ Provided interfaces:
-│  └─ Name : validate_mc_vs_tm - in FV: tc_validation
-│     ├─ RCM Kind    : UNPROTECTED_OPERATION
-│     ├─ Period/MIAT :  0
-│     ├─ WCET (ms)   :  0
-│     ├─ Queue Size  :  1
-│     ├─ Parameters  :
-│     └─ Connections :
-│        └─ Function state_handler_entrypoint, interface validate_mc_vs_tm
-└─ Required interfaces:
-
 Function tm_collection in context _Root
 ├─ Full Prefix : (none)
 ├─ Language    : c
@@ -314,82 +305,5 @@ Function tm_collection in context _Root
 │     ├─ Parameters  :
 │     └─ Connections :
 │        └─ Function state_handler_entrypoint, interface collect_tm
-└─ Required interfaces:
-   └─ Name : request_tm - in FV: tm_collection
-      ├─ RCM Kind    : UNPROTECTED_OPERATION
-      ├─ Period/MIAT :  0
-      ├─ WCET (ms)   :  0
-      ├─ Queue Size  :  1
-      ├─ Parameters  :
-      │  ├─ Name            : temp
-      │  │  ├─ Type         : Temperature-Generic
-      │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-      │  │  ├─ ASN.1 File   : obc-model.asn
-      │  │  ├─ Basic type   : ASN1_REAL
-      │  │  ├─ Encoding     : NATIVE
-      │  │  └─ Direction    : PARAM_OUT
-      │  ├─ Name            : depl_d
-      │  │  ├─ Type         : Deployment-Digital
-      │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-      │  │  ├─ ASN.1 File   : obc-model.asn
-      │  │  ├─ Basic type   : ASN1_BOOLEAN
-      │  │  ├─ Encoding     : NATIVE
-      │  │  └─ Direction    : PARAM_OUT
-      │  ├─ Name            : depl_a
-      │  │  ├─ Type         : Deployment-Analogue
-      │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-      │  │  ├─ ASN.1 File   : obc-model.asn
-      │  │  ├─ Basic type   : ASN1_REAL
-      │  │  ├─ Encoding     : NATIVE
-      │  │  └─ Direction    : PARAM_OUT
-      └─ Connections :
-         └─ Function tm_provider, interface request_tm
-
-Function tm_provider in context _Root
-├─ Full Prefix : (none)
-├─ Language    : c
-├─ Zip file    : (none)
-├─ Is type     : FALSE
-├─ Instance of : 
-├─ Context Parameters :
-│  └─ k : CounterK- default : 0 - asn1 module : OBC-MODEL-DATAVIEW - file : obc-model.asn
-├─ Directives:
-├─ Simulink Tuneable Parameters:
-├─ Implementations:
-│  ├─ default = C
-│  └─ fsm = SDL
-├─ User properties:
-│  └─ Taste::Startup_Priority = 1
-├─ Timers:
-├─ Provided interfaces:
-│  └─ Name : request_tm - in FV: tm_provider
-│     ├─ RCM Kind    : UNPROTECTED_OPERATION
-│     ├─ Period/MIAT :  0
-│     ├─ WCET (ms)   :  0
-│     ├─ Queue Size  :  1
-│     ├─ Parameters  :
-│     │  ├─ Name            : temp
-│     │  │  ├─ Type         : Temperature-Generic
-│     │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-│     │  │  ├─ ASN.1 File   : obc-model.asn
-│     │  │  ├─ Basic type   : ASN1_REAL
-│     │  │  ├─ Encoding     : NATIVE
-│     │  │  └─ Direction    : PARAM_OUT
-│     │  ├─ Name            : depl_d
-│     │  │  ├─ Type         : Deployment-Digital
-│     │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-│     │  │  ├─ ASN.1 File   : obc-model.asn
-│     │  │  ├─ Basic type   : ASN1_BOOLEAN
-│     │  │  ├─ Encoding     : NATIVE
-│     │  │  └─ Direction    : PARAM_OUT
-│     │  ├─ Name            : depl_a
-│     │  │  ├─ Type         : Deployment-Analogue
-│     │  │  ├─ ASN.1 Module : OBC_MODEL_DATAVIEW
-│     │  │  ├─ ASN.1 File   : obc-model.asn
-│     │  │  ├─ Basic type   : ASN1_REAL
-│     │  │  ├─ Encoding     : NATIVE
-│     │  │  └─ Direction    : PARAM_OUT
-│     └─ Connections :
-│        └─ Function tm_collection, interface request_tm
 └─ Required interfaces:
 

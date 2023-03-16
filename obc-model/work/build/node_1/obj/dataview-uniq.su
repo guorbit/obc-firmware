@@ -131,7 +131,7 @@ dataview-uniq.c:1598:6:asn1SccPID_Equal	32	static
 dataview-uniq.c:1604:6:asn1SccPID_IsConstraintValid	48	static
 dataview-uniq.c:1613:6:asn1SccPID_Initialize	32	static
 dataview-uniq.c:1621:6:asn1SccPID_Encode	64	static
-dataview-uniq.c:1665:6:asn1SccPID_Decode	192	static
-dataview-uniq.c:1714:6:asn1SccPID_ACN_Encode	64	static
-dataview-uniq.c:1760:6:asn1SccPID_ACN_Decode	192	static
-dataview-uniq.c:1802:1:_GLOBAL__sub_I_00099_0_asn1SccCounterK_Equal	16	static
+dataview-uniq.c:1662:6:asn1SccPID_Decode	192	static
+dataview-uniq.c:1708:6:asn1SccPID_ACN_Encode	64	static
+dataview-uniq.c:1751:6:asn1SccPID_ACN_Decode	192	static
+dataview-uniq.c:1790:1:_GLOBAL__sub_I_00099_0_asn1SccCounterK_Equal	16	static

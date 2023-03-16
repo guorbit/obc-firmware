@@ -25,6 +25,12 @@ typedef struct
   {
     struct
     {
+      __po_hi_bool_t blinker_blink_trigger_global_outport_hal_toggle_led;
+
+    } blinker_blink_trigger_global_outport_hal_toggle_led;
+
+    struct
+    {
       __po_hi_bool_t gui_poll_global_outport_state_handler_entrypoint_trig_aoi;
 
     } gui_poll_global_outport_state_handler_entrypoint_trig_aoi;
@@ -88,6 +94,12 @@ typedef struct
       __po_hi_bool_t gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_pwr;
 
     } gui_send_tm_mcp_global_outport_state_handler_entrypoint_trig_pwr;
+
+    struct
+    {
+      __po_hi_bool_t hal_toggle_led_global_inport_toggle_led;
+
+    } hal_toggle_led_global_inport_toggle_led;
 
     struct
     {

@@ -15,8 +15,71 @@
 /*  changes will be lost when you re-run Ocarina      */
 /**************************************************** */
 void __po_hi_main_initialize (void);
+extern process_package__taste_protected_object blinker_protected;
 extern process_package__taste_protected_object gui_protected;
+extern process_package__taste_protected_object hal_protected;
 extern process_package__taste_protected_object state_handler_entrypoint_protected;
+__po_hi_port_t __po_hi_blinker_blink_trigger_outport_hal_toggle_led_local_destinations[1] = {hal_toggle_led_global_inport_toggle_led};
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_woffsets[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_offsets[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_used_size[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_empties[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_first[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_request_t *__po_hi_blinker_blink_trigger_recent[__po_hi_blinker_blink_trigger_nb_ports];
+__po_hi_request_t *__po_hi_blinker_blink_trigger_queue[0];
+__po_hi_uint16_t __po_hi_blinker_blink_trigger_total_fifo_size = 0;
+__po_hi_local_port_t __po_hi_blinker_blink_trigger_history[0];
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_n_dest[__po_hi_blinker_blink_trigger_nb_ports] = {1};
+__po_hi_port_id_t __po_hi_blinker_blink_trigger_fifo_size[__po_hi_blinker_blink_trigger_nb_ports] = {__PO_HI_GQUEUE_FIFO_OUT};
+__po_hi_port_t* __po_hi_blinker_blink_trigger_destinations[__po_hi_blinker_blink_trigger_nb_ports] = {__po_hi_blinker_blink_trigger_outport_hal_toggle_led_local_destinations};
+
+/*!
+ * \fn void* blinker_blink_trigger_job (void)
+ * \brief Function executed by the task blinker_blink_trigger
+ *
+ * This function is executed as soon as the task  is created. It performs the 
+ * following operations:  Receive incoming data,  Execute tasks subprograms,  
+ * Send output data.
+ */
+/*  Periodic task : blinker_blink_trigger */
+extern void call_blinker_blink_trigger 
+    (__po_hi_task_id self);
+extern void init_blinker (void);
+void* blinker_blink_trigger_job (void)
+{
+  __po_hi_int32_t error;
+
+  init_blinker ();
+  
+/*!
+ * Waiting for other tasks initialization
+ */
+  __po_hi_wait_initialization ();
+  __po_hi_time_t offset;
+  __po_hi_milliseconds (&(offset), 0);
+  __po_hi_task_wait_offset (&(offset));
+  __po_hi_compute_next_period (demo_blinker_blink_trigger_k);
+  
+/*!
+ * Waiting for the first dispatch instant
+ */
+  __po_hi_wait_for_next_period (demo_blinker_blink_trigger_k);
+  
+/*!
+ * Task body
+ */
+  while (1)
+  {
+    /*  Make_Thread_Compute_Entrypoint */
+    call_blinker_blink_trigger (demo_blinker_blink_trigger_k);
+    /*  Send the OUT ports */
+    error =
+     __po_hi_send_output (demo_blinker_blink_trigger_k, blinker_blink_trigger_global_outport_hal_toggle_led);
+    (void)error;
+    __po_hi_wait_for_next_period (demo_blinker_blink_trigger_k);
+  }
+}
+
 __po_hi_port_t __po_hi_gui_poll_outport_state_handler_entrypoint_trig_aoi_local_destinations[1] = {state_handler_entrypoint_trig_aoi_global_inport_trig_aoi};
 __po_hi_port_t __po_hi_gui_poll_outport_state_handler_entrypoint_trig_mcp_local_destinations[1] = {state_handler_entrypoint_trig_mcp_global_inport_trig_mcp};
 __po_hi_port_t __po_hi_gui_poll_outport_state_handler_entrypoint_trig_pwr_local_destinations[1] = {state_handler_entrypoint_trig_pwr_global_inport_trig_pwr};
@@ -329,6 +392,114 @@ void* gui_send_tm_mcp_job (void)
     inport_send_tm_mcp_request =
      NULL;
     __po_hi_wait_for_next_period (demo_gui_send_tm_mcp_k);
+  }
+}
+
+__po_hi_port_id_t __po_hi_hal_toggle_led_woffsets[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_port_id_t __po_hi_hal_toggle_led_offsets[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_port_id_t __po_hi_hal_toggle_led_used_size[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_port_id_t __po_hi_hal_toggle_led_empties[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_port_id_t __po_hi_hal_toggle_led_first[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_request_t *__po_hi_hal_toggle_led_recent[__po_hi_hal_toggle_led_nb_ports];
+__po_hi_request_t *__po_hi_hal_toggle_led_queue[1];
+__po_hi_uint16_t __po_hi_hal_toggle_led_total_fifo_size = 1;
+__po_hi_local_port_t __po_hi_hal_toggle_led_history[1];
+__po_hi_port_id_t __po_hi_hal_toggle_led_n_dest[__po_hi_hal_toggle_led_nb_ports] = {0};
+__po_hi_port_id_t __po_hi_hal_toggle_led_fifo_size[__po_hi_hal_toggle_led_nb_ports] = {1};
+__po_hi_port_t* __po_hi_hal_toggle_led_destinations[__po_hi_hal_toggle_led_nb_ports] = {NULL};
+
+/*!
+ * \fn void hal_toggle_led_deliver (__po_hi_request_t* request)
+ * \brief Function that delivers requests to the task hal_toggle_led
+ *
+ * When the generated application received a request, it calls a main delivery
+ *  function that redirects to localfunctions for each task. This function 
+ * (hal_toggle_led_deliver) stores the incoming request for the 
+ * taskhal_toggle_led
+ */
+void hal_toggle_led_deliver 
+    (__po_hi_request_t* request)
+{
+
+  switch (request->port)
+  {
+    case hal_toggle_led_global_inport_toggle_led:
+    {
+      __po_hi_gqueue_store_in (demo_hal_toggle_led_k, hal_toggle_led_local_inport_toggle_led, request);
+
+      break;
+    }
+    default:
+    {
+      break;
+    }
+  }
+}
+
+
+/*!
+ * \fn void* hal_toggle_led_job (void)
+ * \brief Function executed by the task hal_toggle_led
+ *
+ * This function is executed as soon as the task  is created. It performs the 
+ * following operations:  Receive incoming data,  Execute tasks subprograms,  
+ * Send output data.
+ */
+/*  Sporadic task : hal_toggle_led */
+extern void call_hal_toggle_led 
+    (__po_hi_task_id self);
+extern void init_hal (void);
+void* hal_toggle_led_job (void)
+{
+  __po_hi_local_port_t port;
+  __po_hi_request_t *inport_toggle_led_request;
+
+  init_hal ();
+  
+/*!
+ * Waiting for other tasks initialization
+ */
+  __po_hi_wait_initialization ();
+  __po_hi_compute_next_period (demo_hal_toggle_led_k);
+  
+/*!
+ * Waiting for the first dispatch instant
+ */
+  __po_hi_wait_for_next_period (demo_hal_toggle_led_k);
+  
+/*!
+ * Task body
+ */
+  while (1)
+  {
+    __po_hi_gqueue_wait_for_incoming_event (demo_hal_toggle_led_k, &(port));
+    __po_hi_compute_next_period (demo_hal_toggle_led_k);
+    /*  Make_Ports_Compute_Entrypoint */
+    switch (port)
+    {
+      case hal_toggle_led_local_inport_toggle_led:
+      {
+        /* :: Yes if commentary :: */
+        if (__po_hi_gqueue_get_count (demo_hal_toggle_led_k, hal_toggle_led_local_inport_toggle_led))
+        {
+                  __po_hi_gqueue_get_value (demo_hal_toggle_led_k, hal_toggle_led_local_inport_toggle_led, &(inport_toggle_led_request));
+          __po_hi_gqueue_next_value (demo_hal_toggle_led_k, hal_toggle_led_local_inport_toggle_led);
+
+        }
+
+        call_hal_toggle_led (demo_hal_toggle_led_k);
+
+        break;
+      }
+      default:
+      {
+        break;
+      }
+    }
+    __po_hi_free_request (inport_toggle_led_request);
+    inport_toggle_led_request =
+     NULL;
+    __po_hi_wait_for_next_period (demo_hal_toggle_led_k);
   }
 }
 
@@ -910,6 +1081,12 @@ void __po_hi_main_deliver
 
       break;
     }
+    case demo_hal_toggle_led_k_entity:
+    {
+      hal_toggle_led_deliver (request);
+
+      break;
+    }
     case demo_state_handler_entrypoint_trig_aoi_k_entity:
     {
       state_handler_entrypoint_trig_aoi_deliver (request);
@@ -938,9 +1115,11 @@ void __po_hi_main_deliver
 void __po_hi_main_initialize (void)
 {
 
+  __po_hi_gqueue_init (demo_blinker_blink_trigger_k, __po_hi_blinker_blink_trigger_nb_ports, __po_hi_blinker_blink_trigger_queue, __po_hi_blinker_blink_trigger_fifo_size, __po_hi_blinker_blink_trigger_first, __po_hi_blinker_blink_trigger_offsets, __po_hi_blinker_blink_trigger_woffsets, __po_hi_blinker_blink_trigger_n_dest, __po_hi_blinker_blink_trigger_destinations, __po_hi_blinker_blink_trigger_used_size, __po_hi_blinker_blink_trigger_history, __po_hi_blinker_blink_trigger_recent, __po_hi_blinker_blink_trigger_empties, __po_hi_blinker_blink_trigger_total_fifo_size);
   __po_hi_gqueue_init (demo_gui_poll_k, __po_hi_gui_poll_nb_ports, __po_hi_gui_poll_queue, __po_hi_gui_poll_fifo_size, __po_hi_gui_poll_first, __po_hi_gui_poll_offsets, __po_hi_gui_poll_woffsets, __po_hi_gui_poll_n_dest, __po_hi_gui_poll_destinations, __po_hi_gui_poll_used_size, __po_hi_gui_poll_history, __po_hi_gui_poll_recent, __po_hi_gui_poll_empties, __po_hi_gui_poll_total_fifo_size);
   __po_hi_gqueue_init (demo_gui_send_tm_aoi_k, __po_hi_gui_send_tm_aoi_nb_ports, __po_hi_gui_send_tm_aoi_queue, __po_hi_gui_send_tm_aoi_fifo_size, __po_hi_gui_send_tm_aoi_first, __po_hi_gui_send_tm_aoi_offsets, __po_hi_gui_send_tm_aoi_woffsets, __po_hi_gui_send_tm_aoi_n_dest, __po_hi_gui_send_tm_aoi_destinations, __po_hi_gui_send_tm_aoi_used_size, __po_hi_gui_send_tm_aoi_history, __po_hi_gui_send_tm_aoi_recent, __po_hi_gui_send_tm_aoi_empties, __po_hi_gui_send_tm_aoi_total_fifo_size);
   __po_hi_gqueue_init (demo_gui_send_tm_mcp_k, __po_hi_gui_send_tm_mcp_nb_ports, __po_hi_gui_send_tm_mcp_queue, __po_hi_gui_send_tm_mcp_fifo_size, __po_hi_gui_send_tm_mcp_first, __po_hi_gui_send_tm_mcp_offsets, __po_hi_gui_send_tm_mcp_woffsets, __po_hi_gui_send_tm_mcp_n_dest, __po_hi_gui_send_tm_mcp_destinations, __po_hi_gui_send_tm_mcp_used_size, __po_hi_gui_send_tm_mcp_history, __po_hi_gui_send_tm_mcp_recent, __po_hi_gui_send_tm_mcp_empties, __po_hi_gui_send_tm_mcp_total_fifo_size);
+  __po_hi_gqueue_init (demo_hal_toggle_led_k, __po_hi_hal_toggle_led_nb_ports, __po_hi_hal_toggle_led_queue, __po_hi_hal_toggle_led_fifo_size, __po_hi_hal_toggle_led_first, __po_hi_hal_toggle_led_offsets, __po_hi_hal_toggle_led_woffsets, __po_hi_hal_toggle_led_n_dest, __po_hi_hal_toggle_led_destinations, __po_hi_hal_toggle_led_used_size, __po_hi_hal_toggle_led_history, __po_hi_hal_toggle_led_recent, __po_hi_hal_toggle_led_empties, __po_hi_hal_toggle_led_total_fifo_size);
   __po_hi_gqueue_init (demo_state_handler_entrypoint_poll_aoi_k, __po_hi_state_handler_entrypoint_poll_aoi_nb_ports, __po_hi_state_handler_entrypoint_poll_aoi_queue, __po_hi_state_handler_entrypoint_poll_aoi_fifo_size, __po_hi_state_handler_entrypoint_poll_aoi_first, __po_hi_state_handler_entrypoint_poll_aoi_offsets, __po_hi_state_handler_entrypoint_poll_aoi_woffsets, __po_hi_state_handler_entrypoint_poll_aoi_n_dest, __po_hi_state_handler_entrypoint_poll_aoi_destinations, __po_hi_state_handler_entrypoint_poll_aoi_used_size, __po_hi_state_handler_entrypoint_poll_aoi_history, __po_hi_state_handler_entrypoint_poll_aoi_recent, __po_hi_state_handler_entrypoint_poll_aoi_empties, __po_hi_state_handler_entrypoint_poll_aoi_total_fifo_size);
   __po_hi_gqueue_init (demo_state_handler_entrypoint_poll_mcp_k, __po_hi_state_handler_entrypoint_poll_mcp_nb_ports, __po_hi_state_handler_entrypoint_poll_mcp_queue, __po_hi_state_handler_entrypoint_poll_mcp_fifo_size, __po_hi_state_handler_entrypoint_poll_mcp_first, __po_hi_state_handler_entrypoint_poll_mcp_offsets, __po_hi_state_handler_entrypoint_poll_mcp_woffsets, __po_hi_state_handler_entrypoint_poll_mcp_n_dest, __po_hi_state_handler_entrypoint_poll_mcp_destinations, __po_hi_state_handler_entrypoint_poll_mcp_used_size, __po_hi_state_handler_entrypoint_poll_mcp_history, __po_hi_state_handler_entrypoint_poll_mcp_recent, __po_hi_state_handler_entrypoint_poll_mcp_empties, __po_hi_state_handler_entrypoint_poll_mcp_total_fifo_size);
   __po_hi_gqueue_init (demo_state_handler_entrypoint_toggle_pwr_k, __po_hi_state_handler_entrypoint_toggle_pwr_nb_ports, __po_hi_state_handler_entrypoint_toggle_pwr_queue, __po_hi_state_handler_entrypoint_toggle_pwr_fifo_size, __po_hi_state_handler_entrypoint_toggle_pwr_first, __po_hi_state_handler_entrypoint_toggle_pwr_offsets, __po_hi_state_handler_entrypoint_toggle_pwr_woffsets, __po_hi_state_handler_entrypoint_toggle_pwr_n_dest, __po_hi_state_handler_entrypoint_toggle_pwr_destinations, __po_hi_state_handler_entrypoint_toggle_pwr_used_size, __po_hi_state_handler_entrypoint_toggle_pwr_history, __po_hi_state_handler_entrypoint_toggle_pwr_recent, __po_hi_state_handler_entrypoint_toggle_pwr_empties, __po_hi_state_handler_entrypoint_toggle_pwr_total_fifo_size);

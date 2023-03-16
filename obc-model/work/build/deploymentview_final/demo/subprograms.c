@@ -6,6 +6,8 @@
 /*  Do NOT hand-modify this file, as your             */
 /*  changes will be lost when you re-run Ocarina      */
 /**************************************************** */
+extern process_package__taste_protected_object blinker_protected;
 extern process_package__taste_protected_object gui_protected;
+extern process_package__taste_protected_object hal_protected;
 extern process_package__taste_protected_object state_handler_entrypoint_protected;
 

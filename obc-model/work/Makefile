@@ -4,7 +4,7 @@ TOOL_INST       := $(shell taste-config --prefix)
 OUTDIR          := $(dir $(MAKEFILE_PATH))
 TASTE_SHARED_TYPES?=${HOME}/.local/share/QtProject/QtCreator/shared_types
 ASN1_FILES      := ../obc-model.asn ${TOOL_INST}/share/taste-types/taste-types.asn dataview/system.asn
-CP_FILES        := ../work/tm_provider/C/Context-tm-provider.asn      # Context parameters
+CP_FILES        :=       # Context parameters
 DATAVIEW_PATH   := ${OUTDIR}/dataview
 DATAVIEW_UNIQ   := ${DATAVIEW_PATH}/dataview-uniq.asn
 DATAVIEW_ACN    := ${DATAVIEW_PATH}/dataview-uniq.acn
@@ -72,7 +72,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	gui/GUI/wrappers/aadl2glueC_built loc_provider/C/wrappers/aadl2glueC_built state_handler_entrypoint/SDL/wrappers/aadl2glueC_built tc_provider/C/wrappers/aadl2glueC_built tc_validation/CPP/wrappers/aadl2glueC_built tm_collection/C/wrappers/aadl2glueC_built tm_provider/C/wrappers/aadl2glueC_built
+aadl2glueC:	gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built loc_provider/C/wrappers/aadl2glueC_built state_handler_entrypoint/SDL/wrappers/aadl2glueC_built tc_provider/C/wrappers/aadl2glueC_built tm_collection/C/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -83,6 +83,10 @@ ${DATAVIEW_AADLV2}: ${DATAVIEW_UNIQ}
 	asn2aadlPlus --aadlv2  $< $@
 
 gui/GUI/wrappers/aadl2glueC_built: gui/GUI/wrappers/gui_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+hal/C/wrappers/aadl2glueC_built: hal/C/wrappers/hal_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
@@ -98,15 +102,7 @@ tc_provider/C/wrappers/aadl2glueC_built: tc_provider/C/wrappers/tc_provider_mini
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
-tc_validation/CPP/wrappers/aadl2glueC_built: tc_validation/CPP/wrappers/tc_validation_mini_cv.aadl ${DATAVIEW_AADLV1}
-	aadl2glueC -allboards -o $(dir $@) $^
-	touch $@
-
 tm_collection/C/wrappers/aadl2glueC_built: tm_collection/C/wrappers/tm_collection_mini_cv.aadl ${DATAVIEW_AADLV1}
-	aadl2glueC -allboards -o $(dir $@) $^
-	touch $@
-
-tm_provider/C/wrappers/aadl2glueC_built: tm_provider/C/wrappers/tm_provider_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 

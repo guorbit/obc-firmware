@@ -13,6 +13,8 @@
 
 /**************************************************** */
 
+void* hal_blink_led_job (void);
+
 void state_handler_entrypoint_poll_aoi_deliver 
     (__po_hi_request_t* request);
 

@@ -7,6 +7,7 @@
 /*  Do NOT hand-modify this file, as your             */
 /*  changes will be lost when you re-run Ocarina      */
 /**************************************************** */
+extern process_package__taste_protected_object hal_protected;
 extern process_package__taste_protected_object state_handler_entrypoint_protected;
 void msp430_eusci_a_serial_minimal_poller 
     (__po_hi_device_id dev_id);

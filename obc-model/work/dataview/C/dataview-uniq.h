@@ -558,29 +558,27 @@ flag asn1SccT_Null_Record_ACN_Encode(const asn1SccT_Null_Record* pVal, BitStream
 
 flag asn1SccT_Null_Record_ACN_Decode(asn1SccT_Null_Record* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef enum {
-    PID_gui = 0,
-    PID_loc_provider = 1,
-    PID_state_handler_entrypoint = 2,
-    PID_tc_provider = 3,
-    PID_tc_validation = 4,
+    PID_hal = 0,
+    PID_gui = 1,
+    PID_loc_provider = 2,
+    PID_state_handler_entrypoint = 3,
+    PID_tc_provider = 4,
     PID_tm_collection = 5,
-    PID_tm_provider = 6,
-    PID_env = 7
+    PID_env = 6
 } asn1SccPID;
 
 // please use the following macros to avoid breaking code.
+#define asn1SccPID_hal PID_hal
 #define asn1SccPID_gui PID_gui
 #define asn1SccPID_loc_provider PID_loc_provider
 #define asn1SccPID_state_handler_entrypoint PID_state_handler_entrypoint
 #define asn1SccPID_tc_provider PID_tc_provider
-#define asn1SccPID_tc_validation PID_tc_validation
 #define asn1SccPID_tm_collection PID_tm_collection
-#define asn1SccPID_tm_provider PID_tm_provider
 #define asn1SccPID_env PID_env
 
 flag asn1SccPID_Equal(const asn1SccPID* pVal1, const asn1SccPID* pVal2);
 
-#define ERR_PID		166  /*gui | loc-provider | state-handler-entrypoint | tc-provider | tc-validation | tm-collection | tm-provider | env*/
+#define ERR_PID		166  /*hal | gui | loc-provider | state-handler-entrypoint | tc-provider | tm-collection | env*/
 flag asn1SccPID_IsConstraintValid(const asn1SccPID* pVal, int* pErrCode);
 
 void asn1SccPID_Initialize(asn1SccPID* pVal);

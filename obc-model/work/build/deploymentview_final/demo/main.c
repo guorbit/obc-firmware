@@ -9,7 +9,9 @@
 /*  Do NOT hand-modify this file, as your             */
 /*  changes will be lost when you re-run Ocarina      */
 /**************************************************** */
+process_package__taste_protected_object blinker_protected;
 process_package__taste_protected_object gui_protected;
+process_package__taste_protected_object hal_protected;
 process_package__taste_protected_object state_handler_entrypoint_protected;
 
 /*!
@@ -38,8 +40,26 @@ __PO_HI_MAIN_TYPE __PO_HI_MAIN_NAME (void)
  * Initialize the runtime
  */
   __po_hi_initialize ();
-  gui_protected.protected_id = 0;
-  state_handler_entrypoint_protected.protected_id = 1;
+  blinker_protected.protected_id = 0;
+  gui_protected.protected_id = 1;
+  hal_protected.protected_id = 2;
+  state_handler_entrypoint_protected.protected_id = 3;
+  
+/*!
+ * Store the period time for task blinker_blink_trigger
+ */
+  __po_hi_milliseconds (&(period), 2000);
+  
+/*!
+ * \brief Making Periodic Task blinker_blink_trigger
+ *
+ * Make a periodic task according to AADL model requirements. The first 
+ * parameter is the task identifier defined in deployment.h 
+ * (demo_blinker_blink_trigger_k) the second is the period defined in the 
+ * AADL model. Third is the task priority ( 1), fourth is the stack size ( 0
+ *  bytes) and last is the subprogram executed by the task
+ */
+  __po_hi_create_periodic_task (demo_blinker_blink_trigger_k, &(period), 1, 0, 0, blinker_blink_trigger_job);
   
 /*!
  * Store the period time for task gui_poll
@@ -76,6 +96,16 @@ __PO_HI_MAIN_TYPE __PO_HI_MAIN_NAME (void)
  * Making Sporadic task
  */
   __po_hi_create_sporadic_task (demo_gui_send_tm_mcp_k, &(period), 1, 0, 0, gui_send_tm_mcp_job);
+  
+/*!
+ * Store the period time for task hal_toggle_led
+ */
+  __po_hi_milliseconds (&(period), 1);
+  
+/*!
+ * Making Sporadic task
+ */
+  __po_hi_create_sporadic_task (demo_hal_toggle_led_k, &(period), 1, 0, 0, hal_toggle_led_job);
   
 /*!
  * Store the period time for task state_handler_entrypoint_poll_aoi

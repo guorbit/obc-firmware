@@ -1604,7 +1604,7 @@ flag PID_Equal(const PID* pVal1, const PID* pVal2)
 flag PID_IsConstraintValid(const PID* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = ((((((((((((((((*(pVal)) == PID_gui)) || (((*(pVal)) == PID_loc_provider)))) || (((*(pVal)) == PID_state_handler_entrypoint)))) || (((*(pVal)) == PID_tc_provider)))) || (((*(pVal)) == PID_tc_validation)))) || (((*(pVal)) == PID_tm_collection)))) || (((*(pVal)) == PID_tm_provider)))) || (((*(pVal)) == PID_env)));
+    ret = ((((((((((((((*(pVal)) == PID_hal)) || (((*(pVal)) == PID_gui)))) || (((*(pVal)) == PID_loc_provider)))) || (((*(pVal)) == PID_state_handler_entrypoint)))) || (((*(pVal)) == PID_tc_provider)))) || (((*(pVal)) == PID_tm_collection)))) || (((*(pVal)) == PID_env)));
     *pErrCode = ret ? 0 :  ERR_PID; 
 
 	return ret;
@@ -1615,7 +1615,7 @@ void PID_Initialize(PID* pVal)
 	(void)pVal;
 
 
-	(*(pVal)) = PID_gui;
+	(*(pVal)) = PID_hal;
 }
 
 flag PID_Encode(const PID* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
@@ -1628,29 +1628,26 @@ flag PID_Encode(const PID* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheck
 	if (ret && *pErrCode == 0) {
 	    switch((*(pVal))) 
 	    {
+	        case PID_hal:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 6);
+	        	break;
 	        case PID_gui:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 6);
 	        	break;
 	        case PID_loc_provider:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 6);
 	        	break;
 	        case PID_state_handler_entrypoint:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 6);
 	        	break;
 	        case PID_tc_provider:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 7);
-	        	break;
-	        case PID_tc_validation:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 6);
 	        	break;
 	        case PID_tm_collection:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 7);
-	        	break;
-	        case PID_tm_provider:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 6);
 	        	break;
 	        case PID_env:   
-	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 7, 0, 7);
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 6);
 	        	break;
 	        default:                    /*COVERAGE_IGNORE*/
 	    	    *pErrCode = ERR_UPER_ENCODE_PID; /*COVERAGE_IGNORE*/
@@ -1670,33 +1667,30 @@ flag PID_Decode(PID* pVal, BitStream* pBitStrm, int* pErrCode)
 
 	{
 	    asn1SccSint enumIndex;
-	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 7);
+	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 6);
 	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_PID;
 	    if (ret) {
 	        switch(enumIndex) 
 	        {
 	            case 0: 
-	                (*(pVal)) = PID_gui;
+	                (*(pVal)) = PID_hal;
 	                break;
 	            case 1: 
-	                (*(pVal)) = PID_loc_provider;
+	                (*(pVal)) = PID_gui;
 	                break;
 	            case 2: 
-	                (*(pVal)) = PID_state_handler_entrypoint;
+	                (*(pVal)) = PID_loc_provider;
 	                break;
 	            case 3: 
-	                (*(pVal)) = PID_tc_provider;
+	                (*(pVal)) = PID_state_handler_entrypoint;
 	                break;
 	            case 4: 
-	                (*(pVal)) = PID_tc_validation;
+	                (*(pVal)) = PID_tc_provider;
 	                break;
 	            case 5: 
 	                (*(pVal)) = PID_tm_collection;
 	                break;
 	            case 6: 
-	                (*(pVal)) = PID_tm_provider;
-	                break;
-	            case 7: 
 	                (*(pVal)) = PID_env;
 	                break;
 	            default:                        /*COVERAGE_IGNORE*/
@@ -1704,7 +1698,7 @@ flag PID_Decode(PID* pVal, BitStream* pBitStrm, int* pErrCode)
 		            ret = FALSE;                /*COVERAGE_IGNORE*/
 	        }
 	    } else {
-	        (*(pVal)) = PID_gui;             /*COVERAGE_IGNORE*/
+	        (*(pVal)) = PID_hal;             /*COVERAGE_IGNORE*/
 	    }
 	}
 
@@ -1720,36 +1714,33 @@ flag PID_ACN_Encode(const PID* pVal, BitStream* pBitStrm, int* pErrCode, flag bC
 	ret = bCheckConstraints ? PID_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret && *pErrCode == 0) {
 	    switch((*(pVal))) { 
-	        case PID_gui:
+	        case PID_hal:
 	            intVal = 0;
 	            break;
-	        case PID_loc_provider:
+	        case PID_gui:
 	            intVal = 1;
 	            break;
-	        case PID_state_handler_entrypoint:
+	        case PID_loc_provider:
 	            intVal = 2;
 	            break;
-	        case PID_tc_provider:
+	        case PID_state_handler_entrypoint:
 	            intVal = 3;
 	            break;
-	        case PID_tc_validation:
+	        case PID_tc_provider:
 	            intVal = 4;
 	            break;
 	        case PID_tm_collection:
 	            intVal = 5;
 	            break;
-	        case PID_tm_provider:
-	            intVal = 6;
-	            break;
 	        case PID_env:
-	            intVal = 7;
+	            intVal = 6;
 	            break;
 	        default:                                    /*COVERAGE_IGNORE*/
 	            ret = FALSE;                            /*COVERAGE_IGNORE*/
 	            *pErrCode = ERR_ACN_ENCODE_PID;                 /*COVERAGE_IGNORE*/
 	    }
 	    if (ret) {
-	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, intVal, 0, 7);
+	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, intVal, 0, 6);
 	    }
     } /*COVERAGE_IGNORE*/
 
@@ -1764,32 +1755,29 @@ flag PID_ACN_Decode(PID* pVal, BitStream* pBitStrm, int* pErrCode)
 
 	asn1SccUint intVal;
 
-	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(intVal)), 0, 7);
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(intVal)), 0, 6);
 	*pErrCode = ret ? 0 : ERR_ACN_DECODE_PID;
 	if (ret) {
 	    switch (intVal) {
 	        case 0:
-	            (*(pVal)) = PID_gui;
+	            (*(pVal)) = PID_hal;
 	            break;
 	        case 1:
-	            (*(pVal)) = PID_loc_provider;
+	            (*(pVal)) = PID_gui;
 	            break;
 	        case 2:
-	            (*(pVal)) = PID_state_handler_entrypoint;
+	            (*(pVal)) = PID_loc_provider;
 	            break;
 	        case 3:
-	            (*(pVal)) = PID_tc_provider;
+	            (*(pVal)) = PID_state_handler_entrypoint;
 	            break;
 	        case 4:
-	            (*(pVal)) = PID_tc_validation;
+	            (*(pVal)) = PID_tc_provider;
 	            break;
 	        case 5:
 	            (*(pVal)) = PID_tm_collection;
 	            break;
 	        case 6:
-	            (*(pVal)) = PID_tm_provider;
-	            break;
-	        case 7:
 	            (*(pVal)) = PID_env;
 	            break;
 	    default:                                    /*COVERAGE_IGNORE*/

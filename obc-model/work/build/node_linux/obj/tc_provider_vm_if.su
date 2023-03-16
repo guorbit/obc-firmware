@@ -1,0 +1,2 @@
+tc_provider_vm_if.c:12:6:init_tc_provider	16	static
+tc_provider_vm_if.c:23:6:tc_provider_request_tc	8	static

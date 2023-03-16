@@ -558,29 +558,27 @@ flag T_Null_Record_ACN_Encode(const T_Null_Record* pVal, BitStream* pBitStrm, in
 
 flag T_Null_Record_ACN_Decode(T_Null_Record* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef enum {
-    PID_gui = 0,
-    PID_loc_provider = 1,
-    PID_state_handler_entrypoint = 2,
-    PID_tc_provider = 3,
-    PID_tc_validation = 4,
+    PID_hal = 0,
+    PID_gui = 1,
+    PID_loc_provider = 2,
+    PID_state_handler_entrypoint = 3,
+    PID_tc_provider = 4,
     PID_tm_collection = 5,
-    PID_tm_provider = 6,
-    PID_env = 7
+    PID_env = 6
 } PID;
 
 // please use the following macros to avoid breaking code.
+#define PID_hal PID_hal
 #define PID_gui PID_gui
 #define PID_loc_provider PID_loc_provider
 #define PID_state_handler_entrypoint PID_state_handler_entrypoint
 #define PID_tc_provider PID_tc_provider
-#define PID_tc_validation PID_tc_validation
 #define PID_tm_collection PID_tm_collection
-#define PID_tm_provider PID_tm_provider
 #define PID_env PID_env
 
 flag PID_Equal(const PID* pVal1, const PID* pVal2);
 
-#define ERR_PID		166  /*gui | loc-provider | state-handler-entrypoint | tc-provider | tc-validation | tm-collection | tm-provider | env*/
+#define ERR_PID		166  /*hal | gui | loc-provider | state-handler-entrypoint | tc-provider | tm-collection | env*/
 flag PID_IsConstraintValid(const PID* pVal, int* pErrCode);
 
 void PID_Initialize(PID* pVal);

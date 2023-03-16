@@ -1,0 +1,2 @@
+loc_provider_vm_if.c:12:6:init_loc_provider	16	static
+loc_provider_vm_if.c:23:6:loc_provider_request_loc	8	static

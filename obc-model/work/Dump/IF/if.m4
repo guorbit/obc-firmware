@@ -25,10 +25,8 @@ define(`m4_state_handler_entrypoint_send_tm_aoi',`gui_send_tm_aoi')dnl
 define(`m4_state_handler_entrypoint_send_tm_aoi_provider',`gui')dnl
 define(`m4_state_handler_entrypoint_send_tm_mcp',`gui_send_tm_mcp')dnl
 define(`m4_state_handler_entrypoint_send_tm_mcp_provider',`gui')dnl
-define(`m4_state_handler_entrypoint_validate_mc_vs_tm',`tc_validation_validate_mc_vs_tm')dnl
-define(`m4_state_handler_entrypoint_validate_mc_vs_tm_provider',`tc_validation')dnl
-define(`m4_tm_collection_request_tm',`tm_provider_request_tm')dnl
-define(`m4_tm_collection_request_tm_provider',`tm_provider')dnl
+define(`m4_env_blink_led',`hal_blink_led')dnl
+define(`m4_env_blink_led_provider',`hal')dnl
 define(`m4_env_poll_aoi',`state_handler_entrypoint_poll_aoi')dnl
 define(`m4_env_poll_aoi_provider',`state_handler_entrypoint')dnl
 define(`m4_env_poll_mcp',`state_handler_entrypoint_poll_mcp')dnl
@@ -66,6 +64,10 @@ endabstract;
 
 
 divert(20)
+m4_c_function(hal,(blink_led,(),(),(), 0),
+
+)
+
 m4_sporadic_itf_gui_handler(
     gui,
     send_tm_aoi,
@@ -127,22 +129,21 @@ m4_sporadic_itf_handler(
     trig_aoi,
     ,
      0,
-     2)
+     10)
 
 m4_sporadic_itf_handler(
     state_handler_entrypoint,
     trig_mcp,
     ,
      0,
-     2)
+     10)
 
 m4_sporadic_itf_handler(
     state_handler_entrypoint,
     trig_pwr,
     ,
      0,
-     2)
-
+     10)
 
 
 
@@ -157,15 +158,7 @@ m4_c_function(tc_provider,(request_tc,(mcp),(Mode_Change_Packet),(PARAM_OUT), 0)
 
 )
 
-m4_c_function(tc_validation,(validate_mc_vs_tm,(),(),(), 0),
-
-)
-
 m4_c_function(tm_collection,(collect_tm,(),(),(), 0),
-
-)
-
-m4_c_function(tm_provider,(request_tm,(temp, depl_d, depl_a),(Temperature_Generic, Deployment_Digital, Deployment_Analogue),(PARAM_OUT, PARAM_OUT, PARAM_OUT), 0),
 
 )
 

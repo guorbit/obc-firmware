@@ -239,27 +239,32 @@ An example for SetLength:
         self._accessPath += "[" + str(idx) + "]"
         return self
 
+    def findCtypesResultType(self, **args):
+        # Find the Getter return type or the Setter param type for the ctypes declaration
+        bridgeFuncName = Clean(self._nodeTypeName) + "_" + self._Caccessor + "_Get" + args.get("postfix", "")
+        if bridgeFuncName not in DV_Types.funcTypeLookup:
+            raise AsnCoderError("Function %s not found in lookup - contact support." % bridgeFuncName)
+        resType = DV_Types.funcTypeLookup[bridgeFuncName]
+        if resType.endswith('*'):
+            cTypesResultType = c_void_p
+        else:
+            cTypesResultType = {
+                'asn1SccSint': c_longlong,
+                'asn1SccUint': c_ulonglong,
+                'byte': c_ubyte,
+                'double': c_double,
+                'flag': c_bool,
+                'int': c_int,
+                'long': c_long,
+                'char': c_ubyte # char
+            }.get(resType, None)
+            if cTypesResultType is None:
+                raise AsnCoderError("Result type of %s not yet supported in the Python mapper - contact support." % resType)
+        return bridgeFuncName, cTypesResultType
+
     def Get(self, **args):  # postfix="", reset=True
         try:
-            bridgeFuncName = Clean(self._nodeTypeName) + "_" + self._Caccessor + "_Get" + args.get("postfix", "")
-            if bridgeFuncName not in DV_Types.funcTypeLookup:
-                raise AsnCoderError("Function %s not found in lookup - contact support." % bridgeFuncName)
-            resType = DV_Types.funcTypeLookup[bridgeFuncName]
-            if resType.endswith('*'):
-                cTypesResultType = c_void_p
-            else:
-                cTypesResultType = {
-                    'asn1SccSint': c_longlong,
-                    'asn1SccUint': c_ulonglong,
-                    'byte': c_ubyte,
-                    'double': c_double,
-                    'flag': c_bool,
-                    'int': c_int,
-                    'long': c_long,
-                    'char': c_ubyte # char
-                }.get(resType, None)
-                if cTypesResultType is None:
-                    raise AsnCoderError("Result type of %s not yet supported in the Python mapper - contact support." % resType)
+            bridgeFuncName, cTypesResultType = self.findCtypesResultType(**args)
             bridgeFunc = getattr(JMP, bridgeFuncName)
             bridgeFunc.restype = cTypesResultType
             retVal = bridgeFunc(self._ptr, *self._params)
@@ -274,14 +279,12 @@ An example for SetLength:
 
     def Set(self, value, **args):  # postfix="", reset=True
         try:
+            # The parameter type is listed in the lookup table of the Get function. Get it from there
+            _, cTypesResultType = self.findCtypesResultType(**args)
+
             # print Clean(self._nodeTypeName) + "_" + self._Caccessor + "_Set"+postfix
             bridgeFunc = getattr(JMP, Clean(self._nodeTypeName) + "_" + self._Caccessor + "_Set" + args.get("postfix", ""))
-            if isinstance(value, float):
-                ctypesValue = c_double(value)
-            elif isinstance(value, (int, long)):
-                ctypesValue = c_longlong(value)
-            else:
-                ctypesValue = value
+            ctypesValue = cTypesResultType(value)
             self._params.append(ctypesValue)
             bridgeFunc(self._ptr, *self._params)
             self._params.pop()

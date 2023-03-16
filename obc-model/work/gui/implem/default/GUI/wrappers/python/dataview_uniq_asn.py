@@ -332,22 +332,21 @@ class T_Null_Record(COMMON):
 
 class PID(COMMON):
     # Allowed enumerants:
-    gui = 0
-    loc_provider = 1
-    state_handler_entrypoint = 2
-    tc_provider = 3
-    tc_validation = 4
+    hal = 0
+    gui = 1
+    loc_provider = 2
+    state_handler_entrypoint = 3
+    tc_provider = 4
     tm_collection = 5
-    tm_provider = 6
-    env = 7
-    allowed = [gui, loc_provider, state_handler_entrypoint, tc_provider, tc_validation, tm_collection, tm_provider, env]
+    env = 6
+    allowed = [hal, gui, loc_provider, state_handler_entrypoint, tc_provider, tm_collection, env]
     def __init__(self, ptr=None):
         super(PID, self).__init__("PID", ptr)
 
     def GSER(self):
         ''' Return the GSER representation of the value '''
         lines = []
-        lines.append(""+{'0': 'gui', '1': 'loc-provider', '2': 'state-handler-entrypoint', '3': 'tc-provider', '4': 'tc-validation', '5': 'tm-collection', '6': 'tm-provider', '7': 'env'}[str(self.Get())])
+        lines.append(""+{'0': 'hal', '1': 'gui', '2': 'loc-provider', '3': 'state-handler-entrypoint', '4': 'tc-provider', '5': 'tm-collection', '6': 'env'}[str(self.Get())])
 
         return ' '.join(lines)
 

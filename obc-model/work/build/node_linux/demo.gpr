@@ -16,18 +16,16 @@ project Demo is
        "../../dataview/Ada/boards/x86", -- Additional tests may be needed if other platforms are used
        "../../gui/GUI/src",
        "../../gui/GUI/wrappers",
+       "../../hal/C/src",
+       "../../hal/C/wrappers",
        "../../loc_provider/C/src",
        "../../loc_provider/C/wrappers",
        "../../state_handler_entrypoint/SDL/code",
        "../../state_handler_entrypoint/SDL/wrappers",
        "../../tc_provider/C/src",
        "../../tc_provider/C/wrappers",
-       "../../tc_validation/CPP/src",
-       "../../tc_validation/CPP/wrappers",
        "../../tm_collection/C/src",
        "../../tm_collection/C/wrappers",
-       "../../tm_provider/C/src",
-       "../../tm_provider/C/wrappers",
        "../deploymentview_final/demo")
         & external_as_list("EXTERNAL_SOURCE_PATH", ":")
         & external_as_list("DEMO_EXTERNAL_SOURCE_PATH", ":")

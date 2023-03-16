@@ -45,14 +45,15 @@ typedef enum
   x86_ground_station_gui_poll_k_entity = 1,
   x86_ground_station_gui_send_tm_aoi_k_entity = 2,
   x86_ground_station_gui_send_tm_mcp_k_entity = 3,
-  msp430_obc_state_handler_entrypoint_poll_aoi_k_entity = 4,
-  msp430_obc_state_handler_entrypoint_poll_mcp_k_entity = 5,
-  msp430_obc_state_handler_entrypoint_toggle_pwr_k_entity = 6,
-  msp430_obc_state_handler_entrypoint_trig_aoi_k_entity = 7,
-  msp430_obc_state_handler_entrypoint_trig_mcp_k_entity = 8,
-  msp430_obc_state_handler_entrypoint_trig_pwr_k_entity = 9,
+  msp430_obc_hal_blink_led_k_entity = 4,
+  msp430_obc_state_handler_entrypoint_poll_aoi_k_entity = 5,
+  msp430_obc_state_handler_entrypoint_poll_mcp_k_entity = 6,
+  msp430_obc_state_handler_entrypoint_toggle_pwr_k_entity = 7,
+  msp430_obc_state_handler_entrypoint_trig_aoi_k_entity = 8,
+  msp430_obc_state_handler_entrypoint_trig_mcp_k_entity = 9,
+  msp430_obc_state_handler_entrypoint_trig_pwr_k_entity = 10,
   invalid_entity = -1,
-  node_2_msp430_eusci_a_serial_minimal_receiver_k_entity = 10
+  node_2_msp430_eusci_a_serial_minimal_receiver_k_entity = 11
 } __po_hi_entity_t;
 
 typedef enum
@@ -85,7 +86,7 @@ typedef enum
 
 #define __PO_HI_NB_NODES 2
 
-#define __PO_HI_NB_ENTITIES 11
+#define __PO_HI_NB_ENTITIES 12
 
 #define __PO_HI_NB_PORTS 26
 

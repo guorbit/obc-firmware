@@ -8,6 +8,23 @@
 #include "transport.h"
 
 
+#include "hal_vm_if.h"
+
+
+void pro_HAL_blink_led(void)
+{
+    extern SemaphoreHandle_t hal_Semaphore;
+
+    BaseType_t result;
+    do
+    {
+        result = xSemaphoreTake(hal_Semaphore, portMAX_DELAY);
+    } while(result != pdTRUE);
+
+    hal_blink_led();
+
+    xSemaphoreGive(hal_Semaphore);
+}
 #include "loc_provider_vm_if.h"
 
 
@@ -75,13 +92,6 @@ void vm_state_handler_entrypoint_send_tm_mcp
         request.m_length = 0;
     }
     deliver_to_gui_send_tm_mcp(&request);
-}
-// Required interface validate_mc_vs_tm in function state_handler_entrypoint
-#include "tc_validation_vm_if.h"  // Remote language: CPP
-void vm_state_handler_entrypoint_validate_mc_vs_tm(void)
-{
-   // Unprotected call (call function defined in vm_if or SIMULINK.Simulink.c function)
-   tc_validation_validate_mc_vs_tm();
 }
 #include "state_handler_entrypoint_vm_if.h"
 
@@ -173,34 +183,17 @@ void pro_state_handler_entrypoint_trig_pwr(void)
 #include "tc_provider_vm_if.h"
 
 
-#include "tc_validation_vm_if.h"
-
-
-// Required interfaces of function tm_collection
-
-// Required interface request_tm in function tm_collection
-#include "tm_provider_vm_if.h"  // Remote language: C
-void vm_tm_collection_request_tm
-        (char *OUT_buf_temp, size_t *size_OUT_buf_temp,
-         char *OUT_buf_depl_d, size_t *size_OUT_buf_depl_d,
-         char *OUT_buf_depl_a, size_t *size_OUT_buf_depl_a)
-
-{
-   // Unprotected call (call function defined in vm_if or SIMULINK.Simulink.c function)
-   tm_provider_request_tm
-        (OUT_buf_temp, size_OUT_buf_temp,
-         OUT_buf_depl_d, size_OUT_buf_depl_d,
-         OUT_buf_depl_a, size_OUT_buf_depl_a);
-
-}
 #include "tm_collection_vm_if.h"
 
 
-#include "tm_provider_vm_if.h"
 
 
+#include "hal_vm_if.h"
 
-
+void call_hal_blink_led (const char* buf, size_t len)
+{
+    hal_blink_led();
+}
 #include "state_handler_entrypoint_vm_if.h"
 
 void call_state_handler_entrypoint_poll_aoi (const char* buf, size_t len)

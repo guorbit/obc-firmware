@@ -19,6 +19,7 @@ struct MSPAllParameters
 
 
 
+
         // for all required sporadic interfaces
         
 
@@ -56,6 +57,7 @@ void deliver_to_gui_send_tm_aoi(struct Request* task);
 void deliver_to_gui_send_tm_mcp(struct Request* task);
 
 
+void deliver_to_hal_blink_led(struct Request* task);
 void deliver_to_state_handler_entrypoint_poll_aoi(struct Request* task);
 void deliver_to_state_handler_entrypoint_poll_mcp(struct Request* task);
 void deliver_to_state_handler_entrypoint_toggle_pwr(struct Request* task);

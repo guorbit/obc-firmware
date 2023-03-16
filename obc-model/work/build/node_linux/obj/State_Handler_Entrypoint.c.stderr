@@ -1,0 +1,65 @@
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:17:1:[m[K [01;35m[Kwarning: [m[K‘[01m[Kpersistent[m[K’ attribute directive ignored [[01;35m[K-Wattributes[m[K]
+ [01;35m[K__attribute__[m[K ((persistent)) context_t state_handler_entrypoint_context = {0};
+ [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:19:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[KCInitState_Handler_Entrypoint[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[KCInitState_Handler_Entrypoint[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:23:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_poll_aoi[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_poll_aoi[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:43:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_poll_mcp[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_poll_mcp[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:63:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_toggle_pwr[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_toggle_pwr[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:84:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_trig_aoi[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_trig_aoi[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:104:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_trig_mcp[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_trig_mcp[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:124:6:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_PI_trig_pwr[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ void [01;35m[Kstate_handler_entrypoint_PI_trig_pwr[m[K()
+      [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:[m[K In function ‘[01m[KrunTransitionState_Handler_Entrypoint[m[K’:
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:186:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccCounterK[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.k[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:191:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccTime_UNIX[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.lfp.t[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:202:20:[m[K [01;35m[Kwarning: [m[Kzero-length gnu_printf format string [[01;35m[K-Wformat-zero-length[m[K]
+             printf([01;35m[K""[m[K);
+                    [01;35m[K^~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:224:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccCounterK[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.k[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:229:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccSubsystem_Address[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.mcp.target_addr[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:234:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccSystem_Mode[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.mcp.target_mode[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:239:22:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 2 has type ‘[01m[Kasn1SccMode_Change_Packet_ttl_ms[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wformat=[m[K]
+             printf("[01;35m[K%d[m[K", [32m[Kstate_handler_entrypoint_context.mcp.ttl_ms[m[K);
+                     [01;35m[K~^[m[K   [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                     [32m[K%ld[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:242:20:[m[K [01;35m[Kwarning: [m[Kzero-length gnu_printf format string [[01;35m[K-Wformat-zero-length[m[K]
+             printf([01;35m[K""[m[K);
+                    [01;35m[K^~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:325:14:[m[K [01;35m[Kwarning: [m[Kzero-length gnu_printf format string [[01;35m[K-Wformat-zero-length[m[K]
+       printf([01;35m[K""[m[K);
+              [01;35m[K^~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:337:14:[m[K [01;35m[Kwarning: [m[Kzero-length gnu_printf format string [[01;35m[K-Wformat-zero-length[m[K]
+       printf([01;35m[K""[m[K);
+              [01;35m[K^~[m[K
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:[m[K At top level:
+[01m[K/home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/SDL/code/State_Handler_Entrypoint.c:349:7:[m[K [01;35m[Kwarning: [m[Kno previous prototype for ‘[01m[Kstate_handler_entrypoint_state[m[K’ [[01;35m[K-Wmissing-prototypes[m[K]
+ char *[01;35m[Kstate_handler_entrypoint_state[m[K(void)
+       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K

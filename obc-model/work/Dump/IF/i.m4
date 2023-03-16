@@ -92,11 +92,6 @@ if_integer_type if_trunc_function(if_real_type p) {
 
 
 
-
-
-
-
-
 divert(-1)
 # inlined from /usr/share/doc/m4/examples/quote.m4
 # quote(args) - convert args to single-quoted string

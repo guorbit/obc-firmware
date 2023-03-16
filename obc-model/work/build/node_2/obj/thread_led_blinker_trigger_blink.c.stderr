@@ -1,0 +1,10 @@
+In file included from /home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/transport.h:6,
+                 from /home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/thread_led_blinker_trigger_blink.c:8:
+/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.h:536:9: warning: struct has no members [-Wpedantic]
+ typedef struct {
+         ^~~~~~
+/home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/thread_led_blinker_trigger_blink.c: In function 'prv_led_blinker_trigger_blink_Task':
+/home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/thread_led_blinker_trigger_blink.c:41:13: warning: implicit declaration of function 'call_led_blinker_trigger_blink'; did you mean 'prv_led_blinker_trigger_blink_Task'? [-Wimplicit-function-declaration]
+             call_led_blinker_trigger_blink((const char*)request.m_data, request.m_length);
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             prv_led_blinker_trigger_blink_Task

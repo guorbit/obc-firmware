@@ -136,6 +136,7 @@ def report_node_2():
            functions.append(task_name_job)
    
        functions[:] = []
+       add_task("hal_blink_led")
        add_task("state_handler_entrypoint_poll_aoi")
        add_task("state_handler_entrypoint_poll_mcp")
        add_task("state_handler_entrypoint_toggle_pwr")
@@ -163,6 +164,8 @@ def report_node_2():
            except:
                pass
        pohic_stack_of = {
+           
+           "hal_blink_led" :  1024,
            
            "state_handler_entrypoint_poll_aoi" :  1024,
            
@@ -208,6 +211,7 @@ def report_node_2():
                print("[-]\033[92m Stack usage of %32s" % task_name_job, "is %7d /%7d \033[00m" % (
                    actual_stack, reserved_stack))
    
+       check_task("hal_blink_led", version)
        check_task("state_handler_entrypoint_poll_aoi", version)
        check_task("state_handler_entrypoint_poll_mcp", version)
        check_task("state_handler_entrypoint_toggle_pwr", version)

@@ -19,19 +19,17 @@ END deploymentview::DV::Node_Linux;
 PACKAGE deploymentview::DV
 PUBLIC
 
-WITH interfaceview::IV::state_handler_entrypoint;
-
-WITH interfaceview::IV::tm_provider;
-
 WITH interfaceview::IV::gui;
 
 WITH interfaceview::IV::loc_provider;
+
+WITH interfaceview::IV::HAL;
 
 WITH interfaceview::IV::tc_provider;
 
 WITH interfaceview::IV::tm_collection;
 
-WITH interfaceview::IV::tc_validation;
+WITH interfaceview::IV::state_handler_entrypoint;
 
 
 WITH ocarina_processors_x86;
@@ -46,20 +44,16 @@ END Node_Linux;
 
 SYSTEM IMPLEMENTATION Node_Linux.others
 SUBCOMPONENTS
-   IV_state_handler_entrypoint : SYSTEM interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others {
-      Taste::FunctionName => "state_handler_entrypoint";
-   };
-
-   IV_tm_provider : SYSTEM interfaceview::IV::tm_provider::tm_provider.others {
-      Taste::FunctionName => "tm_provider";
-   };
-
    IV_gui : SYSTEM interfaceview::IV::gui::gui.others {
       Taste::FunctionName => "gui";
    };
 
    IV_loc_provider : SYSTEM interfaceview::IV::loc_provider::loc_provider.others {
       Taste::FunctionName => "loc_provider";
+   };
+
+   IV_HAL : SYSTEM interfaceview::IV::HAL::HAL.others {
+      Taste::FunctionName => "HAL";
    };
 
    IV_tc_provider : SYSTEM interfaceview::IV::tc_provider::tc_provider.others {
@@ -70,8 +64,8 @@ SUBCOMPONENTS
       Taste::FunctionName => "tm_collection";
    };
 
-   IV_tc_validation : SYSTEM interfaceview::IV::tc_validation::tc_validation.others {
-      Taste::FunctionName => "tc_validation";
+   IV_state_handler_entrypoint : SYSTEM interfaceview::IV::state_handler_entrypoint::state_handler_entrypoint.others {
+      Taste::FunctionName => "state_handler_entrypoint";
    };
 
    demo : PROCESS deploymentview::DV::Node_Linux::demo.others {
@@ -83,25 +77,6 @@ SUBCOMPONENTS
    x86_linux : PROCESSOR ocarina_processors_x86::x86.linux;
 PROPERTIES
    
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_state_handler_entrypoint;
-   
-   
-   
-   
-   
-   
-
-   
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tm_provider;
-   
-   
-   
-   
-   
-   
-
-   
    Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_gui;
    
    
@@ -112,6 +87,15 @@ PROPERTIES
 
    
    Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_loc_provider;
+   
+   
+   
+   
+   
+   
+
+   
+   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_HAL;
    
    
    
@@ -138,7 +122,8 @@ PROPERTIES
    
 
    
-   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_tc_validation;
+   
+   Taste::APLC_Binding => (reference (demo)) APPLIES TO IV_state_handler_entrypoint;
    
    
    

@@ -35,18 +35,18 @@ package System_Dataview with SPARK_Mode
 is
 
 
-subtype asn1SccPID_index_range is Integer range 0..7;
-type asn1SccPID is (asn1Sccgui, asn1Sccloc_provider, asn1Sccstate_handler_entrypoint, asn1Scctc_provider, asn1Scctc_validation, asn1Scctm_collection, asn1Scctm_provider, asn1Sccenv) with Size => adaasn1rtl.Enumerated_Size;
+subtype asn1SccPID_index_range is Integer range 0..6;
+type asn1SccPID is (asn1Scchal, asn1Sccgui, asn1Sccloc_provider, asn1Sccstate_handler_entrypoint, asn1Scctc_provider, asn1Scctm_collection, asn1Sccenv) with Size => adaasn1rtl.Enumerated_Size;
 for asn1SccPID use
-    (asn1Sccgui => 0, asn1Sccloc_provider => 1, asn1Sccstate_handler_entrypoint => 2, asn1Scctc_provider => 3, asn1Scctc_validation => 4, asn1Scctm_collection => 5, asn1Scctm_provider => 6, asn1Sccenv => 7);
+    (asn1Scchal => 0, asn1Sccgui => 1, asn1Sccloc_provider => 2, asn1Sccstate_handler_entrypoint => 3, asn1Scctc_provider => 4, asn1Scctm_collection => 5, asn1Sccenv => 6);
 
 function asn1SccPID_Equal(val1, val2 : asn1SccPID) return Boolean;
 
-ERR_PID:constant Integer := 326; -- gui | loc-provider | state-handler-entrypoint | tc-provider | tc-validation | tm-collection | tm-provider | env
+ERR_PID:constant Integer := 326; -- hal | gui | loc-provider | state-handler-entrypoint | tc-provider | tm-collection | env
 function asn1SccPID_IsConstraintValid(val : asn1SccPID) return adaasn1rtl.ASN1_RESULT;
 
 function asn1SccPID_Init  return asn1SccPID is
-(asn1Sccgui);
+(asn1Scchal);
 pragma Warnings (Off, "there are no others");
  
 pragma Warnings (On, "there are no others");

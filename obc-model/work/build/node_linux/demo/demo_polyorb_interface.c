@@ -318,13 +318,6 @@ void vm_state_handler_entrypoint_send_tm_mcp
    }
    // calling threads: state_handler_entrypoint_poll_aoi, state_handler_entrypoint_poll_mcp, state_handler_entrypoint_toggle_pwr, state_handler_entrypoint_trig_aoi, state_handler_entrypoint_trig_mcp, state_handler_entrypoint_trig_pwr partition: demo
 }
-// Required interface validate_mc_vs_tm in function state_handler_entrypoint
-#include "tc_validation_vm_if.h"  // Remote language: CPP
-void vm_state_handler_entrypoint_validate_mc_vs_tm(void)
-{
-   // Unprotected call (call function defined in vm_if or SIMULINK.Simulink.c function)
-   tc_validation_validate_mc_vs_tm();
-}
 
 void state_handler_entrypoint_check_queue(bool *OUT_has_pending_msg)
 {
@@ -348,24 +341,6 @@ void state_handler_entrypoint_check_queue(bool *OUT_has_pending_msg)
       *OUT_has_pending_msg = true;
       return;
    }
-}
-
-// Required interfaces of function tm_collection
-
-// Required interface request_tm in function tm_collection
-#include "tm_provider_vm_if.h"  // Remote language: C
-void vm_tm_collection_request_tm
-        (char *OUT_buf_temp, size_t *size_OUT_buf_temp,
-         char *OUT_buf_depl_d, size_t *size_OUT_buf_depl_d,
-         char *OUT_buf_depl_a, size_t *size_OUT_buf_depl_a)
-
-{
-   // Unprotected call (call function defined in vm_if or SIMULINK.Simulink.c function)
-   tm_provider_request_tm
-        (OUT_buf_temp, size_OUT_buf_temp,
-         OUT_buf_depl_d, size_OUT_buf_depl_d,
-         OUT_buf_depl_a, size_OUT_buf_depl_a);
-
 }
 
 #include "gui_vm_if.h"
@@ -403,6 +378,15 @@ void call_gui_send_tm_mcp (__po_hi_task_id sender_pid, dataview__mode_change_pac
    __po_hi_protected_lock (gui_protected.protected_id);
    gui_send_tm_mcp (buf->buffer, buf->length);
    __po_hi_protected_unlock (gui_protected.protected_id);
+}
+#include "hal_vm_if.h"
+
+// Function called by the middleware when task is ready to run
+void call_hal_blink_led (__po_hi_task_id sender_pid)
+{
+   (void)sender_pid; // sender id is not used for now
+
+   hal_blink_led();
 }
 #include "state_handler_entrypoint_vm_if.h"
 

@@ -26,6 +26,16 @@ void __po_hi_unmarshall_type_taste_protected_object
     __po_hi_msg_t* message,
     __po_hi_uint32_t* offset);
 
+void __po_hi_marshall_request_blinker_blink_trigger_outport_hal_toggle_led 
+    (__po_hi_request_t* request,
+    __po_hi_msg_t* message,
+    __po_hi_uint32_t* offset);
+
+void __po_hi_unmarshall_request_blinker_blink_trigger_outport_hal_toggle_led 
+    (__po_hi_request_t* request,
+    __po_hi_msg_t* message,
+    __po_hi_uint32_t* offset);
+
 void __po_hi_marshall_request_gui_poll_outport_state_handler_entrypoint_trig_aoi 
     (__po_hi_request_t* request,
     __po_hi_msg_t* message,
@@ -192,6 +202,16 @@ void __po_hi_marshall_request_gui_send_tm_mcp_outport_state_handler_entrypoint_t
     __po_hi_uint32_t* offset);
 
 void __po_hi_unmarshall_request_gui_send_tm_mcp_outport_state_handler_entrypoint_trig_pwr 
+    (__po_hi_request_t* request,
+    __po_hi_msg_t* message,
+    __po_hi_uint32_t* offset);
+
+void __po_hi_marshall_request_hal_toggle_led_inport_toggle_led 
+    (__po_hi_request_t* request,
+    __po_hi_msg_t* message,
+    __po_hi_uint32_t* offset);
+
+void __po_hi_unmarshall_request_hal_toggle_led_inport_toggle_led 
     (__po_hi_request_t* request,
     __po_hi_msg_t* message,
     __po_hi_uint32_t* offset);
