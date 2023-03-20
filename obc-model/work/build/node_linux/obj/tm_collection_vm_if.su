@@ -1,2 +1,0 @@
-tm_collection_vm_if.c:11:6:init_tm_collection	16	static
-tm_collection_vm_if.c:22:6:tm_collection_collect_tm	8	static

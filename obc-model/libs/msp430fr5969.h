@@ -1,1 +1,0 @@
-/opt/msp430-gcc/include/msp430fr5969.h

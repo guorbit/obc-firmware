@@ -1,7 +1,0 @@
-all:
-	mkdir -p code
-	cd code && opengeode --toAda /home/taste/obc-firmware/obc-model/work/payload_subsystem/SDL/src/system_structure.pr "../payload_subsystem.pr"
-	asn1scc -fp AUTO -typePrefix asn1Scc -o code -equal -Ada dataview-uniq.asn code/payload_subsystem_datamodel.asn
-	cd code && gnat make payload_subsystem
-clean:
-	rm -rf code

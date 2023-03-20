@@ -1,7 +1,0 @@
-all:
-	mkdir -p code
-	cd code && opengeode --toAda /home/taste/obc-model/work/tc_provider/implem/fsm/SDL/src/tc_provider.pr 
-	asn1scc -fp AUTO -typePrefix asn1Scc -o code -equal -Ada dataview-uniq.asn code/tc_provider_datamodel.asn
-	cd code && gnat make tc_provider
-clean:
-	rm -rf code

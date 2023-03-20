@@ -1,1 +1,0 @@
-./x86_ground_station & sleep 1 ; ./gui ; pkill -INT x86_ground_station

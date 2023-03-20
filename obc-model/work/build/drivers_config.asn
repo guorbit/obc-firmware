@@ -1,9 +1,0 @@
---  Configuration data for device drivers in distributed systems
---  This file was generated automatically by taste/kazoo
-Taste-Drivers-Configuration DEFINITIONS ::=
-BEGIN
-IMPORTS Serial-Conf-T FROM POHICDRIVER-UART;
-   pohidrv-node-1-serial Serial-Conf-T ::= { devname  "/dev/ttyACM1", speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }
-   pohidrv-node-2-msp430-eusci-a-serial-minimal Serial-Conf-T ::= { devname  " ", speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }
-END
-

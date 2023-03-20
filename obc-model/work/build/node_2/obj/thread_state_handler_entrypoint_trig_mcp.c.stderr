@@ -1,5 +1,0 @@
-In file included from /home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/transport.h:6,
-                 from /home/taste/obc-firmware/obc-model/work/build/node_2/msp430_obc/thread_state_handler_entrypoint_trig_mcp.c:8:
-/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.h:536:9: warning: struct has no members [-Wpedantic]
- typedef struct {
-         ^~~~~~

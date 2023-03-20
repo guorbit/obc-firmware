@@ -1,5 +1,0 @@
-gui_invoke_ri.c:12:6:gui_RI_trig_aoi	32	static
-gui_invoke_ri.c:35:6:gui_RI_trig_mcp	32	static
-gui_invoke_ri.c:58:6:gui_RI_trig_pwr	32	static
-gui_invoke_ri.c:76:1:_GLOBAL__sub_D_00099_0_gui_RI_trig_aoi	16	static
-gui_invoke_ri.c:76:1:_GLOBAL__sub_I_00099_1_gui_RI_trig_aoi	16	static

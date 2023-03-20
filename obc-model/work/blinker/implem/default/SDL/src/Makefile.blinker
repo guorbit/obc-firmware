@@ -1,7 +1,0 @@
-all:
-	mkdir -p code
-	cd code && opengeode --toAda /home/taste/obc-firmware/obc-model/work/blinker/implem/default/SDL/src/blinker.pr 
-	asn1scc -fp AUTO -typePrefix asn1Scc -o code -equal -Ada dataview-uniq.asn code/blinker_datamodel.asn
-	cd code && gnat make blinker
-clean:
-	rm -rf code

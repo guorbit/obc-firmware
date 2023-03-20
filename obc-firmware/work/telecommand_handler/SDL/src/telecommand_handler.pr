@@ -1,0 +1,71 @@
+/* CIF PROCESS (198, 150), (158, 75) */
+process Telecommand_Handler;
+    /* CIF TEXT (310, 16), (267, 140) */
+    -- Text area for declarations and comments
+    
+    dcl led T_Boolean;
+    dcl val T_Boolean;
+    dcl tc LED_Actuation_TC;
+    dcl rep LED_Actuation_Report;
+    /* CIF ENDTEXT */
+    /* CIF START (631, 56), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (631, 111), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF label (1314, 119), (70, 35) */
+    connection report:
+        /* CIF PROCEDURECALL (1299, 174), (99, 35) */
+        call read_led(val);
+        /* CIF task (1301, 224), (94, 35) */
+        task rep.on := val;
+        /* CIF decision (1314, 279), (70, 50) */
+        decision val;
+            /* CIF ANSWER (1412, 349), (70, 23) */
+            (false):
+                /* CIF PROCEDURECALL (1386, 387), (121, 35) */
+                call print("LED OFF");
+                /* CIF PROCEDURECALL (1359, 442), (175, 35) */
+                call report_led_actuation(rep);
+            /* CIF ANSWER (1215, 349), (70, 23) */
+            (true):
+                /* CIF PROCEDURECALL (1191, 387), (116, 35) */
+                call print("LED ON");
+                /* CIF PROCEDURECALL (1162, 442), (175, 35) */
+                call report_led_actuation(rep);
+        enddecision;
+        /* CIF NEXTSTATE (1314, 493), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF End Label */
+    endconnection;
+    /* CIF state (824, 59), (70, 35) */
+    state Wait;
+        /* CIF input (792, 114), (129, 35) */
+        input tc_actuate_led(tc);
+            /* CIF task (813, 169), (87, 35) */
+            task led := tc.on;
+            /* CIF PROCEDURECALL (810, 224), (93, 35) */
+            call set_led(led);
+            /* CIF join (840, 279), (35, 35) */
+            join report;
+    endstate;
+    /* CIF state (633, 240), (70, 35) */
+    state Wait;
+        /* CIF input (633, 295), (70, 35) */
+        input sayhi;
+            /* CIF PROCEDURECALL (599, 350), (137, 35) */
+            call print("hi from SDL");
+            /* CIF NEXTSTATE (633, 405), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (1068, 59), (70, 35) */
+    state Wait;
+        /* CIF input (1030, 114), (142, 35) */
+        input onboard_toggle_led;
+            /* CIF task (1052, 169), (99, 35) */
+            task led := not led;
+            /* CIF PROCEDURECALL (1055, 224), (93, 35) */
+            call set_led(led);
+            /* CIF join (1084, 279), (35, 35) */
+            join report;
+    endstate;
+endprocess Telecommand_Handler;
