@@ -1,7 +1,0 @@
-x86_ground_station_polyorb_interface.c:7:6:vm_gui_trig_aoi	48	static
-x86_ground_station_polyorb_interface.c:40:6:vm_gui_trig_mcp	48	static
-x86_ground_station_polyorb_interface.c:73:6:vm_gui_trig_pwr	48	static
-x86_ground_station_polyorb_interface.c:109:6:call_gui_poll	32	static
-x86_ground_station_polyorb_interface.c:121:6:call_gui_send_tm_aoi	32	static
-x86_ground_station_polyorb_interface.c:133:6:call_gui_send_tm_mcp	32	static
-x86_ground_station_polyorb_interface.c:141:1:_GLOBAL__sub_I_00099_0_vm_gui_trig_aoi	16	static

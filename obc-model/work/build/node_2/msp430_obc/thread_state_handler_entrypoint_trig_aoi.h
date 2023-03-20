@@ -1,6 +1,0 @@
-#ifndef state_handler_entrypoint_trig_aoi_INCLUDED
-#define state_handler_entrypoint_trig_aoi_INCLUDED
-
-void prv_state_handler_entrypoint_trig_aoi_Task(void* prParameters);
-
-#endif

@@ -1,6 +1,0 @@
-In file included from /home/taste/obc-firmware/obc-model/work/tc_validation/CPP/src/tc_validation.h:8,
-                 from /home/taste/obc-firmware/obc-model/work/tc_validation/CPP/wrappers/tc_validation_vm_if.h:24,
-                 from /home/taste/obc-firmware/obc-model/work/tc_validation/CPP/wrappers/tc_validation_vm_if.c:4:
-/home/taste/obc-firmware/obc-model/work/dataview/C/dataview-uniq.h:536:9: warning: struct has no members [-Wpedantic]
- typedef struct {
-         ^~~~~~

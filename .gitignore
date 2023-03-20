@@ -1,0 +1,40 @@
+# project configs
+*.pro
+!obc-firmware/obc-firmware/obc-firmware.pro
+!obc-firmware/obc-firmware/work/taste.pro
+*.pro.user
+statusfile
+
+# AADL files
+*.aadl
+
+# SQL database
+obc-firmware/work/sql_db/ 
+
+# build files
+obc-firmware/work/build/
+obc-firmware/work/binaries/
+obc-firmware/work/Debug/
+obc-firmware/work/Dump/
+obc-firmware/work/doc/
+obc-firmware/work/dataview/
+obc-firmware/work/glue_simu/
+obc-firmware/work/glue_coverage/
+obc-firmware/work/glue_debug/
+obc-firmware/work/glue_release/
+obc-firmware/work/skeletons_built/
+
+# wrappers
+wrappers
+
+# code skeletons & symlinks
+obc-firmware/work/*/GUI/src/*.h
+obc-firmware/work/*/GUI/src/*.c
+obc-firmware/work/*/implem/*/GUI/src/*.h
+obc-firmware/work/*/implem/*/GUI/src/*.c
+obc-firmware/work/*/C
+obc-firmware/work/*/CPP
+obc-firmware/work/*/SDL/code/*
+obc-firmware/work/*/SDL/src/*
+!obc-firmware/work/*/SDL/src/*.pr
+

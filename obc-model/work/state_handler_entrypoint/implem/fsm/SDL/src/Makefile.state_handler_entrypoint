@@ -1,7 +1,0 @@
-all:
-	mkdir -p code
-	cd code && opengeode --toAda /home/taste/obc-firmware/obc-model/work/state_handler_entrypoint/implem/fsm/SDL/src/state_handler_entrypoint.pr "../system_structure.pr"
-	asn1scc -fp AUTO -typePrefix asn1Scc -o code -equal -Ada dataview-uniq.asn code/state_handler_entrypoint_datamodel.asn
-	cd code && gnat make state_handler_entrypoint
-clean:
-	rm -rf code

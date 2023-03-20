@@ -1,6 +1,0 @@
-gui_vm_if.c:13:6:init_gui	32	static
-gui_vm_if.c:26:6:gui_Poll	16	static
-gui_vm_if.c:38:6:gui_send_tm_aoi	48	static
-gui_vm_if.c:68:6:gui_send_tm_mcp	48	static
-gui_vm_if.c:93:1:_GLOBAL__sub_D_00099_0_gui_initialized	16	static
-gui_vm_if.c:93:1:_GLOBAL__sub_I_00099_1_gui_initialized	16	static

@@ -1,4 +1,0 @@
-[01m[K/home/taste/obc-firmware/obc-model/work/loc_provider/C/wrappers/loc_provider_vm_if.c:[m[K In function ‘[01m[Kloc_provider_request_loc[m[K’:
-[01m[K/home/taste/obc-firmware/obc-model/work/loc_provider/C/wrappers/loc_provider_vm_if.c:24:31:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KOUT_lfp_len[m[K’ [[01;35m[K-Wunused-parameter[m[K]
-       (char *OUT_lfp, [01;35m[Ksize_t *OUT_lfp_len[m[K)
-                       [01;35m[K~~~~~~~~^~~~~~~~~~~[m[K

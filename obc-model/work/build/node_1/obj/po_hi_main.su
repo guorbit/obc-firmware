@@ -1,7 +1,0 @@
-po_hi_main.c:104:6:ctrl_c_handler	16	static
-po_hi_main.c:121:6:__po_hi_initialize_add_task	16	static
-po_hi_main.c:128:5:__po_hi_initialize_early	144	static
-po_hi_main.c:258:5:__po_hi_initialize	16	static
-po_hi_main.c:507:5:__po_hi_wait_initialization	144	static
-po_hi_main.c:617:1:_GLOBAL__sub_D_00099_0_ctrl_c_handler	16	static
-po_hi_main.c:617:1:_GLOBAL__sub_I_00099_1_ctrl_c_handler	16	static
