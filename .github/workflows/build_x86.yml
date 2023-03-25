@@ -43,7 +43,7 @@ jobs:
         with:
           name: build_x86
           path: |
-            obc-firmware/obc-firmware/work/binaries         # executables
-            obc-firmware/obc-firmware/work/*/GUI/src/*.py   # GUI widgets
-            obc-firmware/obc-firmware/work/build            # build dir for info
+            obc-firmware/work/binaries        # executables
+            obc-firmware/work/*/GUI/src/*.py  # GUI widgets
+            obc-firmware/work/build           # build dir (extra)
 
