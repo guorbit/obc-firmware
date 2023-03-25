@@ -20,6 +20,8 @@ echo -e '[-] Also, \e[1m\e[32m the TASTE repositories are under /root/tool-src.\
 echo '[-]'
 echo '[-] Launching the TASTE Docker container...'
 echo '[-]'
+
+PWD=$(pwd)
 HOMEB=/root
 XSOCK=/tmp/.X11-unix
 XAUTH=/tmp/.docker.xauth
@@ -27,6 +29,7 @@ touch ${XAUTH}
 xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f ${XAUTH} nmerge -
 export TASTE_IN_DOCKER=1
 docker run \
+    --name taste \
     --privileged \
     -e DISPLAY \
     -e TASTE_IN_DOCKER \
@@ -34,6 +37,5 @@ docker run \
     -v ${XSOCK}:${XSOCK} \
     -v ${XAUTH}:${XAUTH} \
     -v "$HOME":"$HOMEB"/work \
-    -v obc-firmware:"$HOMEB"/work/obc-firmware \
+    -v "$PWD":"$HOMEB"/work/obc-firmware \
     -dit taste /bin/bash -i
-
