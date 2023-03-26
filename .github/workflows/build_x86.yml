@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  # triggered when refereneced in another workflow
+  workflow_call:
+  # automatically triggered by push events on all branches except for main
+  push:
+    branches:
+      - 'feature/*'	# run on feature branches
+      - 'main'          # run on main
+      - 'cid-test'      # run on cid-test for testing
+
+jobs:
+  # build and run the TASTE Docker container
+  build:
+    # run on Linux to use Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout in GitHub workspace
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Make Docker-run.sh executable
+        run: chmod +x Docker-run.sh
+
+      - name: Build Docker container
+        run: docker build -t taste .
+
+      # run with bind mount of TASTE firmware directory
+      - name: Run Docker container
+        run: ./Docker-run.sh
+
+      - name: Build OBC Firmware for default deployment (x86 linux)
+        run: docker exec -i taste bash -c "
+          source /root/.bashrc.taste              &&
+          cd /root/work/obc-firmware/obc-firmware &&
+          taste-update-data-view obc-firmware.asn &&
+          make
+          "
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build_x86
+          path: |
+            obc-firmware/work/binaries/*
+            obc-firmware/work/*/GUI/src/*.py
+            obc-firmware/work/build/*
