@@ -42,4 +42,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build_x86
-          path: obc-firmware/work
+          path: |
+            obc-firmware/work/binaries/*
+            obc-firmware/work/*/GUI/src/*.py
+            obc-firmware/work/build/*
