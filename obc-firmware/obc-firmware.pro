@@ -18,5 +18,5 @@ message($$DISTFILES)
 
 STATECHARTS +=
 
-DISTFILES +=
 DISTFILES += work/doc/database/obc_firmware.png
+
