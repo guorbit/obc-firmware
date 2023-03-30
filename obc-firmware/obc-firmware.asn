@@ -36,8 +36,7 @@ BEGIN
 --  -- You can also declare constants
 --  myVar       MySeqOf     ::= { hello, world }
 
-CounterK                ::= INTEGER (0 .. 1000)
-OString                 ::=  OCTET STRING (SIZE (0 .. 255))
+OString                 ::= OCTET STRING (SIZE (0 .. 255))
 
 Time-UNIX               ::= INTEGER (0 .. 4294967294)   -- overflow in 2106
 Delay-ns                ::= INTEGER (0 .. 1000000000)   -- max 1s
@@ -55,15 +54,28 @@ Location                ::= SEQUENCE {
     alt             Altitude-m
 }
 
-LED-Actuation-TC        ::= SEQUENCE {
-    on              BOOLEAN
+Area-of-Interest        ::= SEQUENCE {
+    loc-start       Location,
+    loc-stop        Location
 }
 
-LED-Actuation-Report    ::= SEQUENCE {
-    on              BOOLEAN
+AoI-List                ::= SEQUENCE (SIZE (32)) OF Area-of-Interest
+AoI-List-Index          ::= INTEGER (0 .. 31)
+
+AoI-Action              ::= ENUMERATED {
+    add,
+    remove
 }
 
-Deployment-Digital      ::= BOOLEAN
-Deployment-Analogue     ::= REAL (0.0 .. 100.0)
+AoI-Config-TC           ::= SEQUENCE {
+    action          AoI-Action,
+    index           AoI-List-Index,
+    aoi             Area-of-Interest
+}
+
+AoI-Config-Report       ::= SEQUENCE {
+    aoi-list-upd    AoI-List
+}
+
 END
 

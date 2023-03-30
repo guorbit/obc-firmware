@@ -1,12 +1,12 @@
 <InterfaceView asn1file="obc-firmware.acn" mscfile="/home/taste/obc-model/obc-model.msc">
-<Function name="print_service" is_type="NO" language="C" default_implementation="msp430" fixed_system_element="NO" required_system_element="NO" startup_priority="1" FPGA_Configurations="">
+<Function name="print_service" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="47200 107600 67200 116200"/>
 <Provided_Interface name="print" kind="Protected" layer="default" required_system_element="NO" wcet="0">
     <Input_Parameter name="stri" type="OString" encoding="NATIVE"/>
     <Property name="Taste::coordinates" value="57000 107600"/>
 </Provided_Interface>
 
-<Provided_Interface name="wait" kind="Cyclic" layer="default" required_system_element="NO" period="1000" priority="1" dispatch_offset="0" wcet="0" stack_size="1024">
+<Provided_Interface name="wait" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" period="1000" priority="1" wcet="0" dispatch_offset="0">
     <Property name="Taste::coordinates" value="57000 116200"/>
 </Provided_Interface>
 
@@ -16,105 +16,16 @@
     </Implementations>
 </Function>
 
-<Function name="HAL" is_type="NO" language="C" default_implementation="msp430" fixed_system_element="NO" required_system_element="NO" startup_priority="1" FPGA_Configurations="">
-    <Property name="Taste::coordinates" value="75000 104500 248700 119300"/>
-<Provided_Interface name="blink_led" kind="Cyclic" layer="default" required_system_element="NO" period="500" priority="1" dispatch_offset="0" wcet="200" stack_size="1024">
-    <Property name="Taste::coordinates" value="75000 108900"/>
-</Provided_Interface>
-
-<Provided_Interface name="toggle_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Input_Parameter name="on_time_ns" type="Delay-ns" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="79000 104500"/>
-</Provided_Interface>
-
-<Provided_Interface name="set_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="88300 104500"/>
-</Provided_Interface>
-
-<Provided_Interface name="read_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Output_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="94900 107300"/>
-</Provided_Interface>
-
-<Required_Interface name="onboard_toggle_led" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="16" miat="0" stack_size="1024">
-    <Property name="Taste::coordinates" value="104100 104500"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="msp430" language="C"/>
-        <Implementation name="x86" language="C"/>
-    </Implementations>
-</Function>
-
-<Function name="telecommand_handler" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" startup_priority="1" FPGA_Configurations="">
-    <Property name="Taste::coordinates" value="64500 18900 84500 90300"/>
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="c"/>
-<Provided_Interface name="sayhi" kind="Cyclic" layer="default" required_system_element="NO" period="2000" priority="1" dispatch_offset="0" wcet="0" stack_size="1024">
-    <Property name="Taste::coordinates" value="64500 87200"/>
-</Provided_Interface>
-
-<Provided_Interface name="tc_actuate_led" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="32" miat="0" stack_size="1024">
-    <Input_Parameter name="led_actuation_tc" type="LED-Actuation-TC" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="64500 26100"/>
-</Provided_Interface>
-
-<Provided_Interface name="onboard_toggle_led" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="16" miat="0" stack_size="1024">
-    <Property name="Taste::coordinates" value="84500 66300"/>
-</Provided_Interface>
-
-<Required_Interface name="print" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Input_Parameter name="stri" type="OString" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="66800 90300"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="toggle_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Input_Parameter name="on_time_ns" type="Delay-ns" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="72700 90300"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="report_led_actuation" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="32" miat="0" stack_size="1024">
-    <Input_Parameter name="led_actuation_report" type="LED-Actuation-Report" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="64500 31300"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="set_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="81400 90300"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface name="read_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
-    <Output_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="84500 78500"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="SDL"/>
-    </Implementations>
-</Function>
-
-<Function name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" startup_priority="1" FPGA_Configurations="">
+<Function name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="13000 14200 33000 106500"/>
-<Provided_Interface name="report_led_actuation" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="32" miat="0" stack_size="1024">
-    <Input_Parameter name="led_actuation_report" type="LED-Actuation-Report" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="33000 31300"/>
+<Provided_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+    <Input_Parameter name="aoi_config_report" type="AoI-Config-Report" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="33000 28200"/>
 </Provided_Interface>
 
-<Required_Interface name="tc_actuate_led" kind="Sporadic" layer="default" required_system_element="NO" priority="1" wcet="0" queue_size="32" miat="0" stack_size="1024">
-    <Input_Parameter name="led_actuation_tc" type="LED-Actuation-TC" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="33000 26100"/>
+<Required_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+    <Input_Parameter name="aoi_config_tc" type="AoI-Config-TC" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="33000 21200"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
@@ -124,46 +35,66 @@
     </Implementations>
 </Function>
 
+<Function name="HAL" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="75000 104500 248700 119300"/>
+<Provided_Interface name="blink_led" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" period="500" priority="1" wcet="200" dispatch_offset="0">
+    <Property name="Taste::coordinates" value="75000 108900"/>
+</Provided_Interface>
+
+<Provided_Interface name="set_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="79600 104500"/>
+</Provided_Interface>
+
+    <Implementations>
+        <Implementation name="msp430" language="C"/>
+        <Implementation name="x86" language="C"/>
+    </Implementations>
+</Function>
+
+<Function name="aoi_manager" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="55300 16800 79800 32200"/>
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="c"/>
+<Provided_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+    <Input_Parameter name="aoi_config_tc" type="AoI-Config-TC" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="55300 21200"/>
+</Provided_Interface>
+
+<Required_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+    <Input_Parameter name="aoi_config_report" type="AoI-Config-Report" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="55300 28200"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface name="print" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Input_Parameter name="stri" type="OString" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="62000 32200"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
 <Connection  required_system_element="NO">
-    <Source func_name="telecommand_handler" ri_name="read_led"/>
-    <Target func_name="HAL" pi_name="read_led"/>
-    <Property name="Taste::coordinates" value="85100 78500 94900 78500 94900 104200"/>
+    <Source func_name="aoi_manager" ri_name="report_aoi_config"/>
+    <Target func_name="gs_gui" pi_name="report_aoi_config"/>
+    <Property name="Taste::coordinates" value="54700 28200 33300 28200"/>
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="telecommand_handler" ri_name="toggle_led"/>
-    <Target func_name="HAL" pi_name="toggle_led"/>
-    <Property name="Taste::coordinates" value="72700 90900 72700 97500 79000 97500 79000 104200"/>
+    <Source func_name="gs_gui" ri_name="tc_config_aoi"/>
+    <Target func_name="aoi_manager" pi_name="tc_config_aoi"/>
+    <Property name="Taste::coordinates" value="33600 21200 55000 21200"/>
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="HAL" ri_name="onboard_toggle_led"/>
-    <Target func_name="telecommand_handler" pi_name="onboard_toggle_led"/>
-    <Property name="Taste::coordinates" value="104100 103900 104100 66300 84800 66300"/>
-</Connection>
-
-<Connection  required_system_element="NO">
-    <Source func_name="telecommand_handler" ri_name="print"/>
+    <Source func_name="aoi_manager" ri_name="print"/>
     <Target func_name="print_service" pi_name="print"/>
-    <Property name="Taste::coordinates" value="66800 90900 66800 99100 57000 99100 57000 107300"/>
-</Connection>
-
-<Connection  required_system_element="NO">
-    <Source func_name="telecommand_handler" ri_name="set_led"/>
-    <Target func_name="HAL" pi_name="set_led"/>
-    <Property name="Taste::coordinates" value="81400 90900 81400 97500 88300 97500 88300 104200"/>
-</Connection>
-
-<Connection  required_system_element="NO">
-    <Source func_name="gs_gui" ri_name="tc_actuate_led"/>
-    <Target func_name="telecommand_handler" pi_name="tc_actuate_led"/>
-    <Property name="Taste::coordinates" value="33600 26100 64200 26100"/>
-</Connection>
-
-<Connection  required_system_element="NO">
-    <Source func_name="telecommand_handler" ri_name="report_led_actuation"/>
-    <Target func_name="gs_gui" pi_name="report_led_actuation"/>
-    <Property name="Taste::coordinates" value="63900 31300 33300 31300"/>
+    <Property name="Taste::coordinates" value="62000 32800 62000 70000 57000 70000 57000 107300"/>
 </Connection>
 
 <Comment name="Welcome to TASTE!\n============\n\nRight click to add a function, and use Ctrl-Click to connect functions together.\n\nYou can split the screen in multiple windows using Ctrl-E-3" required_system_element="NO">

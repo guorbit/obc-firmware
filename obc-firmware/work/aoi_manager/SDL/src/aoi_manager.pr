@@ -1,0 +1,97 @@
+/* CIF PROCESS (250, 150), (150, 75) */
+process Aoi_Manager;
+    /* CIF TEXT (332, 22), (267, 143) */
+    -- Text area for declarations and comments
+    
+    dcl aoi_config_tc AoI_Config_TC;
+    dcl aoi_config_report AoI_Config_Report;
+    
+    dcl idx AoI_List_Index;
+    dcl aoi Area_of_Interest;
+    
+    dcl aoi_list AoI_List;
+    /* CIF ENDTEXT */
+    /* CIF procedure (477, 204), (93, 35) */
+    procedure aoi_list_add;
+        /* CIF TEXT (16, 17), (267, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out list AoI_List,
+          in idx AoI_List_Index,
+          in aoi Area_of_Interest;
+        /* CIF ENDTEXT */
+        /* CIF START (378, 38), (70, 35) */
+        START;
+            /* CIF PROCEDURECALL (327, 93), (170, 35) */
+            call print("adding AoI to list");
+            /* CIF task (360, 148), (104, 35) */
+            task list (idx) := aoi;
+            /* CIF PROCEDURECALL (330, 203), (165, 35) */
+            call print("AoI added to list");
+            /* CIF return (395, 258), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (466, 267), (115, 35) */
+    procedure aoi_list_remove;
+        /* CIF TEXT (12, 16), (267, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out list AoI_List,
+          in idx AoI_List_Index;
+        
+        dcl aoi_blank Area_of_Interest;
+        /* CIF ENDTEXT */
+        /* CIF START (371, 44), (70, 35) */
+        START;
+            /* CIF PROCEDURECALL (305, 94), (201, 35) */
+            call print("removing AoI from list");
+            /* CIF task (334, 149), (142, 35) */
+            task list (idx) := aoi_blank;
+            /* CIF PROCEDURECALL (307, 204), (197, 35) */
+            call print("AoI removed from list");
+    endprocedure;
+    /* CIF START (372, 186), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (372, 236), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (879, 50), (70, 35) */
+    state Wait;
+        /* CIF input (814, 105), (188, 35) */
+        input tc_config_aoi(aoi_config_tc);
+            /* CIF PROCEDURECALL (807, 160), (202, 35) */
+            call print("AoI Config TC received");
+            /* CIF decision (838, 215), (141, 50) */
+            decision aoi_config_tc.action;
+                /* CIF ANSWER (1057, 285), (70, 23) */
+                (remove):
+                    /* CIF PROCEDURECALL (935, 323), (313, 35) */
+                    call print("AoI Config TC action parsed as:\tREMOVE");
+                    /* CIF task (1006, 378), (171, 35) */
+                    task idx := aoi_config_tc.index;
+                    /* CIF PROCEDURECALL (996, 481), (190, 35) */
+                    call aoi_list_remove(aoi_list, idx);
+                /* CIF ANSWER (708, 285), (70, 23) */
+                (add):
+                    /* CIF PROCEDURECALL (599, 323), (287, 35) */
+                    call print("AoI Config TC action parsed as:\tADD");
+                    /* CIF task (657, 378), (171, 35) */
+                    task idx := aoi_config_tc.index;
+                    /* CIF task (664, 433), (156, 35) */
+                    task aoi := aoi_config_tc.aoi;
+                    /* CIF PROCEDURECALL (647, 483), (191, 35) */
+                    call aoi_list_add(aoi_list, idx, aoi);
+            enddecision;
+            /* CIF task (778, 534), (261, 35) */
+            task aoi_config_report.aoi_list_upd := aoi_list;
+            /* CIF PROCEDURECALL (811, 589), (194, 35) */
+            call print("Reporting AoI Config");
+            /* CIF PROCEDURECALL (788, 639), (241, 35) */
+            call report_aoi_config(aoi_config_report);
+            /* CIF PROCEDURECALL (815, 694), (186, 35) */
+            call print("AoI Config reported");
+            /* CIF NEXTSTATE (874, 744), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess Aoi_Manager;
