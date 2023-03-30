@@ -1,4 +1,4 @@
-<InterfaceView asn1file="obc-firmware.acn" mscfile="/home/taste/obc-model/obc-model.msc">
+<InterfaceView asn1file="obc-firmware.asn" mscfile="/home/taste/obc-model/obc-model.msc">
 <Function name="print_service" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="47200 107600 67200 116200"/>
 <Provided_Interface name="print" kind="Protected" layer="default" required_system_element="NO" wcet="0">
@@ -6,7 +6,7 @@
     <Property name="Taste::coordinates" value="57000 107600"/>
 </Provided_Interface>
 
-<Provided_Interface name="wait" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" period="1000" priority="1" wcet="0" dispatch_offset="0">
+<Provided_Interface name="wait" kind="Cyclic" layer="default" required_system_element="NO" period="1000" priority="1" wcet="0" dispatch_offset="0" stack_size="1024">
     <Property name="Taste::coordinates" value="57000 116200"/>
 </Provided_Interface>
 
@@ -16,34 +16,26 @@
     </Implementations>
 </Function>
 
-<Function name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
-    <Property name="Taste::coordinates" value="13000 14200 33000 106500"/>
-<Provided_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
-    <Input_Parameter name="aoi_config_report" type="AoI-Config-Report" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="33000 28200"/>
-</Provided_Interface>
-
-<Required_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
-    <Input_Parameter name="aoi_config_tc" type="AoI-Config-TC" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="33000 21200"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="GUI"/>
-    </Implementations>
-</Function>
-
 <Function name="HAL" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="75000 104500 248700 119300"/>
-<Provided_Interface name="blink_led" kind="Cyclic" layer="default" required_system_element="NO" stack_size="1024" period="500" priority="1" wcet="200" dispatch_offset="0">
-    <Property name="Taste::coordinates" value="75000 108900"/>
+<Provided_Interface name="blink_led" kind="Cyclic" layer="default" required_system_element="NO" period="500" priority="1" wcet="200" dispatch_offset="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="75000 116300"/>
 </Provided_Interface>
 
 <Provided_Interface name="set_led" kind="Protected" layer="default" required_system_element="NO" wcet="0">
     <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::coordinates" value="79600 104500"/>
+    <Property name="Taste::coordinates" value="75000 109400"/>
+</Provided_Interface>
+
+<Provided_Interface name="get_altitude" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Output_Parameter name="altitude_m" type="Altitude-m" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="96500 104500"/>
+</Provided_Interface>
+
+<Provided_Interface name="get_gps" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Output_Parameter name="lat" type="Latitude-WGS84" encoding="NATIVE"/>
+    <Output_Parameter name="lon" type="Longitude-WGS84" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="110800 104500"/>
 </Provided_Interface>
 
     <Implementations>
@@ -55,12 +47,17 @@
 <Function name="aoi_manager" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
     <Property name="Taste::coordinates" value="55300 16800 79800 32200"/>
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="c"/>
-<Provided_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+<Provided_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" priority="1" miat="0" wcet="0" queue_size="1" stack_size="1024">
     <Input_Parameter name="aoi_config_tc" type="AoI-Config-TC" encoding="NATIVE"/>
     <Property name="Taste::coordinates" value="55300 21200"/>
 </Provided_Interface>
 
-<Required_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" stack_size="1024" queue_size="1" miat="0" priority="1" wcet="0">
+<Provided_Interface name="send_location" kind="Sporadic" layer="default" required_system_element="NO" wcet="0">
+    <Input_Parameter name="loc" type="Location" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="79800 26100"/>
+</Provided_Interface>
+
+<Required_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" priority="1" miat="0" wcet="0" queue_size="1" stack_size="1024">
     <Input_Parameter name="aoi_config_report" type="AoI-Config-Report" encoding="NATIVE"/>
     <Property name="Taste::coordinates" value="55300 28200"/>
     <Property name="Taste::InheritPI" value="true"/>
@@ -79,6 +76,85 @@
     </Implementations>
 </Function>
 
+<Function name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="13000 14200 33000 106500"/>
+<Provided_Interface name="report_aoi_config" kind="Sporadic" layer="default" required_system_element="NO" priority="1" miat="0" wcet="0" queue_size="1" stack_size="1024">
+    <Input_Parameter name="aoi_config_report" type="AoI-Config-Report" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="33000 28200"/>
+</Provided_Interface>
+
+<Required_Interface name="tc_config_aoi" kind="Sporadic" layer="default" required_system_element="NO" priority="1" miat="0" wcet="0" queue_size="1" stack_size="1024">
+    <Input_Parameter name="aoi_config_tc" type="AoI-Config-TC" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="33000 21200"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="GUI"/>
+    </Implementations>
+</Function>
+
+<Function name="location_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1">
+    <Property name="Taste::coordinates" value="90300 17900 126700 30700"/>
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="c"/>
+<Provided_Interface name="trigger_get_altitude" kind="Cyclic" layer="default" required_system_element="NO" period="1000" priority="1" wcet="0" dispatch_offset="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="94300 17900"/>
+</Provided_Interface>
+
+<Provided_Interface name="trigger_get_gps" kind="Cyclic" layer="default" required_system_element="NO" period="1000" priority="1" wcet="0" dispatch_offset="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="109300 17900"/>
+</Provided_Interface>
+
+<Provided_Interface name="trigger_send_location" kind="Cyclic" layer="default" required_system_element="NO" period="30000" priority="1" wcet="0" dispatch_offset="0" stack_size="1024">
+    <Property name="Taste::coordinates" value="126700 22400"/>
+</Provided_Interface>
+
+<Required_Interface name="get_altitude" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Output_Parameter name="altitude_m" type="Altitude-m" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="96700 30700"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface name="get_gps" kind="Protected" layer="default" required_system_element="NO" wcet="0">
+    <Output_Parameter name="lat" type="Latitude-WGS84" encoding="NATIVE"/>
+    <Output_Parameter name="lon" type="Longitude-WGS84" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="110900 30700"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface name="send_location" kind="Sporadic" layer="default" required_system_element="NO" wcet="0">
+    <Input_Parameter name="loc" type="Location" encoding="NATIVE"/>
+    <Property name="Taste::coordinates" value="90300 22800"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Connection  required_system_element="NO">
+    <Source func_name="location_tracker" ri_name="send_location"/>
+    <Target func_name="aoi_manager" pi_name="send_location"/>
+    <Property name="Taste::coordinates" value="89700 22800 84900 22800 84900 26100 80100 26100"/>
+</Connection>
+
+<Connection  required_system_element="NO">
+    <Source func_name="location_tracker" ri_name="get_altitude"/>
+    <Target func_name="HAL" pi_name="get_altitude"/>
+    <Property name="Taste::coordinates" value="96700 31300 96700 67700 96500 104200"/>
+</Connection>
+
+<Connection  required_system_element="NO">
+    <Source func_name="aoi_manager" ri_name="print"/>
+    <Target func_name="print_service" pi_name="print"/>
+    <Property name="Taste::coordinates" value="62000 32800 62000 70000 57000 70000 57000 107300"/>
+</Connection>
+
 <Connection  required_system_element="NO">
     <Source func_name="aoi_manager" ri_name="report_aoi_config"/>
     <Target func_name="gs_gui" pi_name="report_aoi_config"/>
@@ -86,15 +162,15 @@
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="gs_gui" ri_name="tc_config_aoi"/>
-    <Target func_name="aoi_manager" pi_name="tc_config_aoi"/>
-    <Property name="Taste::coordinates" value="33600 21200 55000 21200"/>
+    <Source func_name="location_tracker" ri_name="get_gps"/>
+    <Target func_name="HAL" pi_name="get_gps"/>
+    <Property name="Taste::coordinates" value="110900 31300 110900 67700 110800 104200"/>
 </Connection>
 
 <Connection  required_system_element="NO">
-    <Source func_name="aoi_manager" ri_name="print"/>
-    <Target func_name="print_service" pi_name="print"/>
-    <Property name="Taste::coordinates" value="62000 32800 62000 70000 57000 70000 57000 107300"/>
+    <Source func_name="gs_gui" ri_name="tc_config_aoi"/>
+    <Target func_name="aoi_manager" pi_name="tc_config_aoi"/>
+    <Property name="Taste::coordinates" value="33600 21200 55000 21200"/>
 </Connection>
 
 <Comment name="Welcome to TASTE!\n============\n\nRight click to add a function, and use Ctrl-Click to connect functions together.\n\nYou can split the screen in multiple windows using Ctrl-E-3" required_system_element="NO">

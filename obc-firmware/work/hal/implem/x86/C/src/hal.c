@@ -26,6 +26,17 @@ void hal_PI_blink_led( void )
     puts("blink");
 }
 
+void hal_PI_get_altitude( asn1SccAltitude_m *OUT_alt )
+{
+    *OUT_alt = 80;
+}
+
+void hal_PI_get_gps( asn1SccLatitude_WGS84 *OUT_lat, asn1SccLongitude_WGS84 *OUT_lon )
+{
+    *OUT_lat = 45;
+    *OUT_lon = 0;
+}
+
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 {
     LED_ON = *IN_val;

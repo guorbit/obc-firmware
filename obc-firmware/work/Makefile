@@ -28,6 +28,10 @@ dataview:	dataview/C/built dataview/Ada/built
 	cp -u ${DATAVIEW_UNIQ} aoi_manager/SDL/src
 	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
 	md5sum -c "aoi_manager/SDL/src/dataview.md5"  &> /dev/null || md5sum  "aoi_manager/SDL/src/dataview-uniq.asn" >  "aoi_manager/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function location_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} location_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "location_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "location_tracker/SDL/src/dataview-uniq.asn" >  "location_tracker/SDL/src/dataview.md5"
 
 # Generate the complete dataview, including Python bindings if there is a GUI
 ${DATAVIEW_PATH}/built:	dataview dataview/Python/built
@@ -72,7 +76,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	aoi_manager/SDL/wrappers/aadl2glueC_built gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built
+aadl2glueC:	aoi_manager/SDL/wrappers/aadl2glueC_built gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built location_tracker/SDL/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -91,6 +95,10 @@ gs_gui/GUI/wrappers/aadl2glueC_built: gs_gui/GUI/wrappers/gs_gui_mini_cv.aadl ${
 	touch $@
 
 hal/C/wrappers/aadl2glueC_built: hal/C/wrappers/hal_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+location_tracker/SDL/wrappers/aadl2glueC_built: location_tracker/SDL/wrappers/location_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
