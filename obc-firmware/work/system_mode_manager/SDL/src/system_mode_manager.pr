@@ -1,0 +1,26 @@
+/* CIF PROCESS (233, 150), (164, 75) */
+process System_Mode_Manager;
+    /* CIF TEXT (325, 16), (411, 140) */
+    -- Text area for declarations and comments
+    
+    dcl mission_mode_change_tc Mission_Mode_Change_TC;
+    dcl mission_mode_change_report Mission_Mode_Change_Report;
+    
+    dcl system_mode System_Mode_T;
+    /* CIF ENDTEXT */
+    /* CIF START (376, 186), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (376, 236), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (952, 30), (70, 35) */
+    state Wait;
+        /* CIF input (817, 85), (333, 35) */
+        input tc_change_mission_mode(mission_mode_change_tc);
+            /* CIF output (849, 140), (270, 35) */
+            output print("Mission Mode Change TC received");
+            /* CIF output (836, 195), (295, 35) */
+            output confirm_system_mode_change(system_mode);
+            /* CIF NEXTSTATE (949, 245), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess System_Mode_Manager;

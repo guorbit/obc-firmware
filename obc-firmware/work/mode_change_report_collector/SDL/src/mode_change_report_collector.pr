@@ -1,0 +1,24 @@
+/* CIF PROCESS (210, 150), (215, 75) */
+process Mode_Change_Report_Collector;
+    /* CIF TEXT (316, 9), (411, 140) */
+    -- Text area for declarations and comments
+    
+    dcl system_mode System_Mode_T;
+    dcl mission_mode_change_report Mission_Mode_Change_Report;
+    /* CIF ENDTEXT */
+    /* CIF START (366, 177), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (366, 227), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (937, 45), (70, 35) */
+    state Wait;
+        /* CIF input (824, 100), (295, 35) */
+        input confirm_system_mode_change(system_mode);
+            /* CIF output (779, 155), (386, 35) */
+            output report_mission_mode_change(mission_mode_change_report);
+            /* CIF output (921, 205), (101, 35) */
+            output set_led(true);
+            /* CIF NEXTSTATE (937, 255), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess Mode_Change_Report_Collector;

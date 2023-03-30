@@ -5,9 +5,10 @@
             <Property name="Taste::coordinates" value="61500 25800 81200 41000"/>
             <Function name="HAL" path="HAL" selected_implementation="msp430"/>
             <Function name="print_service" path="print_service" selected_implementation="msp430"/>
-            <Function name="telecommand_handler" path="telecommand_handler"/>
+            <Function name="mode_change_report_collector" path="mode_change_report_collector"/>
+            <Function name="system_mode_manager" path="system_mode_manager"/>
         </Partition>
-        <Device name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot; &quot;, speed  b115200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="msp430_eusci_a_serial_minimal" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::MSP430_eUSCI_A_serial" namespace="ocarina_drivers" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal">
+        <Device name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot; &quot;, speed  b115200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="msp430_eusci_a_serial_minimal" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" namespace="ocarina_drivers" extends="ocarina_drivers::MSP430_eUSCI_A_serial" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal" bus_namespace="ocarina_buses">
             <Property name="Taste::coordinates" value="83400 39100"/>
         </Device>
     </Node>
@@ -17,22 +18,22 @@
             <Property name="Taste::coordinates" value="63500 55300 79700 63700"/>
             <Function name="gs_gui" path="gs_gui"/>
         </Partition>
-        <Device name="ethernet1" requires_bus_access="ocarina_buses::ip.i" port="ethernet1" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        <Device name="ethernet1" requires_bus_access="ocarina_buses::ip.i" port="ethernet1" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" namespace="ocarina_drivers" extends="ocarina_drivers::generic_sockets_ip" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" bus_namespace="ocarina_buses">
             <Property name="Taste::coordinates" value="59100 52700"/>
         </Device>
-        <Device name="ethernet2" requires_bus_access="ocarina_buses::ip.i" port="ethernet2" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        <Device name="ethernet2" requires_bus_access="ocarina_buses::ip.i" port="ethernet2" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" namespace="ocarina_drivers" extends="ocarina_drivers::generic_sockets_ip" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" bus_namespace="ocarina_buses">
             <Property name="Taste::coordinates" value="59100 56700"/>
         </Device>
-        <Device name="ethernet3" requires_bus_access="ocarina_buses::ip.i" port="ethernet3" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" namespace="ocarina_drivers" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        <Device name="ethernet3" requires_bus_access="ocarina_buses::ip.i" port="ethernet3" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" namespace="ocarina_drivers" extends="ocarina_drivers::generic_sockets_ip" impl_extends="ocarina_drivers::generic_sockets_ip.pohic" bus_namespace="ocarina_buses">
             <Property name="Taste::coordinates" value="59100 60800"/>
         </Device>
-        <Device name="serial" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="serial" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::linux_serial" namespace="ocarina_drivers" bus_namespace="ocarina_buses" impl_extends="ocarina_drivers::linux_serial.minimal">
+        <Device name="serial" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="serial" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" namespace="ocarina_drivers" extends="ocarina_drivers::linux_serial" impl_extends="ocarina_drivers::linux_serial.minimal" bus_namespace="ocarina_buses">
             <Property name="Taste::coordinates" value="79700 50900"/>
         </Device>
     </Node>
     <Connection name="Connection_1" from_node="Ground_Station" from_port="serial" to_bus="ocarina_buses::serial.minimal" to_node="CubeSat" to_port="msp430_eusci_a_serial_minimal">
             <Property name="Taste::coordinates" value="79700 49900 79700 48300 85000 48300 85000 39100 84400 39100"/>
-            <Message name="Message_1" from_function="gs_gui" from_interface="tc_actuate_led" to_function="telecommand_handler" to_interface="tc_actuate_led"/>
-            <Message name="Message_2" from_function="telecommand_handler" from_interface="report_led_actuation" to_function="gs_gui" to_interface="report_led_actuation"/>
+            <Message name="Message_1" from_function="mode_change_report_collector" from_interface="report_mission_mode_change" to_function="gs_gui" to_interface="report_mission_mode_change"/>
+            <Message name="Message_2" from_function="gs_gui" from_interface="TC_change_mission_mode" to_function="system_mode_manager" to_interface="TC_change_mission_mode"/>
     </Connection>
 </DeploymentView>

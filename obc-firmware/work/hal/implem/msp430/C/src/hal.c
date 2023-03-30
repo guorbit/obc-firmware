@@ -14,15 +14,7 @@
 #include <FreeRTOS.h>
 #include <semphr.h>
 
-volatile bool P4_6_LED_ON = false;
-
-// Port 1 interrupt (GCC-style #pragma-less declaration)
-void __attribute__((interrupt(PORT1_VECTOR))) Port1_ISR (void)
-{
-    //P4OUT ^= 0x40;                      // toggle P4.6 using XOR
-    P1IFG &= ~0x02;                     // clear P1.1 interrupt flag
-    hal_RI_onboard_toggle_led();
-}
+bool P4_6_LED_ON = false;
 
 void hal_startup( void )
 {
@@ -31,34 +23,15 @@ void hal_startup( void )
     PM5CTL0 &= ~LOCKLPM5;               // disable the GPIO power-on default high-impedance mode
                                         // to activate previously configured port settings
 
-    /* Set Port 1.* directions:
-     * 1.* | 7 6 5 4 | 3 2 1 0 |
-     * -------------------------
-     * DIR | I I I I | I I I O |
-     */
-    P1DIR = 0x01;
-    P1REN |= 0x02;                      // enable P1.1 internal resistor
-    P1OUT |= 0x02;                      // set P1.1 internal resistor to pull-up
-    P1IE |= 0x02;                       // enable P1.1 interrupt
-    P1IES |= 0x02;                      // set P1.1 interrupt to rising edge
-    P1IFG = 0x00;                       // clear P1IFG -- might randomly be set by the previous instructions
-
+    P1DIR |= 0x01;                      // Set P1.0 to output direction
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
-
-    __enable_interrupt();               // enable all interrupts
 }
 
 void hal_PI_blink_led(void)
 {
    // Write your code here
     P1OUT ^= 0x01;                      // Toggle P1.0 using XOR
-    P3OUT ^= 0x01;                      // Toggle P3.0 using XOR
-}
-
-void hal_PI_read_led( asn1SccT_Boolean *OUT_val )
-{
-    *OUT_val = P4_6_LED_ON;
 }
 
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
@@ -72,14 +45,4 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
         P4OUT &= ~0x40;                 // Unset P4.6 using AND
     }
     P4_6_LED_ON = *IN_val;
-}
-
-void hal_PI_toggle_led( const asn1SccDelay_ns *IN_on_time_ns )
-{
-    P4OUT ^= 0x40;                      // Toggle P4.6 using exclusive-OR
-    P4_6_LED_ON = true;
-    for (long unsigned int i=0; i<=(*IN_on_time_ns); i++)
-    {}
-    P4OUT ^= 0x40;                      // Toggle P4.6 using exclusive-OR
-    P4_6_LED_ON = false;
 }

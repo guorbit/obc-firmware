@@ -30,10 +30,14 @@ check_targets:
 
 # Generate the language-specific data view needed before editing user code
 dataview:	dataview/C/built dataview/Ada/built
-	# Copy the dataview to SDL/SEDS function telecommand_handler (no context parameters)
-	cp -u ${DATAVIEW_UNIQ} telecommand_handler/SDL/src
+	# Copy the dataview to SDL/SEDS function mode_change_report_collector (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} mode_change_report_collector/SDL/src
 	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
-	md5sum -c "telecommand_handler/SDL/src/dataview.md5"  &> /dev/null || md5sum  "telecommand_handler/SDL/src/dataview-uniq.asn" >  "telecommand_handler/SDL/src/dataview.md5"
+	md5sum -c "mode_change_report_collector/SDL/src/dataview.md5"  &> /dev/null || md5sum  "mode_change_report_collector/SDL/src/dataview-uniq.asn" >  "mode_change_report_collector/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function system_mode_manager (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} system_mode_manager/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "system_mode_manager/SDL/src/dataview.md5"  &> /dev/null || md5sum  "system_mode_manager/SDL/src/dataview-uniq.asn" >  "system_mode_manager/SDL/src/dataview.md5"
 
 # Generate the complete dataview, including Python bindings if there is a GUI
 ${DATAVIEW_PATH}/built:	dataview dataview/Python/built
@@ -80,7 +84,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built telecommand_handler/SDL/wrappers/aadl2glueC_built
+aadl2glueC:	gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built mode_change_report_collector/SDL/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built system_mode_manager/SDL/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -98,11 +102,15 @@ hal/C/wrappers/aadl2glueC_built: hal/C/wrappers/hal_mini_cv.aadl ${DATAVIEW_AADL
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
+mode_change_report_collector/SDL/wrappers/aadl2glueC_built: mode_change_report_collector/SDL/wrappers/mode_change_report_collector_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
 print_service/C/wrappers/aadl2glueC_built: print_service/C/wrappers/print_service_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
-telecommand_handler/SDL/wrappers/aadl2glueC_built: telecommand_handler/SDL/wrappers/telecommand_handler_mini_cv.aadl ${DATAVIEW_AADLV1}
+system_mode_manager/SDL/wrappers/aadl2glueC_built: system_mode_manager/SDL/wrappers/system_mode_manager_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
