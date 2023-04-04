@@ -1,0 +1,136 @@
+/* CIF PROCESS (346, 61), (160, 75) */
+process Pipeline_Mode_Tracker;
+    /* CIF TEXT (309, 0), (287, 140) */
+    -- Text area for declarations and comments
+    
+    dcl pipeline_mode Pipeline_Mode_T;
+    dcl report Pipeline_Mode_Change_Report_T;
+    /* CIF ENDTEXT */
+    /* CIF START (337, 160), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (337, 210), (70, 35) */
+        NEXTSTATE Idle;
+    /* CIF state (2873, 5), (107, 35) */
+    state Processing_LP;
+        /* CIF input (2799, 60), (255, 35) */
+        input change_pipeline_mode(pipeline_mode);
+            /* CIF decision (2871, 110), (110, 50) */
+            decision pipeline_mode;
+                /* CIF ANSWER (2584, 180), (98, 23) */
+                (pipeline_idle):
+                    /* CIF task (2512, 223), (243, 35) */
+                    task report.pipeline_mode := pipeline_idle;
+                    /* CIF output (2509, 273), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (2528, 323), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (2598, 373), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (2846, 180), (159, 23) */
+                (pipeline_processing_fp):
+                    /* CIF task (2773, 223), (304, 35) */
+                    task report.pipeline_mode := pipeline_processing_fp;
+                    /* CIF output (2801, 273), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (2820, 323), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (2872, 378), (107, 35) */
+                    NEXTSTATE Processing_FP;
+                /* CIF ANSWER (3215, 180), (70, 23) */
+                else:
+                    /* CIF task (3099, 223), (303, 35) */
+                    task report.pipeline_mode := pipeline_processing_lp;
+                    /* CIF output (3126, 273), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (3145, 323), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (3197, 373), (107, 35) */
+                    NEXTSTATE Processing_LP;
+            enddecision;
+    endstate;
+    /* CIF state (1049, 7), (70, 35) */
+    state Idle;
+        /* CIF input (956, 62), (255, 35) */
+        input change_pipeline_mode(pipeline_mode);
+            /* CIF decision (1029, 112), (110, 50) */
+            decision pipeline_mode;
+                /* CIF ANSWER (685, 182), (159, 23) */
+                (pipeline_processing_fp):
+                    /* CIF task (612, 220), (304, 35) */
+                    task report.pipeline_mode := pipeline_processing_fp;
+                    /* CIF output (640, 270), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (659, 320), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (711, 370), (107, 35) */
+                    NEXTSTATE Processing_FP;
+                /* CIF ANSWER (1006, 182), (157, 23) */
+                (pipeline_processing_lp):
+                    /* CIF task (933, 220), (303, 35) */
+                    task report.pipeline_mode := pipeline_processing_lp;
+                    /* CIF output (960, 270), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (979, 320), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (1031, 370), (107, 35) */
+                    NEXTSTATE Processing_LP;
+                /* CIF ANSWER (1366, 182), (70, 23) */
+                else:
+                    /* CIF task (1279, 220), (243, 35) */
+                    task report.pipeline_mode := pipeline_idle;
+                    /* CIF output (1276, 270), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (1295, 320), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (1366, 370), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (1936, 4), (107, 35) */
+    state Processing_FP;
+        /* CIF input (1862, 59), (255, 35) */
+        input change_pipeline_mode(pipeline_mode);
+            /* CIF decision (1934, 109), (110, 50) */
+            decision pipeline_mode;
+                /* CIF ANSWER (1650, 179), (98, 23) */
+                (pipeline_idle):
+                    /* CIF task (1578, 222), (243, 35) */
+                    task report.pipeline_mode := pipeline_idle;
+                    /* CIF output (1575, 272), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (1594, 322), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (1665, 372), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1911, 179), (157, 23) */
+                (pipeline_processing_lp):
+                    /* CIF task (1838, 222), (303, 35) */
+                    task report.pipeline_mode := pipeline_processing_lp;
+                    /* CIF output (1865, 272), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (1884, 322), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (1936, 377), (107, 35) */
+                    NEXTSTATE Processing_LP;
+                /* CIF ANSWER (2274, 179), (70, 23) */
+                else:
+                    /* CIF task (2157, 222), (304, 35) */
+                    task report.pipeline_mode := pipeline_processing_fp;
+                    /* CIF output (2184, 272), (249, 35) */
+                    output report_pipeline_mode_change(report);
+                    /* CIF output (2203, 322), (211, 35) */
+                    output confirm_pipeline_mode_change;
+                    /* CIF NEXTSTATE (2255, 372), (107, 35) */
+                    NEXTSTATE Processing_FP;
+            enddecision;
+    endstate;
+    /* CIF state (460, 160), (70, 35) */
+    state Idle;
+    endstate;
+    /* CIF state (437, 223), (107, 35) */
+    state Processing_FP;
+    endstate;
+    /* CIF state (436, 285), (107, 35) */
+    state Processing_LP;
+    endstate;
+endprocess Pipeline_Mode_Tracker;

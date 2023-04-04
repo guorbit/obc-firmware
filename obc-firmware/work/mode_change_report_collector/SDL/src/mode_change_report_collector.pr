@@ -1,24 +1,72 @@
-/* CIF PROCESS (210, 150), (215, 75) */
+/* CIF PROCESS (367, 67), (215, 75) */
 process Mode_Change_Report_Collector;
-    /* CIF TEXT (316, 9), (411, 140) */
+    /* CIF TEXT (316, 9), (419, 140) */
     -- Text area for declarations and comments
     
-    dcl system_mode System_Mode_T;
-    dcl mission_mode_change_report Mission_Mode_Change_Report;
+    dcl system_mode_change_report System_Mode_Change_Report_T;
+    
+    dcl eps_report EPS_Mode_Change_Report_T;
+    dcl comms_report Comms_Mode_Change_Report_T;
+    dcl payload_report Payload_Mode_Change_Report_T;
+    dcl pipeline_report Pipeline_Mode_Change_Report_T;
     /* CIF ENDTEXT */
     /* CIF START (366, 177), (70, 35) */
     START;
         /* CIF NEXTSTATE (366, 227), (70, 35) */
         NEXTSTATE Wait;
-    /* CIF state (937, 45), (70, 35) */
+    /* CIF state (888, 312), (70, 35) */
     state Wait;
-        /* CIF input (824, 100), (295, 35) */
-        input confirm_system_mode_change(system_mode);
-            /* CIF output (779, 155), (386, 35) */
-            output report_mission_mode_change(mission_mode_change_report);
-            /* CIF output (921, 205), (101, 35) */
+        /* CIF input (816, 367), (205, 35) */
+        input confirm_system_mode_change;
+            /* CIF output (711, 417), (416, 35) */
+            output relay_system_mode_change_report(system_mode_change_report);
+            /* CIF output (866, 467), (105, 35) */
+            output set_led(false);
+            /* CIF NEXTSTATE (884, 517), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (1275, 38), (70, 35) */
+    state Wait;
+        /* CIF input (1160, 93), (292, 35) */
+        input report_comms_mode_change(comms_report);
+            /* CIF task (1112, 148), (389, 35) */
+            task system_mode_change_report.comms_report := comms_report;
+            /* CIF output (1256, 203), (101, 35) */
             output set_led(true);
-            /* CIF NEXTSTATE (937, 255), (70, 35) */
+            /* CIF NEXTSTATE (1272, 258), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (2093, 43), (70, 35) */
+    state Wait;
+        /* CIF input (1973, 98), (303, 35) */
+        input report_pipeline_mode_change(pipeline_report);
+            /* CIF task (1925, 148), (400, 35) */
+            task system_mode_change_report.pipeline_report := pipeline_report;
+            /* CIF output (2074, 198), (101, 35) */
+            output set_led(true);
+            /* CIF NEXTSTATE (2090, 248), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (1683, 43), (70, 35) */
+    state Wait;
+        /* CIF input (1563, 98), (301, 35) */
+        input report_payload_mode_change(payload_report);
+            /* CIF task (1515, 148), (398, 35) */
+            task system_mode_change_report.payload_report := payload_report;
+            /* CIF output (1663, 198), (101, 35) */
+            output set_led(true);
+            /* CIF NEXTSTATE (1679, 248), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (889, 43), (70, 35) */
+    state Wait;
+        /* CIF input (794, 98), (250, 35) */
+        input report_eps_mode_change(eps_report);
+            /* CIF task (746, 148), (347, 35) */
+            task system_mode_change_report.eps_report := eps_report;
+            /* CIF output (869, 198), (101, 35) */
+            output set_led(true);
+            /* CIF NEXTSTATE (885, 248), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Mode_Change_Report_Collector;

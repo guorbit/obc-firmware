@@ -1,26 +1,238 @@
-/* CIF PROCESS (233, 150), (164, 75) */
+/* CIF PROCESS (359, 148), (164, 75) */
 process System_Mode_Manager;
-    /* CIF TEXT (325, 16), (411, 140) */
+    /* CIF TEXT (325, 56), (411, 158) */
     -- Text area for declarations and comments
     
-    dcl mission_mode_change_tc Mission_Mode_Change_TC;
+    dcl mission_mode Mission_Mode_T;
     dcl mission_mode_change_report Mission_Mode_Change_Report;
     
+    dcl target_mode System_Mode_T;
     dcl system_mode System_Mode_T;
+    
+    dcl system_mode_idle System_Mode_T;
+    dcl system_mode_uplink System_Mode_T;
     /* CIF ENDTEXT */
-    /* CIF START (376, 186), (70, 35) */
+    /* CIF procedure (399, 501), (142, 35) */
+    procedure init_mode_map_idle;
+        /* CIF TEXT (7, 9), (267, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out sys_idle System_Mode_T;
+        /* CIF ENDTEXT */
+        /* CIF START (433, 31), (70, 35) */
+        START;
+            /* CIF task (368, 86), (198, 35) */
+            task sys_idle.eps_mode := eps_idle;
+            /* CIF task (347, 136), (240, 35) */
+            task sys_idle.comms_mode := comms_idle;
+            /* CIF task (337, 186), (261, 35) */
+            task sys_idle.deployer_mode := deployer_idle;
+            /* CIF task (363, 236), (209, 35) */
+            task sys_idle.adcs_mode := adcs_idle;
+            /* CIF task (343, 286), (249, 35) */
+            task sys_idle.payload_mode := payload_idle;
+            /* CIF task (342, 336), (252, 35) */
+            task sys_idle.pipeline_mode := pipeline_idle;
+            /* CIF return (450, 391), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (390, 554), (156, 35) */
+    procedure init_mode_map_uplink;
+        /* CIF TEXT (7, 9), (267, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out sys_uplink System_Mode_T;
+        /* CIF ENDTEXT */
+        /* CIF START (433, 31), (70, 35) */
+        START;
+            /* CIF task (337, 86), (260, 35) */
+            task sys_uplink.eps_mode := eps_high_power;
+            /* CIF task (333, 136), (269, 35) */
+            task sys_uplink.comms_mode := comms_uplink;
+            /* CIF task (329, 186), (276, 35) */
+            task sys_uplink.deployer_mode := deployer_idle;
+            /* CIF task (355, 236), (224, 35) */
+            task sys_uplink.adcs_mode := adcs_idle;
+            /* CIF task (335, 286), (264, 35) */
+            task sys_uplink.payload_mode := payload_idle;
+            /* CIF task (334, 336), (266, 35) */
+            task sys_uplink.pipeline_mode := pipeline_idle;
+            /* CIF return (450, 391), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF START (440, 228), (70, 35) */
     START;
-        /* CIF NEXTSTATE (376, 236), (70, 35) */
-        NEXTSTATE Wait;
-    /* CIF state (952, 30), (70, 35) */
-    state Wait;
-        /* CIF input (817, 85), (333, 35) */
-        input tc_change_mission_mode(mission_mode_change_tc);
-            /* CIF output (849, 140), (270, 35) */
-            output print("Mission Mode Change TC received");
-            /* CIF output (836, 195), (295, 35) */
-            output confirm_system_mode_change(system_mode);
-            /* CIF NEXTSTATE (949, 245), (70, 35) */
-            NEXTSTATE Wait;
+        /* CIF PROCEDURECALL (344, 283), (260, 35) */
+        call init_mode_map_idle(system_mode_idle);
+        /* CIF PROCEDURECALL (330, 338), (289, 35) */
+        call init_mode_map_uplink(system_mode_uplink);
+        /* CIF task (359, 393), (231, 35) */
+        task system_mode := system_mode_idle;
+        /* CIF NEXTSTATE (425, 443), (98, 35) */
+        NEXTSTATE Wait_change;
+    /* CIF state (993, 67), (98, 35) */
+    state Wait_change;
+        /* CIF input (923, 122), (239, 35) */
+        input change_system_mode(target_mode);
+            /* CIF label (997, 177), (91, 35) */
+            goto_eps_1:
+            /* CIF decision (961, 270), (164, 50) */
+            decision target_mode.eps_mode;
+                /* CIF ANSWER (794, 340), (168, 23) */
+                (system_mode.eps_mode):
+                    /* CIF join (861, 383), (35, 35) */
+                    join goto_comms;
+                /* CIF ANSWER (1172, 340), (70, 23) */
+                else:
+                    /* CIF decision (1124, 378), (164, 50) */
+                    decision target_mode.eps_mode;
+                        /* CIF ANSWER (1045, 448), (119, 23) */
+                        (eps_high_power):
+                            /* CIF output (986, 486), (237, 35) */
+                            output change_eps_mode(eps_high_power);
+                            /* CIF NEXTSTATE (1043, 541), (123, 35) */
+                            NEXTSTATE Wait_eps_conf_1;
+                        /* CIF ANSWER (1266, 448), (70, 23) */
+                        else:
+                            /* CIF join (1283, 491), (35, 35) */
+                            join goto_comms;
+                    enddecision;
+            enddecision;
+    endstate;
+    /* CIF state (644, 591), (98, 35) */
+    state Wait_change;
+        /* CIF input (645, 646), (96, 35) */
+        input reset_uplink;
+            /* CIF task (573, 701), (240, 35) */
+            task target_mode := system_mode_uplink;
+            /* CIF join (676, 756), (35, 35) */
+            join goto_eps_1;
+    endstate;
+    /* CIF state (632, 228), (123, 35) */
+    state Wait_eps_conf_1;
+    endstate;
+    /* CIF state (627, 409), (137, 35) */
+    state Wait_pipeline_conf;
+    endstate;
+    /* CIF state (627, 350), (136, 35) */
+    state Wait_payload_conf;
+    endstate;
+    /* CIF state (630, 287), (131, 35) */
+    state Wait_comms_conf;
+    endstate;
+    /* CIF state (635, 469), (123, 35) */
+    state Wait_eps_conf_2;
+    endstate;
+    /* CIF state (3653, 59), (123, 35) */
+    state Wait_eps_conf_2;
+        /* CIF input (3623, 114), (184, 35) */
+        input confirm_eps_mode_change;
+            /* CIF task (3552, 169), (326, 35) */
+            task system_mode.eps_mode := target_mode.eps_mode;
+            /* CIF label (3676, 219), (79, 35) */
+            goto_end:
+            /* CIF output (3613, 269), (205, 35) */
+            output confirm_system_mode_change;
+            /* CIF NEXTSTATE (3666, 324), (98, 35) */
+            NEXTSTATE Wait_change;
+    endstate;
+    /* CIF state (2068, 63), (131, 35) */
+    state Wait_comms_conf;
+        /* CIF input (2030, 118), (205, 35) */
+        input confirm_comms_mode_change;
+            /* CIF task (1949, 173), (368, 35) */
+            task system_mode.comms_mode := target_mode.comms_mode;
+            /* CIF label (2081, 223), (103, 35) */
+            goto_payload:
+            /* CIF decision (2038, 273), (189, 50) */
+            decision target_mode.payload_mode;
+                /* CIF ANSWER (1894, 343), (194, 23) */
+                (system_mode.payload_mode):
+                    /* CIF join (1974, 386), (35, 35) */
+                    join goto_pipeline;
+                /* CIF ANSWER (2233, 343), (70, 23) */
+                else:
+                    /* CIF output (2101, 386), (333, 35) */
+                    output change_payload_mode(target_mode.payload_mode);
+            enddecision;
+            /* CIF NEXTSTATE (2065, 437), (136, 35) */
+            NEXTSTATE Wait_payload_conf;
+    endstate;
+    /* CIF state (1527, 65), (123, 35) */
+    state Wait_eps_conf_1;
+        /* CIF input (1495, 120), (184, 35) */
+        input confirm_eps_mode_change;
+            /* CIF task (1424, 175), (326, 35) */
+            task system_mode.eps_mode := target_mode.eps_mode;
+            /* CIF label (1538, 225), (98, 35) */
+            goto_comms:
+            /* CIF decision (1495, 275), (185, 50) */
+            decision target_mode.comms_mode;
+                /* CIF ANSWER (1345, 345), (189, 23) */
+                (system_mode.comms_mode):
+                    /* CIF join (1423, 388), (35, 35) */
+                    join goto_payload;
+                /* CIF ANSWER (1685, 345), (70, 23) */
+                else:
+                    /* CIF output (1557, 388), (324, 35) */
+                    output change_comms_mode(target_mode.comms_mode);
+            enddecision;
+            /* CIF NEXTSTATE (1522, 439), (131, 35) */
+            NEXTSTATE Wait_comms_conf;
+    endstate;
+    /* CIF state (2664, 62), (136, 35) */
+    state Wait_payload_conf;
+        /* CIF input (2627, 117), (210, 35) */
+        input confirm_payload_mode_change;
+            /* CIF task (2544, 172), (377, 35) */
+            task system_mode.payload_mode := target_mode.payload_mode;
+            /* CIF label (2680, 222), (104, 35) */
+            goto_pipeline:
+            /* CIF decision (2637, 272), (190, 50) */
+            decision target_mode.pipeline_mode;
+                /* CIF ANSWER (2469, 342), (195, 23) */
+                (system_mode.pipeline_mode):
+                    /* CIF join (2550, 385), (35, 35) */
+                    join goto_eps_2;
+                /* CIF ANSWER (2817, 342), (70, 23) */
+                else:
+                    /* CIF output (2684, 385), (335, 35) */
+                    output change_pipeline_mode(target_mode.pipeline_mode);
+            enddecision;
+            /* CIF NEXTSTATE (2664, 436), (137, 35) */
+            NEXTSTATE Wait_pipeline_conf;
+    endstate;
+    /* CIF state (3213, 56), (137, 35) */
+    state Wait_pipeline_conf;
+        /* CIF input (3176, 111), (211, 35) */
+        input confirm_pipeline_mode_change;
+            /* CIF task (3092, 166), (379, 35) */
+            task system_mode.pipeline_mode := target_mode.pipeline_mode;
+            /* CIF label (3236, 216), (91, 35) */
+            goto_eps_2:
+            /* CIF decision (3200, 266), (164, 50) */
+            decision target_mode.eps_mode;
+                /* CIF ANSWER (3041, 336), (168, 23) */
+                (system_mode.eps_mode):
+                    /* CIF join (3108, 379), (35, 35) */
+                    join goto_end;
+                /* CIF ANSWER (3373, 336), (70, 23) */
+                else:
+                    /* CIF decision (3325, 374), (164, 50) */
+                    decision target_mode.eps_mode;
+                        /* CIF ANSWER (3280, 444), (71, 23) */
+                        (eps_idle):
+                            /* CIF output (3221, 482), (189, 35) */
+                            output change_eps_mode(eps_idle);
+                            /* CIF NEXTSTATE (3254, 532), (123, 35) */
+                            NEXTSTATE Wait_eps_conf_2;
+                        /* CIF ANSWER (3467, 444), (70, 23) */
+                        else:
+                            /* CIF join (3484, 487), (35, 35) */
+                            join goto_end;
+                    enddecision;
+            enddecision;
     endstate;
 endprocess System_Mode_Manager;

@@ -1,0 +1,75 @@
+/* CIF PROCESS (332, 57), (166, 75) */
+process Deployer_Mode_Tracker;
+    /* CIF TEXT (309, 0), (293, 140) */
+    -- Text area for declarations and comments
+    
+    dcl deployer_mode Deployer_Mode_T;
+    dcl report Deployer_Mode_Change_Report_T;
+    /* CIF ENDTEXT */
+    /* CIF START (337, 160), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (337, 210), (70, 35) */
+        NEXTSTATE Idle;
+    /* CIF state (869, 10), (70, 35) */
+    state Idle;
+        /* CIF input (772, 65), (265, 35) */
+        input change_deployer_mode(deployer_mode);
+            /* CIF decision (847, 115), (115, 50) */
+            decision deployer_mode;
+                /* CIF ANSWER (676, 185), (152, 23) */
+                (deployer_deployment):
+                    /* CIF task (601, 223), (303, 35) */
+                    task report.deployer_mode := deployer_deployment;
+                    /* CIF output (625, 273), (254, 35) */
+                    output report_deployer_mode_change(report);
+                    /* CIF output (644, 323), (216, 35) */
+                    output confirm_deployer_mode_change;
+                    /* CIF NEXTSTATE (704, 373), (95, 35) */
+                    NEXTSTATE Deployment;
+                /* CIF ANSWER (1027, 185), (70, 23) */
+                else:
+                    /* CIF task (935, 223), (253, 35) */
+                    task report.deployer_mode := deployer_idle;
+                    /* CIF output (935, 273), (254, 35) */
+                    output report_deployer_mode_change(report);
+                    /* CIF output (954, 323), (216, 35) */
+                    output confirm_deployer_mode_change;
+                    /* CIF NEXTSTATE (1027, 373), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (434, 222), (95, 35) */
+    state Deployment;
+    endstate;
+    /* CIF state (460, 160), (70, 35) */
+    state Idle;
+    endstate;
+    /* CIF state (1434, 5), (95, 35) */
+    state Deployment;
+        /* CIF input (1349, 60), (265, 35) */
+        input change_deployer_mode(deployer_mode);
+            /* CIF decision (1424, 110), (115, 50) */
+            decision deployer_mode;
+                /* CIF ANSWER (1294, 180), (103, 23) */
+                (deployer_idle):
+                    /* CIF task (1219, 223), (253, 35) */
+                    task report.deployer_mode := deployer_idle;
+                    /* CIF output (1219, 273), (254, 35) */
+                    output report_deployer_mode_change(report);
+                    /* CIF output (1238, 323), (216, 35) */
+                    output confirm_deployer_mode_change;
+                    /* CIF NEXTSTATE (1311, 373), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1611, 180), (70, 23) */
+                else:
+                    /* CIF task (1494, 223), (303, 35) */
+                    task report.deployer_mode := deployer_deployment;
+                    /* CIF output (1519, 273), (254, 35) */
+                    output report_deployer_mode_change(report);
+                    /* CIF output (1538, 323), (216, 35) */
+                    output confirm_deployer_mode_change;
+                    /* CIF NEXTSTATE (1598, 373), (95, 35) */
+                    NEXTSTATE Deployment;
+            enddecision;
+    endstate;
+endprocess Deployer_Mode_Tracker;

@@ -1,0 +1,75 @@
+/* CIF PROCESS (292, 103), (150, 75) */
+process Eps_Mode_Tracker;
+    /* CIF TEXT (309, 0), (267, 140) */
+    -- Text area for declarations and comments
+    
+    dcl eps_mode EPS_Mode_T;
+    dcl report EPS_Mode_Change_Report_T;
+    /* CIF ENDTEXT */
+    /* CIF START (337, 160), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (337, 210), (70, 35) */
+        NEXTSTATE Idle;
+    /* CIF state (446, 223), (94, 35) */
+    state High_Power;
+    endstate;
+    /* CIF state (799, 9), (70, 35) */
+    state Idle;
+        /* CIF input (733, 64), (202, 35) */
+        input change_eps_mode(eps_mode);
+            /* CIF decision (792, 114), (83, 50) */
+            decision eps_mode;
+                /* CIF ANSWER (647, 184), (119, 23) */
+                (eps_high_power):
+                    /* CIF task (588, 222), (238, 35) */
+                    task report.eps_mode := eps_high_power;
+                    /* CIF output (596, 272), (223, 35) */
+                    output report_eps_mode_change(report);
+                    /* CIF output (615, 322), (184, 35) */
+                    output confirm_eps_mode_change;
+                    /* CIF NEXTSTATE (660, 372), (94, 35) */
+                    NEXTSTATE High_Power;
+                /* CIF ANSWER (914, 184), (70, 23) */
+                else:
+                    /* CIF task (854, 222), (190, 35) */
+                    task report.eps_mode := eps_idle;
+                    /* CIF output (837, 272), (223, 35) */
+                    output report_eps_mode_change(report);
+                    /* CIF output (856, 322), (184, 35) */
+                    output confirm_eps_mode_change;
+                    /* CIF NEXTSTATE (914, 372), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (460, 160), (70, 35) */
+    state Idle;
+    endstate;
+    /* CIF state (1295, 8), (94, 35) */
+    state High_Power;
+        /* CIF input (1243, 63), (202, 35) */
+        input change_eps_mode(eps_mode);
+            /* CIF decision (1302, 113), (83, 50) */
+            decision eps_mode;
+                /* CIF ANSWER (1186, 183), (71, 23) */
+                (eps_idle):
+                    /* CIF task (1127, 221), (190, 35) */
+                    task report.eps_mode := eps_idle;
+                    /* CIF output (1110, 271), (223, 35) */
+                    output report_eps_mode_change(report);
+                    /* CIF output (1130, 321), (184, 35) */
+                    output confirm_eps_mode_change;
+                    /* CIF NEXTSTATE (1187, 371), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1429, 183), (70, 23) */
+                else:
+                    /* CIF task (1344, 221), (238, 35) */
+                    task report.eps_mode := eps_high_power;
+                    /* CIF output (1352, 271), (223, 35) */
+                    output report_eps_mode_change(report);
+                    /* CIF output (1371, 321), (184, 35) */
+                    output confirm_eps_mode_change;
+                    /* CIF NEXTSTATE (1416, 371), (94, 35) */
+                    NEXTSTATE High_Power;
+            enddecision;
+    endstate;
+endprocess Eps_Mode_Tracker;

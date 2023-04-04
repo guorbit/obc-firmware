@@ -77,7 +77,7 @@ Payload-Mode-T              ::= ENUMERATED {
 }
 Pipeline-Mode-T             ::= ENUMERATED {
     pipeline-idle,
-    pipeline-processing,
+    pipeline-processing-fp,
     pipeline-processing-lp
 }
 
@@ -126,7 +126,7 @@ System-Mode-T               ::= SEQUENCE {
        deployer-mode    (deployer-idle),
        adcs-mode        (adcs-idle),
        payload-mode     (payload-idle),
-       pipeline-mode    (pipeline-processing)
+       pipeline-mode    (pipeline-processing-fp)
     }
     | WITH COMPONENTS {     -- UPLINK + IMAGING
        eps-mode         (eps-high-power),
@@ -162,17 +162,44 @@ System-Mode-T               ::= SEQUENCE {
     }
 ))
 
-Mission-Mode-T              ::= ENUMERATED {
+EPS-Mode-Change-Report-T        ::= SEQUENCE {
+    eps-mode        EPS-Mode-T
+}
+Comms-Mode-Change-Report-T      ::= SEQUENCE {
+    comms-mode      Comms-Mode-T
+}
+Deployer-Mode-Change-Report-T   ::= SEQUENCE {
+   deployer-mode    Deployer-Mode-T
+}
+ADCS-Mode-Change-Report-T       ::= SEQUENCE {
+    adcs-mode       ADCS-Mode-T
+}
+Payload-Mode-Change-Report-T    ::= SEQUENCE {
+    payload-mode    Payload-Mode-T
+}
+Pipeline-Mode-Change-Report-T  ::= SEQUENCE {
+    pipeline-mode   Pipeline-Mode-T
+}
+System-Mode-Change-Report-T     ::= SEQUENCE {
+    eps-report      EPS-Mode-Change-Report-T,
+    comms-report    Comms-Mode-Change-Report-T,
+    deployer-report Deployer-Mode-Change-Report-T,
+    adcs-report     ADCS-Mode-Change-Report-T,
+    payload-report  Payload-Mode-Change-Report-T,
+    pipeline-report Pipeline-Mode-Change-Report-T
+}
+
+Mission-Mode-T                  ::= ENUMERATED {
     mission-idle,
     mission-imaging,
     mission-processing
 }
 
-Mission-Mode-Change-TC      ::= SEQUENCE {
-    target-mode     Mission-Mode-T
+Mission-Mode-Change-TC          ::= SEQUENCE {
+    mission-mode    Mission-Mode-T
 }
 
-Mission-Mode-Change-Report  ::= SEQUENCE {
+Mission-Mode-Change-Report      ::= SEQUENCE {
     system-mode     System-Mode-T
 }
 

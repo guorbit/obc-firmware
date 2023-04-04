@@ -30,10 +30,38 @@ check_targets:
 
 # Generate the language-specific data view needed before editing user code
 dataview:	dataview/C/built dataview/Ada/built
+	# Copy the dataview to SDL/SEDS function adcs_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} adcs_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "adcs_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "adcs_mode_tracker/SDL/src/dataview-uniq.asn" >  "adcs_mode_tracker/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function comms_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} comms_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "comms_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "comms_mode_tracker/SDL/src/dataview-uniq.asn" >  "comms_mode_tracker/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function deployer_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} deployer_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "deployer_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "deployer_mode_tracker/SDL/src/dataview-uniq.asn" >  "deployer_mode_tracker/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function eps_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} eps_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "eps_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "eps_mode_tracker/SDL/src/dataview-uniq.asn" >  "eps_mode_tracker/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function mission_mode_change_tc_handler (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} mission_mode_change_tc_handler/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "mission_mode_change_tc_handler/SDL/src/dataview.md5"  &> /dev/null || md5sum  "mission_mode_change_tc_handler/SDL/src/dataview-uniq.asn" >  "mission_mode_change_tc_handler/SDL/src/dataview.md5"
 	# Copy the dataview to SDL/SEDS function mode_change_report_collector (no context parameters)
 	cp -u ${DATAVIEW_UNIQ} mode_change_report_collector/SDL/src
 	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
 	md5sum -c "mode_change_report_collector/SDL/src/dataview.md5"  &> /dev/null || md5sum  "mode_change_report_collector/SDL/src/dataview-uniq.asn" >  "mode_change_report_collector/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function payload_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} payload_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "payload_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "payload_mode_tracker/SDL/src/dataview-uniq.asn" >  "payload_mode_tracker/SDL/src/dataview.md5"
+	# Copy the dataview to SDL/SEDS function pipeline_mode_tracker (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} pipeline_mode_tracker/SDL/src
+	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
+	md5sum -c "pipeline_mode_tracker/SDL/src/dataview.md5"  &> /dev/null || md5sum  "pipeline_mode_tracker/SDL/src/dataview-uniq.asn" >  "pipeline_mode_tracker/SDL/src/dataview.md5"
 	# Copy the dataview to SDL/SEDS function system_mode_manager (no context parameters)
 	cp -u ${DATAVIEW_UNIQ} system_mode_manager/SDL/src
 	# Compute MD5 of the dataview, needed to decide if code needs to be re-generated
@@ -84,7 +112,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built mode_change_report_collector/SDL/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built system_mode_manager/SDL/wrappers/aadl2glueC_built
+aadl2glueC:	adcs_mode_tracker/SDL/wrappers/aadl2glueC_built comms_mode_tracker/SDL/wrappers/aadl2glueC_built deployer_mode_tracker/SDL/wrappers/aadl2glueC_built eps_mode_tracker/SDL/wrappers/aadl2glueC_built gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built mission_mode_change_tc_handler/SDL/wrappers/aadl2glueC_built mode_change_report_collector/SDL/wrappers/aadl2glueC_built payload_mode_tracker/SDL/wrappers/aadl2glueC_built pipeline_mode_tracker/SDL/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built system_mode_manager/SDL/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -94,6 +122,22 @@ ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
 ${DATAVIEW_AADLV2}: ${DATAVIEW_UNIQ}
 	asn2aadlPlus --aadlv2  $< $@
 
+adcs_mode_tracker/SDL/wrappers/aadl2glueC_built: adcs_mode_tracker/SDL/wrappers/adcs_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+comms_mode_tracker/SDL/wrappers/aadl2glueC_built: comms_mode_tracker/SDL/wrappers/comms_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+deployer_mode_tracker/SDL/wrappers/aadl2glueC_built: deployer_mode_tracker/SDL/wrappers/deployer_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+eps_mode_tracker/SDL/wrappers/aadl2glueC_built: eps_mode_tracker/SDL/wrappers/eps_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
 gs_gui/GUI/wrappers/aadl2glueC_built: gs_gui/GUI/wrappers/gs_gui_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
@@ -102,7 +146,19 @@ hal/C/wrappers/aadl2glueC_built: hal/C/wrappers/hal_mini_cv.aadl ${DATAVIEW_AADL
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 
+mission_mode_change_tc_handler/SDL/wrappers/aadl2glueC_built: mission_mode_change_tc_handler/SDL/wrappers/mission_mode_change_tc_handler_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
 mode_change_report_collector/SDL/wrappers/aadl2glueC_built: mode_change_report_collector/SDL/wrappers/mode_change_report_collector_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+payload_mode_tracker/SDL/wrappers/aadl2glueC_built: payload_mode_tracker/SDL/wrappers/payload_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+pipeline_mode_tracker/SDL/wrappers/aadl2glueC_built: pipeline_mode_tracker/SDL/wrappers/pipeline_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 

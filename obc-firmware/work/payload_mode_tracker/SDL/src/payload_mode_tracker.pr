@@ -1,0 +1,75 @@
+/* CIF PROCESS (328, 65), (159, 75) */
+process Payload_Mode_Tracker;
+    /* CIF TEXT (309, 0), (285, 140) */
+    -- Text area for declarations and comments
+    
+    dcl payload_mode Payload_Mode_T;
+    dcl report Payload_Mode_Change_Report_T;
+    /* CIF ENDTEXT */
+    /* CIF START (337, 160), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (337, 210), (70, 35) */
+        NEXTSTATE Idle;
+    /* CIF state (458, 223), (70, 35) */
+    state Imaging;
+    endstate;
+    /* CIF state (818, 8), (70, 35) */
+    state Idle;
+        /* CIF input (727, 63), (253, 35) */
+        input change_payload_mode(payload_mode);
+            /* CIF decision (798, 113), (109, 50) */
+            decision payload_mode;
+                /* CIF ANSWER (650, 183), (122, 23) */
+                (payload_imaging):
+                    /* CIF task (578, 221), (266, 35) */
+                    task report.payload_mode := payload_imaging;
+                    /* CIF output (587, 271), (248, 35) */
+                    output report_payload_mode_change(report);
+                    /* CIF output (607, 321), (210, 35) */
+                    output confirm_payload_mode_change;
+                    /* CIF NEXTSTATE (677, 371), (70, 35) */
+                    NEXTSTATE Imaging;
+                /* CIF ANSWER (949, 183), (70, 23) */
+                else:
+                    /* CIF task (863, 221), (241, 35) */
+                    task report.payload_mode := payload_idle;
+                    /* CIF output (859, 271), (248, 35) */
+                    output report_payload_mode_change(report);
+                    /* CIF output (879, 321), (210, 35) */
+                    output confirm_payload_mode_change;
+                    /* CIF NEXTSTATE (949, 371), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (460, 160), (70, 35) */
+    state Idle;
+    endstate;
+    /* CIF state (1343, 8), (70, 35) */
+    state Imaging;
+        /* CIF input (1252, 63), (253, 35) */
+        input change_payload_mode(payload_mode);
+            /* CIF decision (1324, 113), (109, 50) */
+            decision payload_mode;
+                /* CIF ANSWER (1201, 183), (97, 23) */
+                (payload_idle):
+                    /* CIF task (1129, 221), (241, 35) */
+                    task report.payload_mode := payload_idle;
+                    /* CIF output (1125, 271), (248, 35) */
+                    output report_payload_mode_change(report);
+                    /* CIF output (1144, 321), (210, 35) */
+                    output confirm_payload_mode_change;
+                    /* CIF NEXTSTATE (1215, 371), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1487, 183), (70, 23) */
+                else:
+                    /* CIF task (1388, 221), (266, 35) */
+                    task report.payload_mode := payload_imaging;
+                    /* CIF output (1398, 271), (248, 35) */
+                    output report_payload_mode_change(report);
+                    /* CIF output (1417, 321), (210, 35) */
+                    output confirm_payload_mode_change;
+                    /* CIF NEXTSTATE (1487, 371), (70, 35) */
+                    NEXTSTATE Imaging;
+            enddecision;
+    endstate;
+endprocess Payload_Mode_Tracker;
