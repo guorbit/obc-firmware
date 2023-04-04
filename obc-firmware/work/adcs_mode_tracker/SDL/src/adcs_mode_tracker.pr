@@ -1,75 +1,83 @@
 /* CIF PROCESS (315, 69), (150, 75) */
 process Adcs_Mode_Tracker;
-    /* CIF TEXT (309, 0), (272, 140) */
+    /* CIF TEXT (309, 0), (267, 140) */
     -- Text area for declarations and comments
     
     dcl adcs_mode ADCS_Mode_T;
-    dcl report ADCS_Mode_Change_Report_T;
+    dcl report ADCS_Mode_Status_Report_T;
     /* CIF ENDTEXT */
     /* CIF START (337, 160), (70, 35) */
     START;
         /* CIF NEXTSTATE (337, 210), (70, 35) */
         NEXTSTATE Idle;
-    /* CIF state (777, 8), (70, 35) */
-    state Idle;
-        /* CIF input (706, 63), (213, 35) */
+    /* CIF state (1381, 8), (92, 35) */
+    state Detumbling;
+        /* CIF input (1320, 63), (213, 35) */
         input change_adcs_mode(adcs_mode);
-            /* CIF decision (768, 113), (89, 50) */
+            /* CIF decision (1382, 113), (89, 50) */
             decision adcs_mode;
-                /* CIF ANSWER (618, 183), (123, 23) */
-                (adcs_detumbling):
-                    /* CIF task (556, 221), (247, 35) */
-                    task report.adcs_mode := adcs_detumbling;
-                    /* CIF output (565, 271), (228, 35) */
-                    output report_adcs_mode_change(report);
-                    /* CIF output (585, 321), (190, 35) */
-                    output confirm_adcs_mode_change;
-                    /* CIF NEXTSTATE (633, 371), (92, 35) */
-                    NEXTSTATE Detumbling;
-                /* CIF ANSWER (894, 183), (70, 23) */
-                else:
-                    /* CIF task (828, 221), (201, 35) */
+                /* CIF ANSWER (1241, 183), (77, 23) */
+                (adcs_idle):
+                    /* CIF task (1179, 221), (201, 35) */
                     task report.adcs_mode := adcs_idle;
-                    /* CIF output (814, 271), (228, 35) */
-                    output report_adcs_mode_change(report);
-                    /* CIF output (834, 321), (190, 35) */
-                    output confirm_adcs_mode_change;
-                    /* CIF NEXTSTATE (894, 371), (70, 35) */
+                    /* CIF task (1139, 271), (281, 35) */
+                    task report.adcs_last_op := mode_status_change;
+                    /* CIF output (1169, 321), (222, 35) */
+                    output report_adcs_mode_status(report);
+                    /* CIF output (1175, 371), (210, 35) */
+                    output return_adcs_mode_status(true);
+                    /* CIF NEXTSTATE (1245, 421), (70, 35) */
                     NEXTSTATE Idle;
+                /* CIF ANSWER (1538, 183), (70, 23) */
+                else:
+                    /* CIF task (1449, 221), (247, 35) */
+                    task report.adcs_mode := adcs_detumbling;
+                    /* CIF task (1442, 271), (261, 35) */
+                    task report.adcs_last_op := mode_status_nop;
+                    /* CIF output (1461, 321), (222, 35) */
+                    output report_adcs_mode_status(report);
+                    /* CIF output (1465, 371), (214, 35) */
+                    output return_adcs_mode_status(false);
+                    /* CIF NEXTSTATE (1526, 421), (92, 35) */
+                    NEXTSTATE Detumbling;
             enddecision;
     endstate;
-    /* CIF state (427, 223), (92, 35) */
-    state Detumbling;
+    /* CIF state (806, 8), (70, 35) */
+    state Idle;
+        /* CIF input (733, 63), (213, 35) */
+        input change_adcs_mode(adcs_mode);
+            /* CIF decision (795, 113), (89, 50) */
+            decision adcs_mode;
+                /* CIF ANSWER (624, 183), (123, 23) */
+                (adcs_detumbling):
+                    /* CIF task (562, 221), (247, 35) */
+                    task report.adcs_mode := adcs_detumbling;
+                    /* CIF task (545, 271), (281, 35) */
+                    task report.adcs_last_op := mode_status_change;
+                    /* CIF output (575, 321), (222, 35) */
+                    output report_adcs_mode_status(report);
+                    /* CIF output (581, 371), (210, 35) */
+                    output return_adcs_mode_status(true);
+                    /* CIF NEXTSTATE (640, 421), (92, 35) */
+                    NEXTSTATE Detumbling;
+                /* CIF ANSWER (943, 183), (70, 23) */
+                else:
+                    /* CIF task (877, 221), (201, 35) */
+                    task report.adcs_mode := adcs_idle;
+                    /* CIF task (847, 271), (261, 35) */
+                    task report.adcs_last_op := mode_status_nop;
+                    /* CIF output (866, 321), (222, 35) */
+                    output report_adcs_mode_status(report);
+                    /* CIF output (870, 371), (214, 35) */
+                    output return_adcs_mode_status(false);
+                    /* CIF NEXTSTATE (943, 421), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
     endstate;
     /* CIF state (460, 160), (70, 35) */
     state Idle;
     endstate;
-    /* CIF state (1258, 8), (92, 35) */
+    /* CIF state (448, 224), (92, 35) */
     state Detumbling;
-        /* CIF input (1197, 63), (213, 35) */
-        input change_adcs_mode(adcs_mode);
-            /* CIF decision (1259, 113), (89, 50) */
-            decision adcs_mode;
-                /* CIF ANSWER (1138, 183), (77, 23) */
-                (adcs_idle):
-                    /* CIF task (1076, 221), (201, 35) */
-                    task report.adcs_mode := adcs_idle;
-                    /* CIF output (1062, 271), (228, 35) */
-                    output report_adcs_mode_change(report);
-                    /* CIF output (1081, 321), (190, 35) */
-                    output confirm_adcs_mode_change;
-                    /* CIF NEXTSTATE (1142, 371), (70, 35) */
-                    NEXTSTATE Idle;
-                /* CIF ANSWER (1390, 183), (70, 23) */
-                else:
-                    /* CIF task (1301, 221), (247, 35) */
-                    task report.adcs_mode := adcs_detumbling;
-                    /* CIF output (1311, 271), (228, 35) */
-                    output report_adcs_mode_change(report);
-                    /* CIF output (1330, 321), (190, 35) */
-                    output confirm_adcs_mode_change;
-                    /* CIF NEXTSTATE (1379, 371), (92, 35) */
-                    NEXTSTATE Detumbling;
-            enddecision;
     endstate;
 endprocess Adcs_Mode_Tracker;

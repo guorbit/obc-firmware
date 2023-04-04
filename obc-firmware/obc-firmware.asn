@@ -162,31 +162,42 @@ System-Mode-T               ::= SEQUENCE {
     }
 ))
 
-EPS-Mode-Change-Report-T        ::= SEQUENCE {
-    eps-mode        EPS-Mode-T
+Mode-Status-Operation-T         ::= ENUMERATED {
+    mode-status-nop,
+    mode-status-change
 }
-Comms-Mode-Change-Report-T      ::= SEQUENCE {
-    comms-mode      Comms-Mode-T
+
+EPS-Mode-Status-Report-T        ::= SEQUENCE {
+    eps-mode                    EPS-Mode-T,
+    eps-last-op                 Mode-Status-Operation-T
 }
-Deployer-Mode-Change-Report-T   ::= SEQUENCE {
-   deployer-mode    Deployer-Mode-T
+Comms-Mode-Status-Report-T      ::= SEQUENCE {
+    comms-mode                  Comms-Mode-T,
+    comms-last-op               Mode-Status-Operation-T
 }
-ADCS-Mode-Change-Report-T       ::= SEQUENCE {
-    adcs-mode       ADCS-Mode-T
+Deployer-Mode-Status-Report-T   ::= SEQUENCE {
+    deployer-mode               Deployer-Mode-T,
+    deployer-last-op            Mode-Status-Operation-T
 }
-Payload-Mode-Change-Report-T    ::= SEQUENCE {
-    payload-mode    Payload-Mode-T
+ADCS-Mode-Status-Report-T       ::= SEQUENCE {
+    adcs-mode                   ADCS-Mode-T,
+    adcs-last-op                Mode-Status-Operation-T
 }
-Pipeline-Mode-Change-Report-T  ::= SEQUENCE {
-    pipeline-mode   Pipeline-Mode-T
+Payload-Mode-Status-Report-T    ::= SEQUENCE {
+    payload-mode                Payload-Mode-T,
+    payload-last-op             Mode-Status-Operation-T
 }
-System-Mode-Change-Report-T     ::= SEQUENCE {
-    eps-report      EPS-Mode-Change-Report-T,
-    comms-report    Comms-Mode-Change-Report-T,
-    deployer-report Deployer-Mode-Change-Report-T,
-    adcs-report     ADCS-Mode-Change-Report-T,
-    payload-report  Payload-Mode-Change-Report-T,
-    pipeline-report Pipeline-Mode-Change-Report-T
+Pipeline-Mode-Status-Report-T  ::= SEQUENCE {
+    pipeline-mode               Pipeline-Mode-T,
+    pipeline-last-op            Mode-Status-Operation-T
+}
+System-Mode-Status-Report-T     ::= SEQUENCE {
+    eps-report                  EPS-Mode-Status-Report-T,
+    comms-report                Comms-Mode-Status-Report-T,
+    deployer-report             Deployer-Mode-Status-Report-T,
+    adcs-report                 ADCS-Mode-Status-Report-T,
+    payload-report              Payload-Mode-Status-Report-T,
+    pipeline-report             Pipeline-Mode-Status-Report-T
 }
 
 Mission-Mode-T                  ::= ENUMERATED {
@@ -195,12 +206,12 @@ Mission-Mode-T                  ::= ENUMERATED {
     mission-processing
 }
 
-Mission-Mode-Change-TC          ::= SEQUENCE {
-    mission-mode    Mission-Mode-T
+Mission-Mode-Change-TC-T        ::= SEQUENCE {
+    mission-mode                Mission-Mode-T
 }
 
-Mission-Mode-Change-Report      ::= SEQUENCE {
-    system-mode     System-Mode-T
+Mission-Mode-Change-Report-T    ::= SEQUENCE {
+    system-mode-status-report   System-Mode-Status-Report-T
 }
 
 END

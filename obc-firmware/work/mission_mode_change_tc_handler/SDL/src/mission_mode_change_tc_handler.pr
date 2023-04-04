@@ -1,21 +1,21 @@
-/* CIF PROCESS (356, 82), (231, 75) */
+/* CIF PROCESS (357, 68), (231, 75) */
 process Mission_Mode_Change_Tc_Handler;
-    /* CIF TEXT (323, 14), (419, 203) */
+    /* CIF TEXT (323, 14), (424, 203) */
     -- Text area for declarations and comments
     
-    dcl mission_mode_change_tc Mission_Mode_Change_TC;
-    dcl mission_mode_change_report Mission_Mode_Change_Report;
+    dcl mission_mode_change_tc Mission_Mode_Change_TC_T;
+    dcl mission_mode_change_report Mission_Mode_Change_Report_T;
     
     dcl target_mission_mode Mission_Mode_T;
     dcl target_system_mode System_Mode_T;
     
-    dcl system_mode_change_report System_Mode_Change_Report_T;
+    dcl system_mode_status_report System_Mode_Status_Report_T;
     
     dcl system_mode_downlink System_Mode_T;
     dcl system_mode_downlink_imaging System_Mode_T;
     dcl system_mode_downlink_processing_lp System_Mode_T;
     /* CIF ENDTEXT */
-    /* CIF procedure (404, 535), (174, 35) */
+    /* CIF procedure (400, 535), (174, 35) */
     procedure init_mode_map_downlink;
         /* CIF TEXT (7, 7), (267, 140) */
         -- Text area for declarations and comments
@@ -40,7 +40,7 @@ process Mission_Mode_Change_Tc_Handler;
             /* CIF return (459, 405), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (376, 583), (227, 35) */
+    /* CIF procedure (372, 583), (227, 35) */
     procedure init_mode_map_downlink_imaging;
         /* CIF TEXT (7, 7), (303, 140) */
         -- Text area for declarations and comments
@@ -65,7 +65,7 @@ process Mission_Mode_Change_Tc_Handler;
             /* CIF return (490, 404), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (357, 630), (261, 35) */
+    /* CIF procedure (353, 630), (261, 35) */
     procedure init_mode_map_downlink_processing_lp;
         /* CIF TEXT (7, 7), (337, 140) */
         -- Text area for declarations and comments
@@ -100,47 +100,41 @@ process Mission_Mode_Change_Tc_Handler;
         call init_mode_map_downlink_processing_lp(system_mode_downlink_processing_lp);
         /* CIF NEXTSTATE (443, 462), (114, 35) */
         NEXTSTATE Wait_command;
-    /* CIF state (2150, 25), (94, 35) */
+    /* CIF state (1980, 23), (94, 35) */
     state Wait_report;
-        /* CIF input (1990, 80), (416, 35) */
-        input relay_system_mode_change_report(system_mode_change_report);
-            /* CIF task (1862, 135), (673, 35) */
-            task mission_mode_change_report.system_mode.eps_mode := system_mode_change_report.eps_report.eps_mode;
-            /* CIF task (1830, 190), (736, 35) */
-            task mission_mode_change_report.system_mode.comms_mode := system_mode_change_report.comms_report.comms_mode;
-            /* CIF task (1823, 243), (750, 35) */
-            task mission_mode_change_report.system_mode.payload_mode := system_mode_change_report.payload_report.payload_mode;
-            /* CIF task (1822, 298), (753, 35) */
-            task mission_mode_change_report.system_mode.pipeline_mode := system_mode_change_report.pipeline_report.pipeline_mode;
-            /* CIF output (2005, 348), (386, 35) */
+        /* CIF input (1823, 78), (410, 35) */
+        input relay_system_mode_change_report(system_mode_status_report);
+            /* CIF task (1750, 128), (557, 35) */
+            task mission_mode_change_report.system_mode_status_report := system_mode_status_report;
+            /* CIF output (1835, 178), (386, 35) */
             output report_mission_mode_change(mission_mode_change_report);
-            /* CIF NEXTSTATE (2141, 403), (114, 35) */
+            /* CIF NEXTSTATE (1971, 233), (114, 35) */
             NEXTSTATE Wait_command;
     endstate;
-    /* CIF state (1137, 21), (114, 35) */
+    /* CIF state (1151, 21), (114, 35) */
     state Wait_command;
-        /* CIF input (1028, 76), (333, 35) */
+        /* CIF input (1042, 76), (333, 35) */
         input tc_change_mission_mode(mission_mode_change_tc);
-            /* CIF task (992, 131), (406, 35) */
+            /* CIF task (1006, 131), (406, 35) */
             task target_mission_mode := mission_mode_change_tc.mission_mode;
-            /* CIF decision (1120, 181), (151, 50) */
+            /* CIF decision (1134, 181), (151, 50) */
             decision target_mission_mode;
-                /* CIF ANSWER (1135, 251), (120, 23) */
+                /* CIF ANSWER (1149, 251), (120, 23) */
                 (mission_imaging):
-                    /* CIF task (1016, 294), (359, 35) */
+                    /* CIF task (1030, 294), (359, 35) */
                     task target_system_mode := system_mode_downlink_imaging;
-                /* CIF ANSWER (801, 251), (95, 23) */
+                /* CIF ANSWER (815, 251), (95, 23) */
                 (mission_idle):
-                    /* CIF task (696, 294), (306, 35) */
+                    /* CIF task (710, 294), (306, 35) */
                     task target_system_mode := system_mode_downlink;
-                /* CIF ANSWER (1519, 251), (137, 23) */
+                /* CIF ANSWER (1533, 251), (137, 23) */
                 (mission_processing):
-                    /* CIF task (1391, 294), (393, 35) */
+                    /* CIF task (1405, 294), (393, 35) */
                     task target_system_mode := system_mode_downlink_processing_lp;
             enddecision;
-            /* CIF output (1051, 345), (287, 35) */
+            /* CIF output (1065, 345), (287, 35) */
             output change_system_mode(target_system_mode);
-            /* CIF NEXTSTATE (1148, 400), (94, 35) */
+            /* CIF NEXTSTATE (1162, 400), (94, 35) */
             NEXTSTATE Wait_report;
     endstate;
 endprocess Mission_Mode_Change_Tc_Handler;
