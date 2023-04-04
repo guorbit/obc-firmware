@@ -1,0 +1,34 @@
+/* CIF PROCESS (250, 150), (150, 75) */
+process Gs_Contact_Manager;
+    /* CIF TEXT (325, 18), (267, 140) */
+    -- Text area for declarations and comments
+    
+    dcl gs_contact T_Boolean;
+    /* CIF ENDTEXT */
+    /* CIF START (387, 184), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (387, 234), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (723, 33), (70, 35) */
+    state Wait;
+        /* CIF input (676, 88), (162, 35) */
+        input trigger_poll_gs_contact;
+            /* CIF output (663, 143), (188, 35) */
+            output poll_gs_contact(gs_contact);
+            /* CIF decision (714, 198), (86, 50) */
+            decision gs_contact;
+                /* CIF ANSWER (789, 268), (70, 23) */
+                (false):
+                    /* CIF output (772, 311), (105, 35) */
+                    output set_led(false);
+                /* CIF ANSWER (660, 268), (70, 23) */
+                (true):
+                    /* CIF output (644, 311), (101, 35) */
+                    output set_led(true);
+                    /* CIF output (629, 361), (131, 35) */
+                    output report_gs_contact;
+            enddecision;
+            /* CIF NEXTSTATE (723, 412), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess Gs_Contact_Manager;

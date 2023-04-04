@@ -26,20 +26,7 @@ void hal_PI_blink_led( void )
     puts("blink");
 }
 
-void hal_PI_read_led( asn1SccT_Boolean *OUT_val )
-{
-    *OUT_val = LED_ON;
-}
-
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 {
     LED_ON = *IN_val;
-}
-
-void hal_PI_toggle_led( const asn1SccDelay_ns *IN_on_time_ns )
-{
-    LED_ON = !LED_ON;
-    for (int i=0; i<=(*IN_on_time_ns); i++)
-    {}
-    LED_ON = !LED_ON;
 }

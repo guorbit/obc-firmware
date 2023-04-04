@@ -18,16 +18,10 @@ void hal_startup(void);
 void hal_PI_blink_led( void );
 
 
-void hal_PI_read_led( asn1SccT_Boolean * );
-
-
 void hal_PI_set_led( const asn1SccT_Boolean * );
 
 
-void hal_PI_toggle_led( const asn1SccDelay_ns * );
-
 /* Required interfaces */
-extern void hal_RI_onboard_toggle_led( void );
 
 
 #ifdef __cplusplus
