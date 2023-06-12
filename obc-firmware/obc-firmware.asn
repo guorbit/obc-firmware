@@ -207,10 +207,11 @@ Mission-Mode-T                  ::= ENUMERATED {
 }
 
 Mission-Mode-Change-TC-T        ::= SEQUENCE {
-    mission-mode                Mission-Mode-T
+    target-mission-mode         Mission-Mode-T
 }
 
 Mission-Mode-Change-Report-T    ::= SEQUENCE {
+    target-mission-mode         Mission-Mode-T,
     system-mode-status-report   System-Mode-Status-Report-T
 }
 

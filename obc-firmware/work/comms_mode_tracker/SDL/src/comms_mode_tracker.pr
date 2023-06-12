@@ -1,5 +1,6 @@
-/* CIF PROCESS (311, 102), (156, 75) */
+/* CIF PROCESS (310, 102), (156, 75) */
 process Comms_Mode_Tracker;
+    /* CIF Keep Specific Geode Partition 'default' */
     /* CIF TEXT (309, 0), (276, 140) */
     -- Text area for declarations and comments
     
@@ -9,56 +10,70 @@ process Comms_Mode_Tracker;
     /* CIF START (337, 160), (70, 35) */
     START;
         /* CIF NEXTSTATE (337, 210), (70, 35) */
-        NEXTSTATE Idle;
-    /* CIF state (1459, 6), (70, 35) */
+        NEXTSTATE Uplink;
+    /* CIF state (460, 160), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Idle;
+    endstate;
+    /* CIF state (451, 286), (78, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Downlink;
+    endstate;
+    /* CIF state (459, 224), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     state Uplink;
-        /* CIF input (1361, 61), (243, 35) */
+    endstate;
+    /* CIF state (835, 6), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Idle;
+        /* CIF input (748, 61), (243, 35) */
         input change_comms_mode(comms_mode);
-            /* CIF decision (1431, 111), (104, 50) */
+            /* CIF decision (818, 111), (104, 50) */
             decision comms_mode;
-                /* CIF ANSWER (1265, 181), (124, 23) */
-                (comms_downlink):
-                    /* CIF task (1195, 219), (264, 35) */
-                    task report.comms_mode := comms_downlink;
-                    /* CIF task (1179, 269), (297, 35) */
-                    task report.comms_last_op := mode_status_change;
-                    /* CIF output (1209, 319), (237, 35) */
-                    output report_comms_mode_status(report);
-                    /* CIF output (1214, 369), (226, 35) */
-                    output return_comms_mode_status(true);
-                    /* CIF NEXTSTATE (1288, 419), (78, 35) */
-                    NEXTSTATE Downlink;
-                /* CIF ANSWER (1594, 181), (70, 23) */
-                else:
-                    /* CIF task (1505, 219), (246, 35) */
+                /* CIF ANSWER (668, 181), (107, 23) */
+                (comms_uplink):
+                    /* CIF task (599, 219), (246, 35) */
                     task report.comms_mode := comms_uplink;
-                    /* CIF task (1490, 269), (277, 35) */
-                    task report.comms_last_op := mode_status_nop;
-                    /* CIF output (1510, 319), (237, 35) */
+                    /* CIF task (573, 269), (297, 35) */
+                    task report.comms_last_op := mode_status_change;
+                    /* CIF output (603, 319), (237, 35) */
                     output report_comms_mode_status(report);
-                    /* CIF output (1513, 369), (230, 35) */
-                    output return_comms_mode_status(false);
-                    /* CIF NEXTSTATE (1594, 419), (70, 35) */
+                    /* CIF output (609, 369), (226, 35) */
+                    output return_comms_mode_status(true);
+                    /* CIF NEXTSTATE (687, 419), (70, 35) */
                     NEXTSTATE Uplink;
+                /* CIF ANSWER (987, 181), (70, 23) */
+                else:
+                    /* CIF task (905, 219), (232, 35) */
+                    task report.comms_mode := comms_idle;
+                    /* CIF task (883, 269), (277, 35) */
+                    task report.comms_last_op := mode_status_nop;
+                    /* CIF output (903, 319), (237, 35) */
+                    output report_comms_mode_status(report);
+                    /* CIF output (906, 369), (230, 35) */
+                    output return_comms_mode_status(false);
+                    /* CIF NEXTSTATE (987, 419), (70, 35) */
+                    NEXTSTATE Idle;
             enddecision;
     endstate;
-    /* CIF state (2037, 6), (78, 35) */
+    /* CIF state (2036, 6), (78, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     state Downlink;
-        /* CIF input (1955, 61), (243, 35) */
+        /* CIF input (1954, 61), (243, 35) */
         input change_comms_mode(comms_mode);
-            /* CIF decision (2025, 111), (104, 50) */
+            /* CIF decision (2024, 111), (104, 50) */
             decision comms_mode;
-                /* CIF ANSWER (1885, 181), (92, 23) */
+                /* CIF ANSWER (1884, 181), (92, 23) */
                 (comms_idle):
-                    /* CIF task (1815, 219), (232, 35) */
+                    /* CIF task (1814, 219), (232, 35) */
                     task report.comms_mode := comms_idle;
-                    /* CIF task (1783, 269), (297, 35) */
+                    /* CIF task (1782, 269), (297, 35) */
                     task report.comms_last_op := mode_status_change;
-                    /* CIF output (1813, 319), (237, 35) */
+                    /* CIF output (1812, 319), (237, 35) */
                     output report_comms_mode_status(report);
-                    /* CIF output (1818, 374), (226, 35) */
+                    /* CIF output (1817, 374), (226, 35) */
                     output return_comms_mode_status(true);
-                    /* CIF NEXTSTATE (1897, 424), (70, 35) */
+                    /* CIF NEXTSTATE (1896, 424), (70, 35) */
                     NEXTSTATE Idle;
                 /* CIF ANSWER (2198, 181), (70, 23) */
                 else:
@@ -74,45 +89,37 @@ process Comms_Mode_Tracker;
                     NEXTSTATE Downlink;
             enddecision;
     endstate;
-    /* CIF state (835, 6), (70, 35) */
-    state Idle;
-        /* CIF input (742, 61), (243, 35) */
-        input change_comms_mode(comms_mode);
-            /* CIF decision (812, 111), (104, 50) */
-            decision comms_mode;
-                /* CIF ANSWER (662, 181), (107, 23) */
-                (comms_uplink):
-                    /* CIF task (593, 219), (246, 35) */
-                    task report.comms_mode := comms_uplink;
-                    /* CIF task (567, 269), (297, 35) */
-                    task report.comms_last_op := mode_status_change;
-                    /* CIF output (597, 319), (237, 35) */
-                    output report_comms_mode_status(report);
-                    /* CIF output (603, 369), (226, 35) */
-                    output return_comms_mode_status(true);
-                    /* CIF NEXTSTATE (681, 419), (70, 35) */
-                    NEXTSTATE Uplink;
-                /* CIF ANSWER (980, 181), (70, 23) */
-                else:
-                    /* CIF task (898, 219), (232, 35) */
-                    task report.comms_mode := comms_idle;
-                    /* CIF task (876, 269), (277, 35) */
-                    task report.comms_last_op := mode_status_nop;
-                    /* CIF output (896, 319), (237, 35) */
-                    output report_comms_mode_status(report);
-                    /* CIF output (899, 369), (230, 35) */
-                    output return_comms_mode_status(false);
-                    /* CIF NEXTSTATE (980, 419), (70, 35) */
-                    NEXTSTATE Idle;
-            enddecision;
-    endstate;
-    /* CIF state (459, 224), (70, 35) */
+    /* CIF state (1459, 6), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     state Uplink;
-    endstate;
-    /* CIF state (452, 286), (78, 35) */
-    state Downlink;
-    endstate;
-    /* CIF state (460, 160), (70, 35) */
-    state Idle;
+        /* CIF input (1360, 61), (243, 35) */
+        input change_comms_mode(comms_mode);
+            /* CIF decision (1430, 111), (104, 50) */
+            decision comms_mode;
+                /* CIF ANSWER (1264, 181), (124, 23) */
+                (comms_downlink):
+                    /* CIF task (1194, 219), (264, 35) */
+                    task report.comms_mode := comms_downlink;
+                    /* CIF task (1178, 269), (297, 35) */
+                    task report.comms_last_op := mode_status_change;
+                    /* CIF output (1208, 319), (237, 35) */
+                    output report_comms_mode_status(report);
+                    /* CIF output (1213, 369), (226, 35) */
+                    output return_comms_mode_status(true);
+                    /* CIF NEXTSTATE (1287, 419), (78, 35) */
+                    NEXTSTATE Downlink;
+                /* CIF ANSWER (1594, 181), (70, 23) */
+                else:
+                    /* CIF task (1505, 219), (246, 35) */
+                    task report.comms_mode := comms_uplink;
+                    /* CIF task (1490, 269), (277, 35) */
+                    task report.comms_last_op := mode_status_nop;
+                    /* CIF output (1510, 319), (237, 35) */
+                    output report_comms_mode_status(report);
+                    /* CIF output (1513, 369), (230, 35) */
+                    output return_comms_mode_status(false);
+                    /* CIF NEXTSTATE (1594, 419), (70, 35) */
+                    NEXTSTATE Uplink;
+            enddecision;
     endstate;
 endprocess Comms_Mode_Tracker;
