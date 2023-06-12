@@ -3,19 +3,25 @@ MAKEFILE_PATH   := $(lastword $(MAKEFILE_LIST))
 TOOL_INST       := $(shell taste-config --prefix)
 OUTDIR          := $(dir $(MAKEFILE_PATH))
 TASTE_SHARED_TYPES?=${HOME}/.local/share/QtProject/QtCreator/shared_types
-ASN1_FILES      := ../obc-firmware.asn ${TOOL_INST}/share/taste-types/taste-types.asn dataview/system.asn
+ASN1_FILES      := ../obc-firmware.asn ${TOOL_INST}/share/taste-types/taste-types.asn system.asn
 CP_FILES        :=       # Context parameters
 DATAVIEW_PATH   := ${OUTDIR}/dataview
 DATAVIEW_UNIQ   := ${DATAVIEW_PATH}/dataview-uniq.asn
 DATAVIEW_ACN    := ${DATAVIEW_PATH}/dataview-uniq.acn
 DATAVIEW_AADLV1 := ${DATAVIEW_PATH}/dataview_aadlv1.aadl
 DATAVIEW_AADLV2 := ${DATAVIEW_PATH}/dataview_aadlv2.aadl
+ASN1_POLICY_FLAGS ?= -typePrefix asn1Scc -renamePolicy 3 -equal -fp AUTO -c -uPER -ACN
 #TASTE_SHARED_TYPES?=${TOOL_INST}/share/SharedTypes  # Ellidiss only
 
 # Project cache folder is used to speed up all ASN.1-related processing
 export PROJECT_CACHE=${HOME}/.taste_AST_cache
-
+export IV_FILE=$(shell readlink -f ../interfaceview.xml)
 all:	build-default
+	$(info Run "make -C work check_stack" to analyze the stack usage of your application")
+
+# Call the stack checker
+check_stack:
+	$(MAKE) -C build -f Makefile.taste check_stack
 
 
 # Check that all runtimes used in the system are installed
@@ -34,8 +40,10 @@ ${DATAVIEW_PATH}/built:	dataview dataview/Python/built
 	touch $@
 
 # Build based on the deployment view
+# The parallel invocation can not be added here because of matlab remote error
+# For local matlab instalation it can be added
 build-default:	aadl2glueC build/system_config.h ${DATAVIEW_PATH}/built build/deploymentview_final/Makefile
-	$(MAKE) -j -C build -f Makefile.taste
+	$(MAKE) -C build -f Makefile.taste
 
 # Execute the generated binaries (used in Space Creator when using the Run button)
 run: # Space creator will always build before, so no need to depend on build-default
@@ -104,7 +112,7 @@ dataview/C/built: ${DATAVIEW_UNIQ} ${DATAVIEW_ACN} ${CP_FILES}
 	mkdir -p $(dir $@)
 	# asn2dataModel does not take the ACN files, and only calls asn1scc
 	# asn2dataModel -o $(dir $@) -toC ${DATAVIEW_UNIQ} ${DATAVIEW_ACN}
-	asn1scc -typePrefix asn1Scc ${ASN1SCC_FLAGS} -renamePolicy 3 -equal -fp AUTO -o $(dir $@) -c -uPER -ACN $^
+	asn1scc ${ASN1SCC_FLAGS} -o $(dir $@) ${ASN1_POLICY_FLAGS} $^
 	cp ${TOOL_INST}/share/AutoGUI/debug_messages.? dataview/C
 	cp ${TOOL_INST}/share/AutoGUI/timeInMS.? dataview/C
 	#cd dataview/C && msgPrinter ../dataview-uniq.asn  (disabled: this is not used anywhere)
@@ -138,9 +146,14 @@ dataview/Ada/built: ${DATAVIEW_UNIQ} ${CP_FILES}
 	touch $@
 	cd dataview/Ada && rm -f gnat.cfg GPS_project.gpr IgnoredExaminerWarnings.wrn runSpark.sh
 
+simulink_skeletons:
+	# target required only for SIMULINK, QGenC or QGenAda InterfaceView function blocks
+	# empty otherwise
+
+
 clean:
 	rm -rf binaries dataview
 	$(MAKE) -C build -f Makefile.taste clean
 
-.PHONY: clean simu compile-all-linux function-instances-linux function-types-linux build-default dataview build-rtems-ada dataview build/modelchecking modelchecking/subtypes/$(SUBTYPE) obs-to-if aadl-to-if asn-to-if $(PROPERTIES_CONFIG) run_cv
+.PHONY: clean simu compile-all-linux function-instances-linux function-types-linux build-default dataview build-rtems-ada dataview build/modelchecking modelchecking/subtypes/$(SUBTYPE) obs-to-if aadl-to-if asn-to-if $(PROPERTIES_CONFIG) run_cv simulink_skeletons
 
