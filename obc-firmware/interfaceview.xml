@@ -13,10 +13,6 @@
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{6c188ebb-2577-4067-a70a-67ae24836981}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
-</Provided_Interface>
-
 <Provided_Interface id="{b3834728-e730-4a14-a000-88d7c9d0f65f}" name="return_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
@@ -46,12 +42,6 @@
 
 <Required_Interface id="{2bf26630-e0e5-49ba-a297-a60b75502ecd}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
     <Input_Parameter name="payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface id="{7209bff6-fe2a-4864-8526-4fa5dbf700bc}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
-    <Input_Parameter name="pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
@@ -86,6 +76,24 @@
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
+<Required_Interface id="{49e5f508-4db7-4865-877f-3f38a8378dd5}" name="change_pipeline_mode_idle" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{d6e7246e-702b-4e2b-a058-248bdabced16}" name="change_pipeline_mode_processing_fp" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{163a2295-6c56-471d-8799-4f10c6b42b8f}" name="change_pipeline_mode_processing_lp" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
     <Implementations>
         <Implementation name="default" language="SDL"/>
     </Implementations>
@@ -93,15 +101,17 @@
 
 <Function id="{c6448cb3-50f4-4ff0-a4f6-4b2a7773901f}" name="pipeline_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" instances_max="1" FPGA_Configurations="" startup_priority="1">
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{d72a080f-21c7-458f-8488-3044446357d1}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
-    <Input_Parameter name="pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
+<Provided_Interface id="{228bae50-3c0b-450d-b5cd-60c524aab8b1}" name="change_pipeline_mode_idle" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{69c4f729-691d-4c41-8116-64bd23774493}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
+<Provided_Interface id="{1fd52839-c5d0-475f-9a25-68cc5f870d5d}" name="change_pipeline_mode_processing_fp" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{94cf751d-cab7-47ae-9dea-59846bf8ce23}" name="change_pipeline_mode_processing_lp" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
 
 <Required_Interface id="{fdc4ca19-be8f-438b-ba80-b693a331e5b7}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" stack_size="1024" miat="0" queue_size="1" priority="1">
     <Input_Parameter name="pipeline_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
@@ -361,11 +371,6 @@
     <Target func_name="system_mode_manager" pi_name="return_payload_mode_status" />
 </Connection>
 
-<Connection id="{5529e073-47a2-49f1-8447-b87e18555ada}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode" />
-    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode" />
-</Connection>
-
 <Connection id="{7f31371e-7ce3-4fb2-a1ec-db3323a87bb4}" name="system_mode_manager_change_eps_mode_high_power____eps_mode_tracker_change_eps_mode_high_power" required_system_element="NO">
     <Source func_name="system_mode_manager" ri_name="change_eps_mode_high_power" />
     <Target func_name="eps_mode_tracker" pi_name="change_eps_mode_high_power" />
@@ -381,14 +386,14 @@
     <Target func_name="mode_change_report_collector" pi_name="report_comms_mode_status" />
 </Connection>
 
+<Connection id="{2a2dce60-2fb1-492f-b1bc-84d2795b2b6d}" name="system_mode_manager_change_pipeline_mode_processing_lp____pipeline_mode_tracker_change_pipeline_mode_processing_lp" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode_processing_lp" />
+    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode_processing_lp" />
+</Connection>
+
 <Connection id="{5537a95c-2744-42b2-80cd-2b3bb3ef5031}" required_system_element="NO">
     <Source func_name="mode_change_report_collector" ri_name="set_led" />
     <Target func_name="HAL" pi_name="set_led" />
-</Connection>
-
-<Connection id="{ecb10074-adc3-4aa6-bacc-d850afd311f3}" required_system_element="NO">
-    <Source func_name="pipeline_mode_tracker" ri_name="return_pipeline_mode_status" />
-    <Target func_name="system_mode_manager" pi_name="return_pipeline_mode_status" />
 </Connection>
 
 <Connection id="{61398c89-8ee6-4a08-a3f6-df0af03c8764}" name="system_mode_manager_change_eps_mode_idle____eps_mode_tracker_change_eps_mode_idle" required_system_element="NO">
@@ -431,6 +436,11 @@
     <Target func_name="comms_mode_tracker" pi_name="change_comms_mode_idle" />
 </Connection>
 
+<Connection id="{c143f493-6f87-42ec-8b00-beb02fc7e257}" name="system_mode_manager_change_pipeline_mode_processing_fp____pipeline_mode_tracker_change_pipeline_mode_processing_fp" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode_processing_fp" />
+    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode_processing_fp" />
+</Connection>
+
 <Connection id="{5e89f7ab-5e95-4c1a-a6af-14ef722d5a23}" required_system_element="NO">
     <Source func_name="mode_change_report_collector" ri_name="relay_system_mode_change_report" />
     <Target func_name="mission_mode_change_tc_handler" pi_name="relay_system_mode_change_report" />
@@ -454,6 +464,11 @@
 <Connection id="{1772d965-7b5f-45bb-a25b-5708c032afd9}" required_system_element="NO">
     <Source func_name="mission_mode_change_tc_handler" ri_name="report_mission_mode_change" />
     <Target func_name="gs_gui" pi_name="report_mission_mode_change" />
+</Connection>
+
+<Connection id="{316c1f30-87a7-40f8-880a-5dcea192c4b7}" name="system_mode_manager_change_pipeline_mode_idle____pipeline_mode_tracker_change_pipeline_mode_idle" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode_idle" />
+    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode_idle" />
 </Connection>
 
 <Connection id="{d4f34aac-f094-486b-be77-13e8c1813b58}" name="system_mode_manager_change_comms_mode_uplink____comms_mode_tracker_change_comms_mode_uplink" required_system_element="NO">
