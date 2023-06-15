@@ -1,7 +1,7 @@
-/* CIF PROCESS (340, 148), (164, 75) */
+/* CIF PROCESS (334, 148), (164, 75) */
 process System_Mode_Manager;
     /* CIF Keep Specific Geode Partition 'default' */
-    /* CIF TEXT (196, 56), (424, 143) */
+    /* CIF TEXT (196, 56), (424, 188) */
     -- Text area for declarations and comments
     
     dcl mission_mode Mission_Mode_T;
@@ -10,11 +10,14 @@ process System_Mode_Manager;
     dcl system_mode System_Mode_T;
     dcl target_mode System_Mode_T;
     
+    dcl system_mode_idle System_Mode_T;
+    dcl system_mode_uplink System_Mode_T;
+    
     dcl mode_change_success T_Boolean;
     /* CIF ENDTEXT */
-    /* CIF START (352, 253), (70, 35) */
+    /* CIF START (364, 268), (70, 35) */
     START;
-        /* CIF task (282, 308), (208, 128) */
+        /* CIF task (294, 323), (208, 128) */
         task system_mode := {
   eps_mode eps_idle,
   comms_mode comms_uplink,
@@ -23,181 +26,187 @@ process System_Mode_Manager;
   payload_mode payload_idle,
   pipeline_mode pipeline_idle
 };
-        /* CIF NEXTSTATE (337, 466), (98, 35) */
+        /* CIF NEXTSTATE (349, 481), (98, 35) */
         NEXTSTATE Wait_change;
-    /* CIF state (1087, 563), (100, 35) */
+    /* CIF state (1535, 784), (93, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
-    state eps_changed;
-        /* CIF provided (1107, 618), (70, 35) */
+    state eps_done_2;
+        /* CIF provided (1549, 840), (70, 35) */
         provided true;
-            /* CIF task (1040, 673), (203, 35) */
-            task mode_change_success := false;
-            /* CIF decision (1047, 723), (189, 50) */
-            decision system_mode.comms_mode;
-                /* CIF ANSWER (1651, 793), (124, 23) */
-                (comms_downlink):
-                    /* CIF decision (1621, 831), (185, 50) */
-                    decision target_mode.comms_mode;
-                        /* CIF ANSWER (1468, 901), (92, 23) */
-                        (comms_idle):
-                            /* CIF output (1353, 939), (323, 35) */
-                            output change_comms_mode_idle(mode_change_success);
-                        /* CIF ANSWER (1829, 901), (70, 23) */
-                        else:
-                    enddecision;
-                /* CIF ANSWER (1084, 793), (107, 23) */
-                (comms_uplink):
-                    /* CIF decision (1045, 831), (185, 50) */
-                    decision target_mode.comms_mode;
-                        /* CIF ANSWER (875, 901), (124, 23) */
-                        (comms_downlink):
-                            /* CIF output (760, 939), (355, 35) */
-                            output change_comms_mode_downlink(mode_change_success);
-                        /* CIF ANSWER (1252, 901), (70, 23) */
-                        else:
-                    enddecision;
-                /* CIF ANSWER (519, 793), (92, 23) */
-                (comms_idle):
-                    /* CIF decision (473, 831), (185, 50) */
-                    decision target_mode.comms_mode;
-                        /* CIF ANSWER (315, 901), (107, 23) */
-                        (comms_uplink):
-                            /* CIF output (200, 939), (337, 35) */
-                            output change_comms_mode_uplink(mode_change_success);
-                        /* CIF ANSWER (682, 901), (70, 23) */
-                        else:
-                    enddecision;
-            enddecision;
-            /* CIF decision (1063, 1005), (156, 50) */
-            decision mode_change_success;
-                /* CIF ANSWER (1033, 1075), (70, 23) */
-                (true):
-                    /* CIF task (883, 1113), (368, 35) */
-                    task system_mode.comms_mode := target_mode.comms_mode;
-                /* CIF ANSWER (1263, 1075), (70, 23) */
-                (false):
-            enddecision;
-            /* CIF NEXTSTATE (1091, 1164), (101, 35) */
-            NEXTSTATE comms_done;
-    endstate;
-    /* CIF state (974, 70), (98, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Wait_change;
-        /* CIF input (905, 125), (239, 35) */
-        input change_system_mode(target_mode);
-            /* CIF label (979, 180), (91, 35) */
-            goto_eps_1:
-            /* CIF decision (943, 235), (164, 50) */
-            decision target_mode.eps_mode;
-                /* CIF ANSWER (858, 305), (119, 23) */
-                (eps_high_power):
-                    /* CIF output (799, 343), (237, 35) */
-                    output change_eps_mode(eps_high_power);
-                    /* CIF NEXTSTATE (856, 398), (123, 35) */
-                    NEXTSTATE Wait_eps_conf_1;
-                /* CIF ANSWER (1098, 305), (70, 23) */
-                else:
-                    /* CIF NEXTSTATE (1082, 394), (100, 35) */
-                    NEXTSTATE eps_changed;
-            enddecision;
-    endstate;
-    /* CIF state (1391, 71), (123, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Wait_eps_conf_1;
-        /* CIF input (1296, 126), (311, 35) */
-        input return_eps_mode_status(mode_change_success);
-            /* CIF decision (1374, 246), (156, 50) */
-            decision mode_change_success;
-                /* CIF ANSWER (1348, 316), (70, 23) */
-                (true):
-                    /* CIF task (1219, 354), (326, 35) */
-                    task system_mode.eps_mode := target_mode.eps_mode;
-                /* CIF ANSWER (1557, 316), (70, 23) */
-                (false):
-            enddecision;
-            /* CIF NEXTSTATE (1402, 405), (100, 35) */
-            NEXTSTATE eps_changed;
-    endstate;
-    /* CIF state (2903, 69), (123, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Wait_eps_conf_2;
-        /* CIF input (2810, 124), (311, 35) */
-        input return_eps_mode_status(mode_change_success);
-            /* CIF decision (2888, 247), (156, 50) */
-            decision mode_change_success;
-                /* CIF ANSWER (2864, 317), (70, 23) */
-                (true):
-                    /* CIF task (2735, 355), (326, 35) */
-                    task system_mode.eps_mode := target_mode.eps_mode;
-                /* CIF ANSWER (3094, 317), (70, 23) */
-                (false):
-            enddecision;
-            /* CIF label (2926, 406), (79, 35) */
-            goto_end:
-            /* CIF output (2858, 456), (215, 35) */
+            /* CIF output (1476, 895), (215, 35) */
             output complete_system_mode_change;
-            /* CIF NEXTSTATE (2917, 511), (98, 35) */
+            /* CIF NEXTSTATE (1534, 945), (98, 35) */
             NEXTSTATE Wait_change;
     endstate;
-    /* CIF state (2434, 63), (137, 35) */
+    /* CIF state (4115, 62), (137, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait_pipeline_conf;
-        /* CIF input (2333, 118), (338, 35) */
+        /* CIF input (4014, 117), (338, 35) */
         input return_pipeline_mode_status(mode_change_success);
-            /* CIF decision (2424, 245), (156, 50) */
+            /* CIF decision (4105, 167), (156, 50) */
             decision mode_change_success;
-                /* CIF ANSWER (2400, 315), (70, 23) */
+                /* CIF ANSWER (4087, 237), (70, 23) */
                 (true):
-                    /* CIF task (2245, 353), (379, 35) */
+                    /* CIF task (3932, 275), (379, 35) */
                     task system_mode.pipeline_mode := target_mode.pipeline_mode;
-                /* CIF ANSWER (2630, 315), (70, 23) */
+                /* CIF ANSWER (4317, 237), (70, 23) */
                 (false):
             enddecision;
-            /* CIF label (2457, 404), (91, 35) */
-            goto_eps_2:
-            /* CIF decision (2420, 459), (164, 50) */
-            decision target_mode.eps_mode;
-                /* CIF ANSWER (2370, 529), (71, 23) */
-                (eps_idle):
-                    /* CIF output (2311, 567), (189, 35) */
-                    output change_eps_mode(eps_idle);
-                    /* CIF NEXTSTATE (2344, 617), (123, 35) */
-                    NEXTSTATE Wait_eps_conf_2;
-                /* CIF ANSWER (2576, 529), (70, 23) */
-                else:
-                    /* CIF join (2593, 572), (35, 35) */
-                    join goto_end;
-            enddecision;
+            /* CIF NEXTSTATE (4130, 383), (106, 35) */
+            NEXTSTATE pipeline_done;
     endstate;
-    /* CIF state (1916, 62), (101, 35) */
+    /* CIF state (3210, 61), (101, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state comms_done;
-        /* CIF provided (1934, 117), (70, 35) */
+        /* CIF provided (3234, 116), (70, 35) */
         provided true;
-            /* CIF output (1802, 172), (333, 35) */
+            /* CIF output (3102, 171), (333, 35) */
             output change_payload_mode(target_mode.payload_mode);
-            /* CIF NEXTSTATE (1900, 227), (136, 35) */
+            /* CIF NEXTSTATE (3200, 226), (136, 35) */
             NEXTSTATE Wait_payload_conf;
     endstate;
-    /* CIF state (1894, 316), (136, 35) */
+    /* CIF state (3652, 61), (136, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait_payload_conf;
-        /* CIF input (1795, 371), (337, 35) */
+        /* CIF input (3553, 116), (337, 35) */
         input return_payload_mode_status(mode_change_success);
-            /* CIF decision (1886, 426), (156, 50) */
+            /* CIF decision (3644, 171), (156, 50) */
             decision mode_change_success;
-                /* CIF ANSWER (1857, 496), (70, 23) */
+                /* CIF ANSWER (3621, 241), (70, 23) */
                 (true):
-                    /* CIF task (1703, 534), (377, 35) */
+                    /* CIF task (3467, 279), (377, 35) */
                     task system_mode.payload_mode := target_mode.payload_mode;
-                /* CIF ANSWER (2087, 496), (70, 23) */
+                /* CIF ANSWER (3851, 241), (70, 23) */
                 (false):
             enddecision;
-            /* CIF label (1912, 585), (104, 35) */
-            goto_pipeline:
-            /* CIF output (1796, 640), (335, 35) */
+            /* CIF output (3554, 330), (335, 35) */
             output change_pipeline_mode(target_mode.pipeline_mode);
-            /* CIF NEXTSTATE (1895, 695), (137, 35) */
+            /* CIF NEXTSTATE (3653, 385), (137, 35) */
             NEXTSTATE Wait_pipeline_conf;
+    endstate;
+    /* CIF state (1125, 61), (98, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait_change;
+        /* CIF input (1056, 116), (239, 35) */
+        input change_system_mode(target_mode);
+            /* CIF task (1074, 171), (203, 35) */
+            task mode_change_success := false;
+            /* CIF decision (1092, 221), (168, 50) */
+            decision system_mode.eps_mode;
+                /* CIF ANSWER (992, 291), (71, 23) */
+                (eps_idle):
+                    /* CIF decision (946, 334), (164, 50) */
+                    decision target_mode.eps_mode;
+                        /* CIF ANSWER (892, 404), (119, 23) */
+                        (eps_high_power):
+                            /* CIF output (777, 447), (350, 35) */
+                            output change_eps_mode_high_power(mode_change_success);
+                        /* CIF ANSWER (1146, 404), (70, 23) */
+                        else:
+                    enddecision;
+                /* CIF ANSWER (1273, 291), (70, 23) */
+                else:
+            enddecision;
+            /* CIF decision (1098, 513), (156, 50) */
+            decision mode_change_success;
+                /* CIF ANSWER (1272, 583), (70, 23) */
+                (false):
+                /* CIF ANSWER (1004, 583), (70, 23) */
+                (true):
+                    /* CIF task (875, 621), (326, 35) */
+                    task system_mode.eps_mode := target_mode.eps_mode;
+            enddecision;
+            /* CIF NEXTSTATE (1129, 672), (93, 35) */
+            NEXTSTATE eps_done_1;
+    endstate;
+    /* CIF state (2289, 69), (93, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state eps_done_1;
+        /* CIF provided (2307, 124), (70, 35) */
+        provided true;
+            /* CIF task (2240, 179), (203, 35) */
+            task mode_change_success := false;
+            /* CIF decision (2247, 229), (189, 50) */
+            decision system_mode.comms_mode;
+                /* CIF ANSWER (2846, 299), (124, 23) */
+                (comms_downlink):
+                    /* CIF decision (2816, 337), (185, 50) */
+                    decision target_mode.comms_mode;
+                        /* CIF ANSWER (2663, 407), (92, 23) */
+                        (comms_idle):
+                            /* CIF output (2548, 445), (323, 35) */
+                            output change_comms_mode_idle(mode_change_success);
+                        /* CIF ANSWER (3029, 407), (70, 23) */
+                        else:
+                    enddecision;
+                /* CIF ANSWER (2279, 299), (107, 23) */
+                (comms_uplink):
+                    /* CIF decision (2240, 337), (185, 50) */
+                    decision target_mode.comms_mode;
+                        /* CIF ANSWER (2070, 407), (124, 23) */
+                        (comms_downlink):
+                            /* CIF output (1955, 445), (355, 35) */
+                            output change_comms_mode_downlink(mode_change_success);
+                        /* CIF ANSWER (2452, 407), (70, 23) */
+                        else:
+                    enddecision;
+                /* CIF ANSWER (1714, 299), (92, 23) */
+                (comms_idle):
+                    /* CIF decision (1668, 337), (185, 50) */
+                    decision target_mode.comms_mode;
+                        /* CIF ANSWER (1510, 407), (107, 23) */
+                        (comms_uplink):
+                            /* CIF output (1395, 445), (337, 35) */
+                            output change_comms_mode_uplink(mode_change_success);
+                        /* CIF ANSWER (1882, 407), (70, 23) */
+                        else:
+                    enddecision;
+            enddecision;
+            /* CIF decision (2263, 511), (156, 50) */
+            decision mode_change_success;
+                /* CIF ANSWER (2233, 581), (70, 23) */
+                (true):
+                    /* CIF task (2083, 619), (368, 35) */
+                    task system_mode.comms_mode := target_mode.comms_mode;
+                /* CIF ANSWER (2463, 581), (70, 23) */
+                (false):
+            enddecision;
+            /* CIF NEXTSTATE (2291, 670), (101, 35) */
+            NEXTSTATE comms_done;
+    endstate;
+    /* CIF state (1125, 777), (106, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state pipeline_done;
+        /* CIF provided (1148, 832), (70, 35) */
+        provided true;
+            /* CIF task (1081, 887), (203, 35) */
+            task mode_change_success := false;
+            /* CIF decision (1098, 937), (168, 50) */
+            decision system_mode.eps_mode;
+                /* CIF ANSWER (963, 1007), (119, 23) */
+                (eps_high_power):
+                    /* CIF decision (941, 1050), (164, 50) */
+                    decision target_mode.eps_mode;
+                        /* CIF ANSWER (911, 1120), (71, 23) */
+                        (eps_idle):
+                            /* CIF output (796, 1163), (302, 35) */
+                            output change_eps_mode_idle(mode_change_success);
+                        /* CIF ANSWER (1142, 1120), (70, 23) */
+                        else:
+                    enddecision;
+                /* CIF ANSWER (1289, 1007), (70, 23) */
+                else:
+            enddecision;
+            /* CIF decision (1104, 1229), (156, 50) */
+            decision mode_change_success;
+                /* CIF ANSWER (1293, 1299), (70, 23) */
+                (false):
+                /* CIF ANSWER (998, 1299), (70, 23) */
+                (true):
+                    /* CIF task (869, 1337), (326, 35) */
+                    task system_mode.eps_mode := target_mode.eps_mode;
+            enddecision;
+            /* CIF NEXTSTATE (1136, 1388), (93, 35) */
+            NEXTSTATE eps_done_2;
     endstate;
 endprocess System_Mode_Manager;
