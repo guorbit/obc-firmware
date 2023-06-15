@@ -1,35 +1,81 @@
 <InterfaceView version="1.2" asn1file="obc-firmware.acn" mscfile="/home/taste/obc-model/obc-model.msc" UiFile="interfaceview.ui.xml">
-<Function id="{420eaf7a-1895-4d1b-b2e5-c7f40bcaad42}" name="system_mode_manager" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
+<Function id="{cff3dce7-920c-4848-971c-5d3de03c1dbd}" name="mission_mode_change_tc_handler" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{83155c0a-49a2-468d-bf6b-1cbf3b5d642f}" name="change_system_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{b6cee5cd-ea42-46c7-be4e-790460789f5a}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{7d433119-0bf4-4574-983c-8879e1bfecac}" name="relay_system_mode_change_report" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="system_mode_change_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Required_Interface id="{0cad64b8-9497-4385-bf6a-5c0b970741c3}" name="report_mission_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="16" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{206b530d-0d26-4b3f-9920-1728594a7b35}" name="change_system_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="target_mode" type="System-Mode-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function id="{c6448cb3-50f4-4ff0-a4f6-4b2a7773901f}" name="pipeline_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
+<Provided_Interface id="{d72a080f-21c7-458f-8488-3044446357d1}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Required_Interface id="{69c4f729-691d-4c41-8116-64bd23774493}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{fdc4ca19-be8f-438b-ba80-b693a331e5b7}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="pipeline_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function id="{420eaf7a-1895-4d1b-b2e5-c7f40bcaad42}" name="system_mode_manager" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
+<Provided_Interface id="{83155c0a-49a2-468d-bf6b-1cbf3b5d642f}" name="change_system_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="target_mode" type="System-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{0ca95b5f-2b81-483a-b0fd-ef68c86a5fd2}" name="return_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{b3834728-e730-4a14-a000-88d7c9d0f65f}" name="return_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{b3834728-e730-4a14-a000-88d7c9d0f65f}" name="return_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{72e235aa-425f-43d2-962d-1badee44bd89}" name="return_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{72e235aa-425f-43d2-962d-1badee44bd89}" name="return_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{a9cffef8-c7fe-47fe-aeb4-0f8247148830}" name="return_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{a9cffef8-c7fe-47fe-aeb4-0f8247148830}" name="return_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{6c188ebb-2577-4067-a70a-67ae24836981}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{6c188ebb-2577-4067-a70a-67ae24836981}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{349bfdcf-9f77-43c8-8ef3-7d3019127c13}" name="return_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{349bfdcf-9f77-43c8-8ef3-7d3019127c13}" name="return_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{dc18bb4f-6fed-4984-8d5b-d4ab773ce556}" name="complete_system_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="16" priority="1" wcet="0">
+<Required_Interface id="{dc18bb4f-6fed-4984-8d5b-d4ab773ce556}" name="complete_system_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="16" miat="0" wcet="0" priority="1">
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
@@ -40,61 +86,50 @@
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{d271de19-4009-4193-9171-d95ac17ee44e}" name="change_deployer_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{d271de19-4009-4193-9171-d95ac17ee44e}" name="change_deployer_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="deployer_mode" type="Deployer-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{b6fd089c-431d-4c3c-b501-4d0ba397cf2c}" name="change_comms_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="comms_mode" type="Comms-Mode-T" encoding="NATIVE"/>
+<Required_Interface id="{b6fd089c-431d-4c3c-b501-4d0ba397cf2c}" name="change_comms_mode_idle" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" is_alarm="false" is_observable="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{3cf95c50-6508-4813-9fe1-24133910385d}" name="change_adcs_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{3cf95c50-6508-4813-9fe1-24133910385d}" name="change_adcs_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="adcs_mode" type="ADCS-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{2bf26630-e0e5-49ba-a297-a60b75502ecd}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{2bf26630-e0e5-49ba-a297-a60b75502ecd}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{7209bff6-fe2a-4864-8526-4fa5dbf700bc}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{7209bff6-fe2a-4864-8526-4fa5dbf700bc}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{a15d3b41-4ca2-48ac-9bee-cdd248078c66}" name="change_eps_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{a15d3b41-4ca2-48ac-9bee-cdd248078c66}" name="change_eps_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="eps_mode" type="EPS-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-    <Implementations>
-        <Implementation name="default" language="SDL"/>
-    </Implementations>
-</Function>
-
-<Function id="{c6448cb3-50f4-4ff0-a4f6-4b2a7773901f}" name="pipeline_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{d72a080f-21c7-458f-8488-3044446357d1}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{69c4f729-691d-4c41-8116-64bd23774493}" name="return_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+<Required_Interface id="{54f40143-6312-42ff-a763-40add29c28a2}" name="change_comms_mode_uplink" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{fdc4ca19-be8f-438b-ba80-b693a331e5b7}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="pipeline_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
+<Required_Interface id="{555aa435-9283-46ef-8950-8940f7f82a32}" name="change_comms_mode_downlink" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
@@ -104,131 +139,19 @@
     </Implementations>
 </Function>
 
-<Function id="{cff3dce7-920c-4848-971c-5d3de03c1dbd}" name="mission_mode_change_tc_handler" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
+<Function id="{22d6f47e-bfcc-47d5-ba5a-b4e79f399e7e}" name="deployer_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{b6cee5cd-ea42-46c7-be4e-790460789f5a}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{7d433119-0bf4-4574-983c-8879e1bfecac}" name="relay_system_mode_change_report" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="system_mode_change_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{0cad64b8-9497-4385-bf6a-5c0b970741c3}" name="report_mission_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="16" priority="1" wcet="0">
-    <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface id="{206b530d-0d26-4b3f-9920-1728594a7b35}" name="change_system_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="target_mode" type="System-Mode-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="SDL"/>
-    </Implementations>
-</Function>
-
-<Function id="{155c111d-7661-4e5f-80e7-c60707828360}" name="payload_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{57be3672-50be-457b-af22-1c1da809dbfa}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{f9dbc170-438e-4cf5-bd3d-b35e96dabdc3}" name="return_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface id="{c6018e36-342e-4666-b852-995c6eb935d3}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="payload_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="SDL"/>
-    </Implementations>
-</Function>
-
-<Function id="{8f0851e1-99fe-4789-8030-f76742ced961}" name="mode_change_report_collector" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{4193bf7c-49a5-4cc9-b938-f02735facd12}" name="complete_system_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="16" priority="1" wcet="0">
-</Provided_Interface>
-
-<Provided_Interface id="{b9901868-c287-462a-a1a8-9680f0fd4dcf}" name="report_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="comms_report" type="Comms-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{806b9321-c972-48c6-a98f-7fb032182ce3}" name="report_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="deployer_report" type="Deployer-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{012c625c-b60d-4d67-982f-486d71d99907}" name="report_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="adcs_report" type="ADCS-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{59b27913-8cc2-4147-8567-4efd72b177ab}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="payload_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{b3c54008-5590-4ea5-9c35-983da20983c1}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="pipeline_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Provided_Interface id="{f49f7df1-0210-4490-b656-f0c98dba9513}" name="report_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="eps_report" type="EPS-Mode-Status-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{6b25bd88-4c34-4ee5-b92c-678f1d130baf}" name="set_led" kind="Protected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
-    <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface id="{c3a7b510-ad6c-4ab7-a20b-03166837e6e0}" name="relay_system_mode_change_report" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="system_mode_change_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="SDL"/>
-    </Implementations>
-</Function>
-
-<Function id="{88fc8749-5905-433c-af04-b933b456c849}" name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-<Provided_Interface id="{0cb9d1c5-84bc-42c5-afc6-122a06df302a}" name="report_mission_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="16" priority="1" wcet="0">
-    <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="NATIVE"/>
-</Provided_Interface>
-
-<Required_Interface id="{929d2509-c0aa-4dbc-9974-2a6bdcf442c9}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-    <Implementations>
-        <Implementation name="default" language="GUI"/>
-    </Implementations>
-</Function>
-
-<Function id="{22d6f47e-bfcc-47d5-ba5a-b4e79f399e7e}" name="deployer_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{4ff2277d-ca6d-4253-a29b-843f12c5a872}" name="change_deployer_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{4ff2277d-ca6d-4253-a29b-843f12c5a872}" name="change_deployer_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="deployer_mode" type="Deployer-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{b3bdf0bf-2077-423f-9c8f-6bf8a4936d44}" name="return_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{b3bdf0bf-2077-423f-9c8f-6bf8a4936d44}" name="return_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{fc8833d8-b237-4927-b20b-d03f5ec473d7}" name="report_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{fc8833d8-b237-4927-b20b-d03f5ec473d7}" name="report_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="deployer_report" type="Deployer-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="false"/>
@@ -239,19 +162,19 @@
     </Implementations>
 </Function>
 
-<Function id="{1d1a1901-5168-4308-a2da-1a09f84a2c42}" name="adcs_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
+<Function id="{1d1a1901-5168-4308-a2da-1a09f84a2c42}" name="adcs_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{adcfd87b-b127-4048-a665-e1d0f465fc75}" name="change_adcs_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{adcfd87b-b127-4048-a665-e1d0f465fc75}" name="change_adcs_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="adcs_mode" type="ADCS-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{9e22be5c-ef76-4c22-879e-5e24b518fdd8}" name="return_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{9e22be5c-ef76-4c22-879e-5e24b518fdd8}" name="return_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{438c96b7-9fad-4532-b568-51d14cfc229a}" name="report_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{438c96b7-9fad-4532-b568-51d14cfc229a}" name="report_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="adcs_report" type="ADCS-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -262,22 +185,118 @@
     </Implementations>
 </Function>
 
-<Function id="{f20b06fb-79b4-484f-8c1b-61f7bf8e626b}" name="print_service" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-<Provided_Interface id="{be0327e8-5fee-4a90-a743-96eebf7b7256}" name="print" kind="Protected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
-    <Input_Parameter name="stri" type="OString" encoding="NATIVE"/>
+<Function id="{88fc8749-5905-433c-af04-b933b456c849}" name="gs_gui" is_type="NO" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+<Provided_Interface id="{0cb9d1c5-84bc-42c5-afc6-122a06df302a}" name="report_mission_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="16" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{0a120795-b918-4106-a0aa-553a35105fc8}" name="wait" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" period="1000" dispatch_offset="0" stack_size="1024" priority="1" wcet="0">
-</Provided_Interface>
+<Required_Interface id="{929d2509-c0aa-4dbc-9974-2a6bdcf442c9}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
 
     <Implementations>
-        <Implementation name="msp430" language="C"/>
-        <Implementation name="x86" language="C"/>
+        <Implementation name="default" language="GUI"/>
     </Implementations>
 </Function>
 
-<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" period="500" dispatch_offset="0" stack_size="1024" priority="1" wcet="200">
+<Function id="{155c111d-7661-4e5f-80e7-c60707828360}" name="payload_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
+<Provided_Interface id="{57be3672-50be-457b-af22-1c1da809dbfa}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Required_Interface id="{f9dbc170-438e-4cf5-bd3d-b35e96dabdc3}" name="return_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{c6018e36-342e-4666-b852-995c6eb935d3}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="payload_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function id="{8f0851e1-99fe-4789-8030-f76742ced961}" name="mode_change_report_collector" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
+<Provided_Interface id="{4193bf7c-49a5-4cc9-b938-f02735facd12}" name="complete_system_mode_change" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="16" miat="0" wcet="0" priority="1">
+</Provided_Interface>
+
+<Provided_Interface id="{b9901868-c287-462a-a1a8-9680f0fd4dcf}" name="report_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="comms_report" type="Comms-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{806b9321-c972-48c6-a98f-7fb032182ce3}" name="report_deployer_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="deployer_report" type="Deployer-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{012c625c-b60d-4d67-982f-486d71d99907}" name="report_adcs_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="adcs_report" type="ADCS-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{59b27913-8cc2-4147-8567-4efd72b177ab}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="payload_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{b3c54008-5590-4ea5-9c35-983da20983c1}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="pipeline_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{f49f7df1-0210-4490-b656-f0c98dba9513}" name="report_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="eps_report" type="EPS-Mode-Status-Report-T" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Required_Interface id="{6b25bd88-4c34-4ee5-b92c-678f1d130baf}" name="set_led" kind="Protected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+<Required_Interface id="{c3a7b510-ad6c-4ab7-a20b-03166837e6e0}" name="relay_system_mode_change_report" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="system_mode_change_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="true"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function id="{fbe2a4a5-96f4-4dad-be97-66a832021c09}" name="comms_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
+<Provided_Interface id="{24f7cbab-086b-49fc-a53e-20f33c2361ee}" name="change_comms_mode_idle" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" is_alarm="false" is_observable="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{ccc94c73-2b7f-415c-b3c2-4097dcc9a115}" name="change_comms_mode_uplink" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{5103b12e-3314-4913-bc01-4bf95662c92c}" name="change_comms_mode_downlink" kind="Unprotected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Output_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Required_Interface id="{1c067830-74ff-4e6d-99e5-b4af1b493685}" name="report_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
+    <Input_Parameter name="comms_report" type="Comms-Mode-Status-Report-T" encoding="NATIVE"/>
+    <Property name="Taste::InheritPI" value="true"/>
+    <Property name="Taste::Autonamed" value="false"/>
+</Required_Interface>
+
+    <Implementations>
+        <Implementation name="default" language="SDL"/>
+    </Implementations>
+</Function>
+
+<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" wcet="200" period="500" dispatch_offset="0" priority="1">
 </Provided_Interface>
 
 <Provided_Interface id="{51d88f2f-533a-4b8b-bf54-9b00b639836e}" name="set_led" kind="Protected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
@@ -290,42 +309,33 @@
     </Implementations>
 </Function>
 
-<Function id="{fbe2a4a5-96f4-4dad-be97-66a832021c09}" name="comms_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
-    <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{24f7cbab-086b-49fc-a53e-20f33c2361ee}" name="change_comms_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="comms_mode" type="Comms-Mode-T" encoding="NATIVE"/>
+<Function id="{f20b06fb-79b4-484f-8c1b-61f7bf8e626b}" name="print_service" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
+<Provided_Interface id="{be0327e8-5fee-4a90-a743-96eebf7b7256}" name="print" kind="Protected" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
+    <Input_Parameter name="stri" type="OString" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{422dcac4-8724-4b53-abda-038a3c09b98b}" name="return_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="true"/>
-</Required_Interface>
-
-<Required_Interface id="{1c067830-74ff-4e6d-99e5-b4af1b493685}" name="report_comms_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
-    <Input_Parameter name="comms_report" type="Comms-Mode-Status-Report-T" encoding="NATIVE"/>
-    <Property name="Taste::InheritPI" value="true"/>
-    <Property name="Taste::Autonamed" value="false"/>
-</Required_Interface>
+<Provided_Interface id="{0a120795-b918-4106-a0aa-553a35105fc8}" name="wait" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" wcet="0" period="1000" dispatch_offset="0" priority="1">
+</Provided_Interface>
 
     <Implementations>
-        <Implementation name="default" language="SDL"/>
+        <Implementation name="msp430" language="C"/>
+        <Implementation name="x86" language="C"/>
     </Implementations>
 </Function>
 
-<Function id="{6b5e60bb-4c3e-4f13-8cf9-bba8fee5b5ac}" name="eps_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" instances_min="1" startup_priority="1" instances_max="1">
+<Function id="{6b5e60bb-4c3e-4f13-8cf9-bba8fee5b5ac}" name="eps_mode_tracker" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" FPGA_Configurations="" startup_priority="1" instances_max="1">
     <Property name="TASTE_IV_Properties::Default_CodeGen" value="ada"/>
-<Provided_Interface id="{f98ede07-507e-413d-a7ff-cec3923c7bf7}" name="change_eps_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Provided_Interface id="{f98ede07-507e-413d-a7ff-cec3923c7bf7}" name="change_eps_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="eps_mode" type="EPS-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{cc7dc1b2-7b37-4e59-85b3-590469a3fc4a}" name="return_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{cc7dc1b2-7b37-4e59-85b3-590469a3fc4a}" name="return_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="success" type="T-Boolean" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{22879347-39b9-4516-ad60-e62d9118d84a}" name="report_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" miat="0" stack_size="1024" queue_size="1" priority="1" wcet="0">
+<Required_Interface id="{22879347-39b9-4516-ad60-e62d9118d84a}" name="report_eps_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" stack_size="1024" queue_size="1" miat="0" wcet="0" priority="1">
     <Input_Parameter name="eps_report" type="EPS-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -336,9 +346,19 @@
     </Implementations>
 </Function>
 
-<Connection id="{4e122273-61d8-4435-9b89-0f0ecfb94efd}" required_system_element="NO">
-    <Source func_name="deployer_mode_tracker" ri_name="report_deployer_mode_status" />
-    <Target func_name="mode_change_report_collector" pi_name="report_deployer_mode_status" />
+<Connection id="{a464a6c1-4e8c-4e22-888c-968abdd553a9}" required_system_element="NO">
+    <Source func_name="comms_mode_tracker" ri_name="report_comms_mode_status" />
+    <Target func_name="mode_change_report_collector" pi_name="report_comms_mode_status" />
+</Connection>
+
+<Connection id="{3d1d99b5-3fb3-427b-8c18-c7a1df325ac0}" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_adcs_mode" />
+    <Target func_name="adcs_mode_tracker" pi_name="change_adcs_mode" />
+</Connection>
+
+<Connection id="{5529e073-47a2-49f1-8447-b87e18555ada}" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode" />
+    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode" />
 </Connection>
 
 <Connection id="{516cc8b3-45aa-47ae-aaa5-fd1b2644574e}" required_system_element="NO">
@@ -351,29 +371,24 @@
     <Target func_name="payload_mode_tracker" pi_name="change_payload_mode" />
 </Connection>
 
-<Connection id="{5529e073-47a2-49f1-8447-b87e18555ada}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_pipeline_mode" />
-    <Target func_name="pipeline_mode_tracker" pi_name="change_pipeline_mode" />
+<Connection id="{4e122273-61d8-4435-9b89-0f0ecfb94efd}" required_system_element="NO">
+    <Source func_name="deployer_mode_tracker" ri_name="report_deployer_mode_status" />
+    <Target func_name="mode_change_report_collector" pi_name="report_deployer_mode_status" />
 </Connection>
 
-<Connection id="{a464a6c1-4e8c-4e22-888c-968abdd553a9}" required_system_element="NO">
-    <Source func_name="comms_mode_tracker" ri_name="report_comms_mode_status" />
-    <Target func_name="mode_change_report_collector" pi_name="report_comms_mode_status" />
+<Connection id="{90bba9ad-a919-40ed-a419-3b1e2935c68b}" required_system_element="NO">
+    <Source func_name="deployer_mode_tracker" ri_name="return_deployer_mode_status" />
+    <Target func_name="system_mode_manager" pi_name="return_deployer_mode_status" />
 </Connection>
 
-<Connection id="{3d1d99b5-3fb3-427b-8c18-c7a1df325ac0}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_adcs_mode" />
-    <Target func_name="adcs_mode_tracker" pi_name="change_adcs_mode" />
+<Connection id="{9710ac17-60d5-4074-947a-af08c241a9ed}" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="complete_system_mode_change" />
+    <Target func_name="mode_change_report_collector" pi_name="complete_system_mode_change" />
 </Connection>
 
-<Connection id="{ecb10074-adc3-4aa6-bacc-d850afd311f3}" required_system_element="NO">
-    <Source func_name="pipeline_mode_tracker" ri_name="return_pipeline_mode_status" />
-    <Target func_name="system_mode_manager" pi_name="return_pipeline_mode_status" />
-</Connection>
-
-<Connection id="{5537a95c-2744-42b2-80cd-2b3bb3ef5031}" required_system_element="NO">
-    <Source func_name="mode_change_report_collector" ri_name="set_led" />
-    <Target func_name="HAL" pi_name="set_led" />
+<Connection id="{44c3c3de-4e3d-4f97-8e6f-18bf7bb4496f}" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_eps_mode" />
+    <Target func_name="eps_mode_tracker" pi_name="change_eps_mode" />
 </Connection>
 
 <Connection id="{6227cabe-7715-402e-af49-5dc887428f6e}" required_system_element="NO">
@@ -386,59 +401,14 @@
     <Target func_name="system_mode_manager" pi_name="return_eps_mode_status" />
 </Connection>
 
-<Connection id="{44c3c3de-4e3d-4f97-8e6f-18bf7bb4496f}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_eps_mode" />
-    <Target func_name="eps_mode_tracker" pi_name="change_eps_mode" />
+<Connection id="{5537a95c-2744-42b2-80cd-2b3bb3ef5031}" required_system_element="NO">
+    <Source func_name="mode_change_report_collector" ri_name="set_led" />
+    <Target func_name="HAL" pi_name="set_led" />
 </Connection>
 
-<Connection id="{9710ac17-60d5-4074-947a-af08c241a9ed}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="complete_system_mode_change" />
-    <Target func_name="mode_change_report_collector" pi_name="complete_system_mode_change" />
-</Connection>
-
-<Connection id="{90bba9ad-a919-40ed-a419-3b1e2935c68b}" required_system_element="NO">
-    <Source func_name="deployer_mode_tracker" ri_name="return_deployer_mode_status" />
-    <Target func_name="system_mode_manager" pi_name="return_deployer_mode_status" />
-</Connection>
-
-<Connection id="{dca006c1-6ddc-473c-bd52-5992f045de54}" required_system_element="NO">
-    <Source func_name="adcs_mode_tracker" ri_name="report_adcs_mode_status" />
-    <Target func_name="mode_change_report_collector" pi_name="report_adcs_mode_status" />
-</Connection>
-
-<Connection id="{2b242c07-f906-4e6a-95f2-272470e3eef7}" required_system_element="NO">
-    <Source func_name="comms_mode_tracker" ri_name="return_comms_mode_status" />
-    <Target func_name="system_mode_manager" pi_name="return_comms_mode_status" />
-</Connection>
-
-<Connection id="{e3ab35b9-fe70-48fc-8aa2-e3425a8bd35a}" required_system_element="NO">
-    <Source func_name="adcs_mode_tracker" ri_name="return_adcs_mode_status" />
-    <Target func_name="system_mode_manager" pi_name="return_adcs_mode_status" />
-</Connection>
-
-<Connection id="{5a7e1411-16f8-4add-b2ca-7ec89c6fcced}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_comms_mode" />
-    <Target func_name="comms_mode_tracker" pi_name="change_comms_mode" />
-</Connection>
-
-<Connection id="{6ad42721-98df-4b17-9cbd-039e6b9c53a2}" required_system_element="NO">
-    <Source func_name="mission_mode_change_tc_handler" ri_name="change_system_mode" />
-    <Target func_name="system_mode_manager" pi_name="change_system_mode" />
-</Connection>
-
-<Connection id="{8bd9eb87-da15-4b32-8d0a-cdb7571870de}" required_system_element="NO">
-    <Source func_name="system_mode_manager" ri_name="change_deployer_mode" />
-    <Target func_name="deployer_mode_tracker" pi_name="change_deployer_mode" />
-</Connection>
-
-<Connection id="{4eef8faa-a7da-4914-95b3-197cd8831af9}" required_system_element="NO">
-    <Source func_name="payload_mode_tracker" ri_name="report_payload_mode_status" />
-    <Target func_name="mode_change_report_collector" pi_name="report_payload_mode_status" />
-</Connection>
-
-<Connection id="{5e89f7ab-5e95-4c1a-a6af-14ef722d5a23}" required_system_element="NO">
-    <Source func_name="mode_change_report_collector" ri_name="relay_system_mode_change_report" />
-    <Target func_name="mission_mode_change_tc_handler" pi_name="relay_system_mode_change_report" />
+<Connection id="{ecb10074-adc3-4aa6-bacc-d850afd311f3}" required_system_element="NO">
+    <Source func_name="pipeline_mode_tracker" ri_name="return_pipeline_mode_status" />
+    <Target func_name="system_mode_manager" pi_name="return_pipeline_mode_status" />
 </Connection>
 
 <Connection id="{fb780ba7-3e97-46be-865c-6d7cf587efa7}" required_system_element="NO">
@@ -451,14 +421,59 @@
     <Target func_name="gs_gui" pi_name="report_mission_mode_change" />
 </Connection>
 
-<Connection id="{5167215c-d6cb-46c0-83f9-6150085c2a7d}" required_system_element="NO">
-    <Source func_name="gs_gui" ri_name="tc_change_mission_mode" />
-    <Target func_name="mission_mode_change_tc_handler" pi_name="tc_change_mission_mode" />
+<Connection id="{8bd9eb87-da15-4b32-8d0a-cdb7571870de}" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_deployer_mode" />
+    <Target func_name="deployer_mode_tracker" pi_name="change_deployer_mode" />
+</Connection>
+
+<Connection id="{5e89f7ab-5e95-4c1a-a6af-14ef722d5a23}" required_system_element="NO">
+    <Source func_name="mode_change_report_collector" ri_name="relay_system_mode_change_report" />
+    <Target func_name="mission_mode_change_tc_handler" pi_name="relay_system_mode_change_report" />
+</Connection>
+
+<Connection id="{4eef8faa-a7da-4914-95b3-197cd8831af9}" required_system_element="NO">
+    <Source func_name="payload_mode_tracker" ri_name="report_payload_mode_status" />
+    <Target func_name="mode_change_report_collector" pi_name="report_payload_mode_status" />
+</Connection>
+
+<Connection id="{5a7e1411-16f8-4add-b2ca-7ec89c6fcced}" name="system_mode_manager_change_comms_mode_idle____comms_mode_tracker_change_comms_mode_idle" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_comms_mode_idle" />
+    <Target func_name="comms_mode_tracker" pi_name="change_comms_mode_idle" />
+</Connection>
+
+<Connection id="{6ad42721-98df-4b17-9cbd-039e6b9c53a2}" required_system_element="NO">
+    <Source func_name="mission_mode_change_tc_handler" ri_name="change_system_mode" />
+    <Target func_name="system_mode_manager" pi_name="change_system_mode" />
+</Connection>
+
+<Connection id="{dca006c1-6ddc-473c-bd52-5992f045de54}" required_system_element="NO">
+    <Source func_name="adcs_mode_tracker" ri_name="report_adcs_mode_status" />
+    <Target func_name="mode_change_report_collector" pi_name="report_adcs_mode_status" />
+</Connection>
+
+<Connection id="{e3ab35b9-fe70-48fc-8aa2-e3425a8bd35a}" required_system_element="NO">
+    <Source func_name="adcs_mode_tracker" ri_name="return_adcs_mode_status" />
+    <Target func_name="system_mode_manager" pi_name="return_adcs_mode_status" />
 </Connection>
 
 <Connection id="{81653b9a-c35a-48e8-b2a9-d357796ce43b}" required_system_element="NO">
     <Source func_name="eps_mode_tracker" ri_name="report_eps_mode_status" />
     <Target func_name="mode_change_report_collector" pi_name="report_eps_mode_status" />
+</Connection>
+
+<Connection id="{5167215c-d6cb-46c0-83f9-6150085c2a7d}" required_system_element="NO">
+    <Source func_name="gs_gui" ri_name="tc_change_mission_mode" />
+    <Target func_name="mission_mode_change_tc_handler" pi_name="tc_change_mission_mode" />
+</Connection>
+
+<Connection id="{9682392d-c0aa-40e1-82d8-310ac1958338}" name="system_mode_manager_change_comms_mode_downlink____comms_mode_tracker_change_comms_mode_downlink" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_comms_mode_downlink" />
+    <Target func_name="comms_mode_tracker" pi_name="change_comms_mode_downlink" />
+</Connection>
+
+<Connection id="{d4f34aac-f094-486b-be77-13e8c1813b58}" name="system_mode_manager_change_comms_mode_uplink____comms_mode_tracker_change_comms_mode_uplink" required_system_element="NO">
+    <Source func_name="system_mode_manager" ri_name="change_comms_mode_uplink" />
+    <Target func_name="comms_mode_tracker" pi_name="change_comms_mode_uplink" />
 </Connection>
 
 <Comment id="{79126f59-8bdb-46a9-87c3-e562c108e91d}" name="Welcome to TASTE!\n============\n\nRight click to add a function, and use Ctrl-Click to connect functions together.\n\nYou can split the screen in multiple windows using Ctrl-E-3" required_system_element="NO">
