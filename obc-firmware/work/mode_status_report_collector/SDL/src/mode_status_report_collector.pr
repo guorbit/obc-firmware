@@ -1,4 +1,4 @@
-/* CIF PROCESS (376, 63), (208, 75) */
+/* CIF PROCESS (378, 63), (208, 75) */
 process Mode_Status_Report_Collector;
     /* CIF Keep Specific Geode Partition 'default' */
     /* CIF TEXT (316, 9), (405, 140) */
@@ -6,7 +6,7 @@ process Mode_Status_Report_Collector;
     
     dcl system_mode_status_report System_Mode_Status_Report_T;
     /* CIF ENDTEXT */
-    /* CIF procedure (340, 644), (215, 35) */
+    /* CIF procedure (337, 576), (215, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure complete_system_mode_change;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -18,7 +18,7 @@ process Mode_Status_Report_Collector;
             /* CIF return (392, 109), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (335, 271), (170, 35) */
+    /* CIF procedure (337, 271), (170, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure report_eps_mode_status;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -37,7 +37,7 @@ process Mode_Status_Report_Collector;
             /* CIF return (522, 198), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (330, 169), (177, 35) */
+    /* CIF procedure (332, 169), (177, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure reset_subsystem_last_ops;
         /* CIF START (219, 38), (70, 35) */
@@ -53,7 +53,7 @@ process Mode_Status_Report_Collector;
             /* CIF return (236, 313), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (334, 334), (191, 35) */
+    /* CIF procedure (336, 334), (191, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure report_comms_mode_status;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -72,7 +72,7 @@ process Mode_Status_Report_Collector;
             /* CIF return (580, 194), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (337, 394), (196, 35) */
+    /* CIF procedure (339, 394), (196, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure report_payload_mode_status;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -91,7 +91,7 @@ process Mode_Status_Report_Collector;
             /* CIF return (585, 192), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (335, 453), (197, 35) */
+    /* CIF procedure (337, 453), (197, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure report_pipeline_mode_status;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -110,6 +110,25 @@ process Mode_Status_Report_Collector;
             /* CIF return (594, 197), (35, 35) */
             return ;
     endprocedure;
+    /* CIF procedure (341, 514), (176, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    procedure report_adcs_mode_status;
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (23, 16), (307, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+            in Adcs_Report ADCS_Mode_Status_Report_T;
+        /* CIF ENDTEXT */
+        /* CIF START (577, 32), (70, 35) */
+        START;
+            /* CIF task (435, 87), (352, 35) */
+            task system_mode_status_report.adcs_report := adcs_report;
+            /* CIF output (561, 142), (101, 35) */
+            output set_led(true);
+            /* CIF return (594, 197), (35, 35) */
+            return ;
+    endprocedure;
     /* CIF START (632, 167), (70, 35) */
     START;
         /* CIF PROCEDURECALL (578, 222), (177, 35) */
@@ -119,47 +138,55 @@ process Mode_Status_Report_Collector;
     /* CIF state (876, 267), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (791, 322), (215, 35) */
+        /* CIF input (793, 322), (215, 35) */
         input complete_system_mode_change;
-            /* CIF output (697, 372), (403, 35) */
+            /* CIF output (699, 372), (403, 35) */
             output relay_system_mode_status_report(system_mode_status_report);
-            /* CIF output (846, 422), (105, 35) */
+            /* CIF output (848, 422), (105, 35) */
             output set_led(false);
-            /* CIF PROCEDURECALL (810, 477), (177, 35) */
+            /* CIF PROCEDURECALL (812, 477), (177, 35) */
             call reset_subsystem_last_ops;
-            /* CIF NEXTSTATE (864, 527), (70, 35) */
+            /* CIF NEXTSTATE (866, 527), (70, 35) */
             NEXTSTATE Wait;
     endstate;
     /* CIF state (885, 46), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (821, 101), (170, 35) */
+        /* CIF input (823, 101), (170, 35) */
         input report_eps_mode_status;
-            /* CIF NEXTSTATE (872, 151), (70, 35) */
+            /* CIF NEXTSTATE (874, 151), (70, 35) */
             NEXTSTATE Wait;
     endstate;
-    /* CIF state (2056, 45), (70, 35) */
+    /* CIF state (1849, 45), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (1982, 100), (197, 35) */
+        /* CIF input (1776, 100), (197, 35) */
         input report_pipeline_mode_status;
-            /* CIF NEXTSTATE (2046, 150), (70, 35) */
+            /* CIF NEXTSTATE (1840, 150), (70, 35) */
             NEXTSTATE Wait;
     endstate;
     /* CIF state (1113, 43), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (1040, 98), (191, 35) */
+        /* CIF input (1042, 98), (191, 35) */
         input report_comms_mode_status;
-            /* CIF NEXTSTATE (1101, 153), (70, 35) */
+            /* CIF NEXTSTATE (1103, 153), (70, 35) */
             NEXTSTATE Wait;
     endstate;
-    /* CIF state (1813, 41), (70, 35) */
+    /* CIF state (1612, 44), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (1739, 96), (196, 35) */
+        /* CIF input (1539, 99), (196, 35) */
         input report_payload_mode_status;
-            /* CIF NEXTSTATE (1803, 146), (70, 35) */
+            /* CIF NEXTSTATE (1603, 149), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (1369, 46), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait;
+        /* CIF input (1304, 101), (176, 35) */
+        input report_adcs_mode_status;
+            /* CIF NEXTSTATE (1358, 151), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Mode_Status_Report_Collector;
