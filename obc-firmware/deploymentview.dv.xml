@@ -1,39 +1,29 @@
-<DeploymentView>
-    <Node name="Ground_Station" type="ocarina_processors_x86::x86.linux" node_label="Node_1" namespace="ocarina_processors_x86">
-        <Property name="Taste::coordinates" value="59100 50900 83100 67900"/>
-        <Partition name="x86_ground_station">
-            <Property name="Taste::coordinates" value="63500 55300 79700 63700"/>
-            <Function name="gs_gui" path="gs_gui"/>
+<DeploymentView version="1.2" UiFile="deploymentview.ui.xml">
+    <Node id="{30875ec4-4cef-4927-9e93-d41f699cd3cb}" name="CubeSat" type="ocarina_processors_msp430::msp430fr5969.freertos" node_label="Node_2" namespace="ocarina_processors_msp430">
+        <Partition id="{934fadb8-922a-4111-b951-e18616e09968}" name="MSP430_OBC">
+            <Function id="{6d824468-0080-46e5-bb07-4a5bc67580fd}" name="HAL" path="HAL" selected_implementation="msp430"/>
+            <Function id="{c653eaf3-bb79-4488-a307-d39fe0a7f090}" name="print_service" path="print_service" selected_implementation="msp430"/>
+            <Function id="{1dac58fa-17c9-4902-93d9-1780942f7993}" name="mode_status_report_collector" path="mode_status_report_collector"/>
+            <Function id="{d4f36968-dd5e-4d2e-93c3-c649ab0248b0}" name="system_mode_manager" path="system_mode_manager"/>
         </Partition>
-        <Device name="ethernet1" requires_bus_access="ocarina_buses::ip.i" port="ethernet1" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
-            <Property name="Taste::coordinates" value="59100 52700"/>
-        </Device>
-        <Device name="ethernet2" requires_bus_access="ocarina_buses::ip.i" port="ethernet2" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
-            <Property name="Taste::coordinates" value="59100 56700"/>
-        </Device>
-        <Device name="ethernet3" requires_bus_access="ocarina_buses::ip.i" port="ethernet3" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
-            <Property name="Taste::coordinates" value="59100 60800"/>
-        </Device>
-        <Device name="serial" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="serial" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::linux_serial" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::linux_serial.minimal">
-            <Property name="Taste::coordinates" value="79700 50900"/>
+        <Device id="{6f66f93d-821e-4f95-b500-69140d9e1d8b}" name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot; &quot;, speed  b115200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="msp430_eusci_a_serial_minimal" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::MSP430_eUSCI_A_serial" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal">
         </Device>
     </Node>
-    <Node name="CubeSat" type="ocarina_processors_msp430::msp430fr5969.freertos" node_label="Node_2" namespace="ocarina_processors_msp430">
-        <Property name="Taste::coordinates" value="59300 21400 83400 43200"/>
-        <Partition name="MSP430_OBC">
-            <Property name="Taste::coordinates" value="61500 25800 81200 41000"/>
-            <Function name="HAL" path="HAL" selected_implementation="msp430"/>
-            <Function name="print_service" path="print_service" selected_implementation="msp430"/>
-            <Function name="mode_change_report_collector" path="mode_change_report_collector"/>
-            <Function name="system_mode_manager" path="system_mode_manager"/>
+    <Node id="{3c628b4c-4196-4d1d-9ff5-b1120365076b}" name="Ground_Station" type="ocarina_processors_x86::x86.linux" node_label="Node_1" namespace="ocarina_processors_x86">
+        <Partition id="{dfcb38aa-d0f3-45d1-ab14-bcab6e026142}" name="x86_ground_station">
+            <Function id="{8dc31166-31a8-48aa-ac6f-92e4a5554178}" name="gs_gui" path="gs_gui"/>
         </Partition>
-        <Device name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot; &quot;, speed  b115200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="msp430_eusci_a_serial_minimal" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::MSP430_eUSCI_A_serial" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal">
-            <Property name="Taste::coordinates" value="83400 39100"/>
+        <Device id="{594fbf4f-6b79-44ed-be02-68ba72501ca8}" name="ethernet1" requires_bus_access="ocarina_buses::ip.i" port="ethernet1" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        </Device>
+        <Device id="{a86ea880-7c30-484d-8888-402f96321f5e}" name="ethernet2" requires_bus_access="ocarina_buses::ip.i" port="ethernet2" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        </Device>
+        <Device id="{325c881f-2147-403e-a790-0b3675d21cba}" name="ethernet3" requires_bus_access="ocarina_buses::ip.i" port="ethernet3" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn" asn1type="IP-Conf-T" asn1module="POHICDRIVER-IP" extends="ocarina_drivers::generic_sockets_ip" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::generic_sockets_ip.pohic">
+        </Device>
+        <Device id="{958733e5-4698-4a2f-a511-e9fccc9622fe}" name="serial" requires_bus_access="ocarina_buses::serial.minimal" config="{ devname  &quot;/dev/ttyACM1&quot;, speed  b19200, bits  8, sending-wait  0, use-paritybit  FALSE }" port="serial" asn1file="/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::linux_serial" bus_namespace="ocarina_buses" namespace="ocarina_drivers" impl_extends="ocarina_drivers::linux_serial.minimal">
         </Device>
     </Node>
-    <Connection name="Connection_1" from_node="Ground_Station" from_port="serial" to_bus="ocarina_buses::serial.minimal" to_node="CubeSat" to_port="msp430_eusci_a_serial_minimal">
-            <Property name="Taste::coordinates" value="79700 49900 79700 48300 85000 48300 85000 39100 84400 39100"/>
-            <Message name="Message_1" from_function="mode_change_report_collector" from_interface="report_mission_mode_change" to_function="gs_gui" to_interface="report_mission_mode_change"/>
-            <Message name="Message_2" from_function="gs_gui" from_interface="TC_change_mission_mode" to_function="system_mode_manager" to_interface="tc_change_mission_mode"/>
+    <Connection id="{a3b5c118-3446-492d-81b1-0f02ebe9bf13}" name="Connection_1" from_node="Ground_Station" from_port="serial" to_bus="ocarina_buses::serial.minimal" to_node="CubeSat" to_port="msp430_eusci_a_serial_minimal">
+            <Message id="{e9cd5ffc-1197-43c9-9504-6b23486fe8b4}" name="Message_1" from_function="mode_status_report_collector" from_interface="report_mission_mode_change" to_function="gs_gui" to_interface="report_mission_mode_change"/>
+            <Message id="{7ff490aa-d95d-4ca6-be21-b42c19854284}" name="Message_2" from_function="gs_gui" from_interface="TC_change_mission_mode" to_function="system_mode_manager" to_interface="tc_change_mission_mode"/>
     </Connection>
 </DeploymentView>

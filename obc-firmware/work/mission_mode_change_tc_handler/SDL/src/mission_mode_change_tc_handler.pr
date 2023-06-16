@@ -1,7 +1,7 @@
-/* CIF PROCESS (356, 68), (231, 75) */
+/* CIF PROCESS (355, 68), (231, 75) */
 process Mission_Mode_Change_Tc_Handler;
     /* CIF Keep Specific Geode Partition 'default' */
-    /* CIF TEXT (323, 14), (424, 203) */
+    /* CIF TEXT (323, 14), (424, 173) */
     -- Text area for declarations and comments
     
     dcl mission_mode_change_tc Mission_Mode_Change_TC_T;
@@ -10,67 +10,31 @@ process Mission_Mode_Change_Tc_Handler;
     dcl target_mission_mode Mission_Mode_T;
     dcl target_system_mode System_Mode_T;
     
-    dcl system_mode_status_report System_Mode_Status_Report_T;
-    
     dcl system_mode_downlink System_Mode_T;
     dcl system_mode_downlink_imaging System_Mode_T;
     dcl system_mode_downlink_processing_lp System_Mode_T;
     /* CIF ENDTEXT */
-    /* CIF procedure (352, 630), (261, 35) */
+    /* CIF procedure (368, 715), (226, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
-    procedure init_mode_map_downlink_processing_lp;
+    procedure relay_system_mode_status_report;
         /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (7, 7), (337, 140) */
+        /* CIF TEXT (32, 39), (416, 140) */
         -- Text area for declarations and comments
         
+        -- exported procedure
         fpar
-          in/out sys_downlink_processing_lp System_Mode_T;
+            in System_Mode_Status_Report System_Mode_Status_Report_T;
         /* CIF ENDTEXT */
-        /* CIF START (564, 40), (70, 35) */
+        /* CIF START (751, 46), (70, 35) */
         START;
-            /* CIF task (416, 95), (365, 35) */
-            task sys_downlink_processing_lp.eps_mode := eps_high_power;
-            /* CIF task (403, 150), (392, 35) */
-            task sys_downlink_processing_lp.comms_mode := comms_downlink;
-            /* CIF task (408, 200), (381, 35) */
-            task sys_downlink_processing_lp.deployer_mode := deployer_idle;
-            /* CIF task (434, 250), (329, 35) */
-            task sys_downlink_processing_lp.adcs_mode := adcs_idle;
-            /* CIF task (414, 300), (369, 35) */
-            task sys_downlink_processing_lp.payload_mode := payload_idle;
-            /* CIF task (383, 350), (430, 35) */
-            task sys_downlink_processing_lp.pipeline_mode := pipeline_processing_lp;
-            /* CIF return (581, 400), (35, 35) */
+            /* CIF task (507, 101), (557, 35) */
+            task mission_mode_change_report.system_mode_status_report := system_mode_status_report;
+            /* CIF task (547, 156), (476, 35) */
+            task mission_mode_change_report.target_mission_mode := target_mission_mode;
+            /* CIF return (768, 206), (35, 35) */
             return ;
     endprocedure;
-    /* CIF procedure (371, 583), (227, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure init_mode_map_downlink_imaging;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (7, 7), (303, 140) */
-        -- Text area for declarations and comments
-        
-        fpar
-          in/out sys_downlink_imaging System_Mode_T;
-        /* CIF ENDTEXT */
-        /* CIF START (473, 44), (70, 35) */
-        START;
-            /* CIF task (342, 99), (331, 35) */
-            task sys_downlink_imaging.eps_mode := eps_high_power;
-            /* CIF task (329, 154), (357, 35) */
-            task sys_downlink_imaging.comms_mode := comms_downlink;
-            /* CIF task (334, 204), (347, 35) */
-            task sys_downlink_imaging.deployer_mode := deployer_idle;
-            /* CIF task (360, 254), (295, 35) */
-            task sys_downlink_imaging.adcs_mode := adcs_idle;
-            /* CIF task (327, 304), (360, 35) */
-            task sys_downlink_imaging.payload_mode := payload_imaging;
-            /* CIF task (339, 354), (337, 35) */
-            task sys_downlink_imaging.pipeline_mode := pipeline_idle;
-            /* CIF return (490, 404), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF procedure (399, 535), (174, 35) */
+    /* CIF procedure (398, 535), (174, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure init_mode_map_downlink;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -97,6 +61,60 @@ process Mission_Mode_Change_Tc_Handler;
             /* CIF return (459, 405), (35, 35) */
             return ;
     endprocedure;
+    /* CIF procedure (370, 583), (227, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    procedure init_mode_map_downlink_imaging;
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (7, 7), (303, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out sys_downlink_imaging System_Mode_T;
+        /* CIF ENDTEXT */
+        /* CIF START (473, 44), (70, 35) */
+        START;
+            /* CIF task (342, 99), (331, 35) */
+            task sys_downlink_imaging.eps_mode := eps_high_power;
+            /* CIF task (329, 154), (357, 35) */
+            task sys_downlink_imaging.comms_mode := comms_downlink;
+            /* CIF task (334, 204), (347, 35) */
+            task sys_downlink_imaging.deployer_mode := deployer_idle;
+            /* CIF task (360, 254), (295, 35) */
+            task sys_downlink_imaging.adcs_mode := adcs_idle;
+            /* CIF task (327, 304), (360, 35) */
+            task sys_downlink_imaging.payload_mode := payload_imaging;
+            /* CIF task (339, 354), (337, 35) */
+            task sys_downlink_imaging.pipeline_mode := pipeline_idle;
+            /* CIF return (490, 404), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (351, 630), (261, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    procedure init_mode_map_downlink_processing_lp;
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (7, 7), (337, 140) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in/out sys_downlink_processing_lp System_Mode_T;
+        /* CIF ENDTEXT */
+        /* CIF START (564, 40), (70, 35) */
+        START;
+            /* CIF task (416, 95), (365, 35) */
+            task sys_downlink_processing_lp.eps_mode := eps_high_power;
+            /* CIF task (403, 150), (392, 35) */
+            task sys_downlink_processing_lp.comms_mode := comms_downlink;
+            /* CIF task (408, 200), (381, 35) */
+            task sys_downlink_processing_lp.deployer_mode := deployer_idle;
+            /* CIF task (434, 250), (329, 35) */
+            task sys_downlink_processing_lp.adcs_mode := adcs_idle;
+            /* CIF task (414, 300), (369, 35) */
+            task sys_downlink_processing_lp.payload_mode := payload_idle;
+            /* CIF task (383, 350), (430, 35) */
+            task sys_downlink_processing_lp.pipeline_mode := pipeline_processing_lp;
+            /* CIF return (581, 400), (35, 35) */
+            return ;
+    endprocedure;
     /* CIF START (466, 247), (70, 35) */
     START;
         /* CIF PROCEDURECALL (338, 302), (324, 35) */
@@ -107,45 +125,41 @@ process Mission_Mode_Change_Tc_Handler;
         call init_mode_map_downlink_processing_lp(system_mode_downlink_processing_lp);
         /* CIF NEXTSTATE (443, 462), (114, 35) */
         NEXTSTATE Wait_command;
-    /* CIF state (1979, 23), (94, 35) */
+    /* CIF state (1978, 23), (94, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait_report;
-        /* CIF input (1822, 78), (410, 35) */
-        input relay_system_mode_change_report(system_mode_status_report);
-            /* CIF task (1749, 128), (557, 35) */
-            task mission_mode_change_report.system_mode_status_report := system_mode_status_report;
-            /* CIF task (1789, 183), (476, 35) */
-            task mission_mode_change_report.target_mission_mode := target_mission_mode;
-            /* CIF output (1834, 233), (386, 35) */
+        /* CIF input (1913, 78), (226, 35) */
+        input relay_system_mode_status_report;
+            /* CIF output (1833, 128), (386, 35) */
             output report_mission_mode_change(mission_mode_change_report);
-            /* CIF NEXTSTATE (1970, 288), (114, 35) */
+            /* CIF NEXTSTATE (1969, 183), (114, 35) */
             NEXTSTATE Wait_command;
     endstate;
-    /* CIF state (1150, 21), (114, 35) */
+    /* CIF state (1149, 21), (114, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait_command;
-        /* CIF input (1041, 76), (333, 35) */
+        /* CIF input (1040, 76), (333, 35) */
         input tc_change_mission_mode(mission_mode_change_tc);
-            /* CIF task (983, 131), (449, 35) */
+            /* CIF task (982, 131), (449, 35) */
             task target_mission_mode := mission_mode_change_tc.target_mission_mode;
-            /* CIF decision (1133, 181), (151, 50) */
+            /* CIF decision (1132, 181), (151, 50) */
             decision target_mission_mode;
-                /* CIF ANSWER (1148, 251), (120, 23) */
+                /* CIF ANSWER (1147, 251), (120, 23) */
                 (mission_imaging):
-                    /* CIF task (1029, 294), (359, 35) */
+                    /* CIF task (1028, 294), (359, 35) */
                     task target_system_mode := system_mode_downlink_imaging;
-                /* CIF ANSWER (814, 251), (95, 23) */
+                /* CIF ANSWER (813, 251), (95, 23) */
                 (mission_idle):
-                    /* CIF task (709, 294), (306, 35) */
+                    /* CIF task (708, 294), (306, 35) */
                     task target_system_mode := system_mode_downlink;
-                /* CIF ANSWER (1532, 251), (137, 23) */
+                /* CIF ANSWER (1531, 251), (137, 23) */
                 (mission_processing):
-                    /* CIF task (1404, 294), (393, 35) */
+                    /* CIF task (1403, 294), (393, 35) */
                     task target_system_mode := system_mode_downlink_processing_lp;
             enddecision;
-            /* CIF output (1064, 345), (287, 35) */
+            /* CIF output (1063, 345), (287, 35) */
             output change_system_mode(target_system_mode);
-            /* CIF NEXTSTATE (1161, 400), (94, 35) */
+            /* CIF NEXTSTATE (1160, 400), (94, 35) */
             NEXTSTATE Wait_report;
     endstate;
 endprocess Mission_Mode_Change_Tc_Handler;

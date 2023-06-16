@@ -1,39 +1,30 @@
-<UI version="1.0" ><Entity id="{94885970-88ef-40e8-8fad-17a48fef1840}"><Taste coordinates="49100 7700 93200 39700">
+<UI version="1.0" ><Entity id="{30875ec4-4cef-4927-9e93-d41f699cd3cb}"><Taste coordinates="59300 21400 83400 43200">
 </Taste>
-</Entity><Entity id="{93e79353-0549-4aab-8ada-845a55f91f2b}"><Taste coordinates="51300 10500 91000 37500">
+</Entity><Entity id="{934fadb8-922a-4111-b951-e18616e09968}"><Taste coordinates="61500 25800 81200 41000">
 </Taste>
-</Entity><Entity id="{d244a3f7-6c96-4738-99b1-cc88c5d46129}">
-</Entity><Entity id="{510833d5-21bb-4c3d-9a08-38b0d7b29b79}">
-</Entity><Entity id="{4d34b2e6-5fa5-48c2-a0e1-2a46748add5b}">
-</Entity><Entity id="{d71ebe11-bdb9-4bb7-83a0-bf80849133b7}">
-</Entity><Entity id="{a5c153b2-9dae-4637-97ee-2cddda0379c9}">
-</Entity><Entity id="{d5a4b184-5d39-4da9-8ce7-24ff9e040ac2}">
-</Entity><Entity id="{96585915-bd7a-491b-987d-4750dd7fc039}">
-</Entity><Entity id="{01e49ce9-8707-4945-b04a-802b13085876}">
-</Entity><Entity id="{246cefe5-5e22-4245-86e9-5b1d0067790e}">
-</Entity><Entity id="{7ea20d41-6871-4459-8502-61fd938b68c3}">
-</Entity><Entity id="{40330d2b-acfd-41a4-b42f-17925b5dc4d2}">
-</Entity><Entity id="{fead2070-e8fd-4fee-92e8-50c27c97f1e1}"><Taste coordinates="93200 32600">
+</Entity><Entity id="{6d824468-0080-46e5-bb07-4a5bc67580fd}">
+</Entity><Entity id="{c653eaf3-bb79-4488-a307-d39fe0a7f090}">
+</Entity><Entity id="{1dac58fa-17c9-4902-93d9-1780942f7993}">
+</Entity><Entity id="{d4f36968-dd5e-4d2e-93c3-c649ab0248b0}">
+</Entity><Entity id="{6f66f93d-821e-4f95-b500-69140d9e1d8b}"><Taste coordinates="83400 39100">
 </Taste>
-</Entity><Entity id="{5f60c8e2-0c87-4d45-b271-3f41278ee140}"><Taste coordinates="93300 32600 79200 50600">
+</Entity><Entity id="{a3b5c118-3446-492d-81b1-0f02ebe9bf13}"><Taste coordinates="79700 49900 79700 48300 85000 48300 85000 39100 84400 39100">
 </Taste>
-</Entity><Entity id="{32386449-01b5-401e-b506-6e370a168b3d}">
-</Entity><Entity id="{31ee58f4-4b49-43e5-9964-bf34abc9f745}">
-</Entity><Entity id="{a01d7047-a696-41d0-885c-fec78ab5ecf3}">
-</Entity><Entity id="{a847c97d-f31a-4010-aa33-356d437107eb}">
-</Entity><Entity id="{9efe225a-3c1a-4fc4-b0a6-cad12d0902ab}"><Taste coordinates="59400 50600 83400 67600">
+</Entity><Entity id="{e9cd5ffc-1197-43c9-9504-6b23486fe8b4}">
+</Entity><Entity id="{7ff490aa-d95d-4ca6-be21-b42c19854284}">
+</Entity><Entity id="{e491b7cb-eac2-426b-98cf-c1e4d7358833}">
+</Entity><Entity id="{3c628b4c-4196-4d1d-9ff5-b1120365076b}"><Taste coordinates="59100 50900 83100 67900">
 </Taste>
-</Entity><Entity id="{f22861f8-80d9-4d94-a387-af53effcb9ec}"><Taste coordinates="63800 55000 80000 63400">
+</Entity><Entity id="{dfcb38aa-d0f3-45d1-ab14-bcab6e026142}"><Taste coordinates="63500 55300 79700 63700">
 </Taste>
-</Entity><Entity id="{737cb1ff-31e4-49fd-978e-4acb9e3bf40e}">
-</Entity><Entity id="{1ce15acf-664c-4058-8e7a-6f49350c165a}"><Taste coordinates="59400 52400">
+</Entity><Entity id="{8dc31166-31a8-48aa-ac6f-92e4a5554178}">
+</Entity><Entity id="{594fbf4f-6b79-44ed-be02-68ba72501ca8}"><Taste coordinates="59100 52700">
 </Taste>
-</Entity><Entity id="{8d0af8e4-f38d-4015-a6eb-5dec303c43f6}"><Taste coordinates="59400 56400">
+</Entity><Entity id="{a86ea880-7c30-484d-8888-402f96321f5e}"><Taste coordinates="59100 56700">
 </Taste>
-</Entity><Entity id="{f2d3a068-f77a-4516-ad20-49e374736053}"><Taste coordinates="59400 60500">
+</Entity><Entity id="{325c881f-2147-403e-a790-0b3675d21cba}"><Taste coordinates="59100 60800">
 </Taste>
-</Entity><Entity id="{b95a03e9-13e6-408e-a054-0a4ca18614b1}"><Taste coordinates="79200 50600">
+</Entity><Entity id="{958733e5-4698-4a2f-a511-e9fccc9622fe}"><Taste coordinates="79700 50900">
 </Taste>
-</Entity><Entity id="{4ea4116b-1b95-4d46-b180-df579486c319}">
 </Entity>
 </UI>
