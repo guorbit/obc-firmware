@@ -27,6 +27,7 @@ obc-firmware/work/glue_release
 obc-firmware/work/skeletons_built
 
 # generated Makefiles
+obc-firmware/work/Makefile
 obc-firmware/work/*/C/Makefile
 obc-firmware/work/*/implem/*/C/Makefile
 obc-firmware/work/*/CPP/Makefile
@@ -35,20 +36,31 @@ obc-firmware/work/*/SDL/Makefile
 obc-firmware/work/*/implem/*/SDL/Makefile
 
 # code skeletons & symlinks
+obc-firmware/work/*/C
+obc-firmware/work/*/CPP
+obc-firmware/work/*/SDL
 obc-firmware/work/*/GUI/src/*.h
 obc-firmware/work/*/GUI/src/*.c
 obc-firmware/work/*/implem/*/GUI/src/*.h
 obc-firmware/work/*/implem/*/GUI/src/*.c
-obc-firmware/work/*/C
-obc-firmware/work/*/CPP
 obc-firmware/work/*/SDL/*.gpr
 obc-firmware/work/*/SDL/code/*
 obc-firmware/work/*/SDL/src/*
 !obc-firmware/work/*/SDL/src/*.pr
 obc-firmware/work/*/SDL/src/system_structure.pr
+obc-firmware/work/*/implem/*/SDL/*.gpr
+obc-firmware/work/*/implem/*/SDL/code/*
+obc-firmware/work/*/implem/*/SDL/src/*
+!obc-firmware/work/*/implem/*/SDL/src/*.pr
+obc-firmware/work/*/implem/*/SDL/src/system_structure.pr
 
 # wrappers
 wrappers
+wrappers_simu
+
+# simulation and model-checking
+simulation
+modelchecking
 
 # execution caches
 __pycache__

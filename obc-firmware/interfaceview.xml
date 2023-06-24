@@ -464,7 +464,7 @@
     </Implementations>
 </Function>
 
-<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" language="C" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" startup_priority="1" instances_min="1" instances_max="1" FPGA_Configurations="">
+<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" language="SDL" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" startup_priority="1" instances_min="1" instances_max="1" FPGA_Configurations="">
 <Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" dispatch_offset="0" stack_size="1024" priority="1" period="500" wcet="200">
 </Provided_Interface>
 
@@ -474,7 +474,7 @@
 
     <Implementations>
         <Implementation name="msp430" language="C"/>
-        <Implementation name="x86" language="C"/>
+        <Implementation name="x86" language="SDL"/>
     </Implementations>
 </Function>
 
