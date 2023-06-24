@@ -11,6 +11,5 @@ include(mission_mode_change_tc_handler/mission_mode_change_tc_handler.pro)
 include(mode_status_report_collector/mode_status_report_collector.pro)
 include(payload_mode_tracker/payload_mode_tracker.pro)
 include(pipeline_mode_tracker/pipeline_mode_tracker.pro)
-include(print_service/print_service.pro)
 include(system_mode_manager/system_mode_manager.pro)
 

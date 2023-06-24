@@ -112,7 +112,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	adcs_mode_tracker/SDL/wrappers/aadl2glueC_built comms_mode_tracker/SDL/wrappers/aadl2glueC_built deployer_mode_tracker/SDL/wrappers/aadl2glueC_built eps_mode_tracker/SDL/wrappers/aadl2glueC_built gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built mission_mode_change_tc_handler/SDL/wrappers/aadl2glueC_built mode_status_report_collector/SDL/wrappers/aadl2glueC_built payload_mode_tracker/SDL/wrappers/aadl2glueC_built pipeline_mode_tracker/SDL/wrappers/aadl2glueC_built print_service/C/wrappers/aadl2glueC_built system_mode_manager/SDL/wrappers/aadl2glueC_built
+aadl2glueC:	adcs_mode_tracker/SDL/wrappers/aadl2glueC_built comms_mode_tracker/SDL/wrappers/aadl2glueC_built deployer_mode_tracker/SDL/wrappers/aadl2glueC_built eps_mode_tracker/SDL/wrappers/aadl2glueC_built gs_gui/GUI/wrappers/aadl2glueC_built hal/C/wrappers/aadl2glueC_built mission_mode_change_tc_handler/SDL/wrappers/aadl2glueC_built mode_status_report_collector/SDL/wrappers/aadl2glueC_built payload_mode_tracker/SDL/wrappers/aadl2glueC_built pipeline_mode_tracker/SDL/wrappers/aadl2glueC_built system_mode_manager/SDL/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -159,10 +159,6 @@ payload_mode_tracker/SDL/wrappers/aadl2glueC_built: payload_mode_tracker/SDL/wra
 	touch $@
 
 pipeline_mode_tracker/SDL/wrappers/aadl2glueC_built: pipeline_mode_tracker/SDL/wrappers/pipeline_mode_tracker_mini_cv.aadl ${DATAVIEW_AADLV1}
-	aadl2glueC -allboards -o $(dir $@) $^
-	touch $@
-
-print_service/C/wrappers/aadl2glueC_built: print_service/C/wrappers/print_service_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 

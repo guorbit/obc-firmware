@@ -1,0 +1,36 @@
+<UI version="1.0" ><Entity id="{a4c4a178-fabc-4187-a2e6-255aa7623131}"><Taste coordinates="48700 62500 87400 83300">
+</Taste>
+</Entity><Entity id="{ab57e128-8c1b-425d-b308-4d0c8a4f51da}"><Taste coordinates="54400 66800 82700 80000">
+</Taste>
+</Entity><Entity id="{d1e7213b-7c18-406d-89a9-a42c860a3708}">
+</Entity><Entity id="{b911c018-42a3-48f1-8dfa-a9ce86ea75f4}"><Taste coordinates="48700 64200">
+</Taste>
+</Entity><Entity id="{dfa21923-2fd0-40c0-a27c-2f69a436d0d1}"><Taste coordinates="48700 68300">
+</Taste>
+</Entity><Entity id="{bbfca01d-47a8-4370-a66e-0eab4d4f8b1c}"><Taste coordinates="48700 72400">
+</Taste>
+</Entity><Entity id="{1d73893e-662c-4cd1-95b1-72046d8af49a}"><Taste coordinates="81900 62500">
+</Taste>
+</Entity><Entity id="{9a1a0bc0-660e-4266-bdcd-435592dc2fc1}"><Taste coordinates="93100 48200 94100 48200 94100 55700 81900 55700 81900 61500">
+</Taste>
+</Entity><Entity id="{8f07a104-eb05-4b9f-89fc-348e14ada209}">
+</Entity><Entity id="{0ae2cc5c-7921-48d4-9ef3-5c28e2a7fb27}">
+</Entity><Entity id="{729b756c-7ee4-45c8-bedd-522e7063c1de}">
+</Entity><Entity id="{162a267c-8450-4860-aa5c-78cd24b53103}"><Taste coordinates="43300 22800 92100 44200">
+</Taste>
+</Entity><Entity id="{d4a036b8-f6df-472c-9141-047cd9217cfd}"><Taste coordinates="46700 25800 88700 51300">
+</Taste>
+</Entity><Entity id="{2760e55d-fe67-4bdd-bdfe-8c34dbc484df}">
+</Entity><Entity id="{c8cebe72-4c60-4627-be9b-20fb16acf97a}">
+</Entity><Entity id="{5174ef7e-c8ba-44a4-b35c-998ea699f32e}">
+</Entity><Entity id="{7a204a80-20b9-47db-8b88-4fe23d06d717}">
+</Entity><Entity id="{565d613a-e1b7-4785-9d2a-c35cd286eddc}">
+</Entity><Entity id="{d04afa37-7c54-4ed2-95dd-83b49c207d0a}">
+</Entity><Entity id="{148c404b-41d9-443b-aa41-889ca77b2abc}">
+</Entity><Entity id="{9b40fd72-e96b-4c84-bfe6-fa9b119b1af9}">
+</Entity><Entity id="{24908efa-d9eb-4ea0-ab22-a68d5ceeeb8d}">
+</Entity><Entity id="{f0c8a370-14ac-48b3-a19b-accf8e054365}">
+</Entity><Entity id="{95ee2d3c-4a44-4187-bceb-80dd6fdc4135}"><Taste coordinates="92100 48200">
+</Taste>
+</Entity>
+</UI>

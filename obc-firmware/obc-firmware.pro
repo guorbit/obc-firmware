@@ -2,12 +2,13 @@ TEMPLATE = lib
 CONFIG -= qt
 CONFIG += generateC
 
-DISTFILES +=  $(HOME)/tool-inst/share/taste-types/taste-types.asn
+DISTFILES +=  $(HOME)/tool-inst/share/taste-types/taste-types.asn \
+    deploymentview_pohic.dv.xml
 
 DISTFILES += obc-firmware.asn
 DISTFILES += obc-firmware.acn
 DISTFILES += interfaceview.xml
-DISTFILES += deploymentview.dv.xml
+DISTFILES +=
 DISTFILES += obc-firmware.msc
 DISTFILES += work/binaries/*.msc
 DISTFILES += work/binaries/coverage/index.html

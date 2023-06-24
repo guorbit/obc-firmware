@@ -38,4 +38,6 @@ docker run \
     -v ${XAUTH}:${XAUTH} \
     -v "$HOME":"$HOMEB"/work \
     -v "$PWD":"$HOMEB"/work/obc-firmware \
-    -dit taste /bin/bash -i
+    -v /home/taste/Downloads/test_msp:"$HOMEB"/work/test-msp \
+    -v /dev:/dev \
+    -dit taste:bullseye /bin/bash -i

@@ -4,6 +4,7 @@
 !obc-firmware/obc-firmware.pro
 !obc-firmware/work/taste.pro
 statusfile
+.qtc_clangd
 
 # AADL files
 *.aadl
