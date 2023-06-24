@@ -25,7 +25,7 @@ jobs:
         run: chmod +x Docker-run.sh
 
       - name: Build Docker container
-        run: docker build -t taste .
+        run: docker build -t taste:bullseye .
 
       # run with bind mount of TASTE firmware directory
       - name: Run Docker container
