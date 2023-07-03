@@ -1,11 +1,12 @@
 #
 # Process this Dockerfile with:
 #
-#     docker build -t taste:bullseye .
+#     docker build -t taste:bullseye-fork .
 #
 # And then run a fresh TASTE container with proper X11 redirection, with...
 #
 #     ./Docker-run.sh
+#     docker attach taste-fork
 #
 FROM debian:bullseye
 RUN apt update
@@ -57,9 +58,14 @@ RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISAB
 # Those that need RTEMS can set it up themselves (avoid creating huge Docker image)
 # RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/85_rtems.sh'
 # RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/86_air.sh'
+# Install kazoo fork
+RUN bash -c 'cd /root/tool-src/kazoo ; git fetch --all ; git checkout feature-lurker-msp430-update-attempt ; git pull'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/87_kazoo.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/88_spaceCreator.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/89_linux_runtime.sh'
+# Install TASTE-Runtime-Common fork
+RUN bash -c 'cd /root/tool-src/TASTE-Runtime-Common ; git fetch --all ; git checkout feature-msp430-support ; git pull'
+RUN bash -c 'cd /root/tool-src ; ./install/89_linux_runtime.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/90_misc.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/91_env.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/95_components_library.sh'

@@ -3,6 +3,7 @@ CONFIG -= qt
 CONFIG += generateC
 
 DISTFILES +=  $(HOME)/tool-inst/share/taste-types/taste-types.asn \
+    deploymentview_cpp.dv.xml \
     deploymentview_pohic.dv.xml
 
 DISTFILES += obc-firmware.asn
