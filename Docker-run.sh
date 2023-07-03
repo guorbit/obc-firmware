@@ -37,6 +37,6 @@ docker run \
     -v ${XSOCK}:${XSOCK} \
     -v ${XAUTH}:${XAUTH} \
     -v "$HOME":"$HOMEB"/work \
-    -v /home/taste/obc-firmware:"$HOMEB"/work/obc-firmware \
+    -v "$PWD":"$HOMEB"/work/obc-firmware \
     -v /dev:/dev \
     -dit taste:bullseye-fork /bin/bash -i
