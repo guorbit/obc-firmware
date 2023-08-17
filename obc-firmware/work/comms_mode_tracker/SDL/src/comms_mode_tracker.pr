@@ -1,141 +1,56 @@
-/* CIF PROCESS (296, 102), (156, 75) */
+/* CIF PROCESS (293, 102), (156, 75) */
 process Comms_Mode_Tracker;
     /* CIF Keep Specific Geode Partition 'default' */
     /* CIF TEXT (295, 0), (282, 140) */
     -- Text area for declarations and comments
     
-    dcl comms_mode Comms_Mode_T;
+    dcl target_comms_mode Comms_Mode_T;
     dcl report Comms_Mode_Status_Report_T;
     
     -- massive thanks to Maxime Perrotin @ ESA
     -- for the architecture / design pattern advice!
     /* CIF ENDTEXT */
-    /* CIF procedure (306, 219), (196, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure change_comms_mode_uplink;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (31, 40), (267, 140) */
-        -- Text area for declarations and comments
-        
-        -- exported procedure
-        fpar
-            in/out Success T_Boolean;
-        /* CIF ENDTEXT */
-        /* CIF START (491, 64), (70, 35) */
-        START;
-            /* CIF task (423, 119), (205, 35) */
-            task comms_mode := comms_uplink;
-            /* CIF task (470, 169), (110, 35) */
-            task success := true;
-            /* CIF task (403, 224), (244, 35) */
-            task report.comms_mode := comms_mode;
-            /* CIF task (377, 279), (297, 35) */
-            task report.comms_last_op := mode_status_change;
-            /* CIF return (508, 329), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF procedure (306, 271), (213, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure change_comms_mode_downlink;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (34, 38), (267, 140) */
-        -- Text area for declarations and comments
-        
-        -- exported procedure
-        fpar
-            in/out Success T_Boolean;
-        /* CIF ENDTEXT */
-        /* CIF START (496, 58), (70, 35) */
-        START;
-            /* CIF task (419, 113), (223, 35) */
-            task comms_mode := comms_downlink;
-            /* CIF task (475, 163), (110, 35) */
-            task success := true;
-            /* CIF task (408, 218), (244, 35) */
-            task report.comms_mode := comms_mode;
-            /* CIF task (382, 273), (297, 35) */
-            task report.comms_last_op := mode_status_change;
-            /* CIF return (513, 323), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF procedure (306, 171), (181, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure change_comms_mode_idle;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (24, 13), (267, 140) */
-        -- Text area for declarations and comments
-        
-        -- exported procedure
-        fpar
-            in/out Success T_Boolean;
-        /* CIF ENDTEXT */
-        /* CIF START (538, 37), (70, 35) */
-        START;
-            /* CIF task (477, 92), (191, 35) */
-            task comms_mode := comms_idle;
-            /* CIF task (517, 142), (110, 35) */
-            task success := true;
-            /* CIF task (450, 197), (244, 35) */
-            task report.comms_mode := comms_mode;
-            /* CIF task (424, 252), (297, 35) */
-            task report.comms_last_op := mode_status_change;
-            /* CIF return (555, 302), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF START (595, 165), (70, 35) */
+    /* CIF START (386, 178), (70, 35) */
     START;
-        /* CIF task (528, 220), (205, 35) */
-        task comms_mode := comms_uplink;
-        /* CIF NEXTSTATE (595, 273), (70, 35) */
+        /* CIF NEXTSTATE (386, 233), (70, 35) */
         NEXTSTATE Uplink;
-    /* CIF state (1125, 11), (70, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Uplink;
-        /* CIF input (1051, 66), (213, 35) */
-        input change_comms_mode_downlink;
-            /* CIF output (1038, 116), (237, 35) */
-            output report_comms_mode_status(report);
-            /* CIF NEXTSTATE (1118, 166), (78, 35) */
-            NEXTSTATE Downlink;
-    endstate;
-    /* CIF state (1398, 10), (78, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Downlink;
-        /* CIF input (1346, 65), (181, 35) */
-        input change_comms_mode_idle;
-            /* CIF output (1318, 115), (237, 35) */
-            output report_comms_mode_status(report);
-            /* CIF NEXTSTATE (1402, 165), (70, 35) */
-            NEXTSTATE Idle;
-    endstate;
-    /* CIF state (846, 298), (70, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state *
-    /* CIF comment (936, 298), (209, 38) */
-    comment 'unsupported transition catcher:
-- any other state';
-        /* CIF input (846, 353), (70, 35) */
-        input *
-        /* CIF comment (936, 353), (123, 35) */
-        comment '- any other signal';
-            /* CIF output (766, 408), (228, 68) */
-            output report_comms_mode_status({
-  comms_mode comms_mode,
-  comms_last_op mode_status_nop
-});
-            /* CIF NEXTSTATE (846, 496), (70, 35) */
-            NEXTSTATE -
-            /* CIF comment (936, 496), (152, 35) */
-            comment 'back to previous state';
-    endstate;
-    /* CIF state (848, 10), (70, 35) */
+    /* CIF state (755, 10), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Idle;
-        /* CIF input (781, 65), (196, 35) */
-        input change_comms_mode_uplink;
-            /* CIF output (761, 115), (237, 35) */
-            output report_comms_mode_status(report);
-            /* CIF NEXTSTATE (845, 165), (70, 35) */
+        /* CIF input (640, 65), (287, 35) */
+        input change_comms_mode(target_comms_mode);
+            /* CIF output (660, 120), (248, 68) */
+            output report_comms_mode_status({
+  comms_mode target_comms_mode,
+  comms_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (749, 218), (70, 35) */
             NEXTSTATE Uplink;
+    endstate;
+    /* CIF state (1105, 11), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Uplink;
+        /* CIF input (992, 66), (287, 35) */
+        input change_comms_mode(target_comms_mode);
+            /* CIF output (1012, 121), (248, 68) */
+            output report_comms_mode_status({
+  comms_mode target_comms_mode,
+  comms_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (1097, 237), (78, 35) */
+            NEXTSTATE Downlink;
+    endstate;
+    /* CIF state (1451, 12), (78, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Downlink;
+        /* CIF input (1346, 67), (287, 35) */
+        input change_comms_mode(target_comms_mode);
+            /* CIF output (1366, 122), (248, 68) */
+            output report_comms_mode_status({
+  comms_mode target_comms_mode,
+  comms_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (1455, 238), (70, 35) */
+            NEXTSTATE Idle;
     endstate;
 endprocess Comms_Mode_Tracker;

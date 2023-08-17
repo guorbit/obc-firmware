@@ -1,20 +1,4 @@
 <DeploymentView version="1.2" UiFile="deploymentview_cpp.ui.xml">
-    <Node id="{e7d256f1-bc9f-4349-8d6e-e8a1544f9a13}" name="msp430 fr5969 FreeRTOS" type="ocarina_processors_msp430::msp430fr5969.freertos" node_label="Node_2" namespace="ocarina_processors_msp430">
-        <Partition id="{9d738aef-2715-431f-b12a-8236ded4bafc}" name="obc_partition">
-            <Function id="{ab1ecebf-3af2-470a-8d8f-fbdbbffb3ff1}" name="eps_mode_tracker" path="system_mode_management_group::eps_mode_tracker"/>
-            <Function id="{020389e2-37ca-4804-80eb-55d559601a66}" name="HAL" path="HAL"/>
-            <Function id="{b7bdbc29-0e97-4d08-b45f-36f3cf2f5d18}" name="comms_mode_tracker" path="system_mode_management_group::comms_mode_tracker"/>
-            <Function id="{a3dadf0c-15fb-41ea-8845-da07aaa8315f}" name="adcs_mode_tracker" path="system_mode_management_group::adcs_mode_tracker"/>
-            <Function id="{e132d012-74ea-4af1-acba-a383921cb7c7}" name="deployer_mode_tracker" path="system_mode_management_group::deployer_mode_tracker"/>
-            <Function id="{6d6663a4-15cf-44cc-9c59-892dbd65840c}" name="payload_mode_tracker" path="system_mode_management_group::payload_mode_tracker"/>
-            <Function id="{218943ba-0720-468e-9e0a-740533228a00}" name="mode_status_report_collector" path="system_mode_management_group::mode_status_report_collector"/>
-            <Function id="{006b5b7d-a540-41b1-b5eb-d1c663d8ffa6}" name="mission_mode_change_tc_handler" path="mission_mode_change_tc_handler"/>
-            <Function id="{3b1e0dc5-a8d1-4d61-9a31-847f76a1342f}" name="pipeline_mode_tracker" path="system_mode_management_group::pipeline_mode_tracker"/>
-            <Function id="{b0e8b3da-76ab-4edf-80e0-d3208943483f}" name="system_mode_manager" path="system_mode_management_group::system_mode_manager"/>
-        </Partition>
-        <Device id="{9563bf07-1503-49ff-8fb5-d05d982d6713}" name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.ccsds" packetizer="passthrough" config="{ devname  &quot;/dev/tty0&quot;, speed  b9600, parity  even, bits  8, use-paritybit  TRUE }" port="msp430_eusci_a_serial_minimal" asn1file="/root/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::MSP430_eUSCI_A_serial" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal" namespace="ocarina_drivers" bus_namespace="ocarina_buses">
-        </Device>
-    </Node>
     <Node id="{0933e7d4-0404-49ad-826d-c2521fc8115f}" name="x86 Linux C++" type="ocarina_processors_x86::x86.generic_linux" node_label="Node_1" namespace="ocarina_processors_x86">
         <Partition id="{bf80ed21-30bf-4f5c-a146-5b4919d27061}" name="gs_partition">
             <Function id="{5564b17d-c297-483e-aefc-11c6bf43d906}" name="gs_gui" path="gs_gui"/>
@@ -38,8 +22,23 @@
         <Device id="{0c3fe8e1-97ef-4025-b6cb-7e6ff753dd14}" name="uart0" requires_bus_access="ocarina_buses::serial.ccsds" packetizer="passthrough" config="{ devname  &quot;/dev/ttyACM1&quot;, speed  b9600, parity  even, bits  8, use-paritybit  TRUE }" port="uart0" asn1file="/root/tool-inst/include/TASTE-Linux-Drivers/configurations/linux-serial-ccsds-driver.asn" asn1type="Serial-CCSDS-Linux-Conf-T" asn1module="LINUX-SERIAL-CCSDS-DRIVER" extends="ocarina_drivers::serial_ccsds" impl_extends="ocarina_drivers::serial_ccsds.linux" namespace="ocarina_drivers" bus_namespace="ocarina_buses">
         </Device>
     </Node>
+    <Node id="{e7d256f1-bc9f-4349-8d6e-e8a1544f9a13}" name="msp430 fr5969 FreeRTOS" type="ocarina_processors_msp430::msp430fr5969.freertos" node_label="Node_2" namespace="ocarina_processors_msp430">
+        <Partition id="{9d738aef-2715-431f-b12a-8236ded4bafc}" name="obc_partition">
+            <Function id="{77e2f404-2a80-47c5-b10a-7ae2065e7941}" name="eps_mode_tracker" path="eps_subsystem::eps_mode_tracker"/>
+            <Function id="{1e8cc2a8-e3ad-4e71-8e1b-aa3bc4c77b4f}" name="comms_mode_tracker" path="comms_subsystem::comms_mode_tracker"/>
+            <Function id="{825913ab-97a9-4eb9-8d54-a957d89338bd}" name="HAL" path="obc_subsystem::HAL"/>
+            <Function id="{d0659068-cc0c-4a0e-a0ea-e9b612b723f0}" name="payload_mode_tracker" path="payload_subsystem::payload_mode_tracker"/>
+            <Function id="{30d8cb18-5d8f-455e-841c-f3d0fc9cae6c}" name="deployer_mode_tracker" path="deployer_subsystem::deployer_mode_tracker"/>
+            <Function id="{d63b38f9-3082-4509-ba93-8dc1c03a0b07}" name="adcs_mode_tracker" path="adcs_subsystem::adcs_mode_tracker"/>
+            <Function id="{bea5f9ae-35ae-40cf-9066-df114846e766}" name="system_mode_manager" path="obc_subsystem::system_mode_manager"/>
+            <Function id="{23a3eaf7-a2ce-4763-b9b7-14054cd0ee23}" name="pipeline_mode_tracker" path="pipeline_subsystem::pipeline_mode_tracker"/>
+            <Function id="{85d117fb-5cc5-49fe-9622-b66ee92aacdc}" name="mission_mode_change_tc_handler" path="obc_subsystem::mission_mode_change_tc_handler"/>
+        </Partition>
+        <Device id="{9563bf07-1503-49ff-8fb5-d05d982d6713}" name="msp430_eusci_a_serial_minimal" requires_bus_access="ocarina_buses::serial.ccsds" packetizer="passthrough" config="{ devname  &quot;/dev/tty0&quot;, speed  b9600, parity  even, bits  8, use-paritybit  TRUE }" port="msp430_eusci_a_serial_minimal" asn1file="/root/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/serial.asn" asn1type="Serial-Conf-T" asn1module="POHICDRIVER-UART" extends="ocarina_drivers::MSP430_eUSCI_A_serial" impl_extends="ocarina_drivers::MSP430_eUSCI_A_serial.minimal" namespace="ocarina_drivers" bus_namespace="ocarina_buses">
+        </Device>
+    </Node>
     <Connection id="{99d0e506-e29a-417e-99dd-5536a7be1b78}" name="Connection_1" from_node="msp430 fr5969 FreeRTOS" from_port="msp430_eusci_a_serial_minimal" to_bus="ocarina_buses::serial.ccsds" to_node="x86 Linux C++" to_port="uart0">
-            <Message id="{42d1bf23-9295-4404-a8ae-afb949ff0313}" name="Message_1" from_function="mission_mode_change_tc_handler" from_interface="report_mission_mode_change" to_function="gs_gui" to_interface="report_mission_mode_change"/>
-            <Message id="{73d3465c-ffee-4578-b708-fd1265b06542}" name="Message_2" from_function="gs_gui" from_interface="tc_change_mission_mode" to_function="mission_mode_change_tc_handler" to_interface="tc_change_mission_mode"/>
+            <Message id="{0fb7a723-96f8-4346-a4bf-40fce33d32be}" name="Message_1" from_function="mission_mode_change_tc_handler" from_interface="report_mission_mode_change" to_function="gs_gui" to_interface="report_mission_mode_change"/>
+            <Message id="{a3bc1ff8-eff2-4710-ba41-53e8484c7ae8}" name="Message_2" from_function="gs_gui" from_interface="tc_change_mission_mode" to_function="mission_mode_change_tc_handler" to_interface="tc_change_mission_mode"/>
     </Connection>
 </DeploymentView>

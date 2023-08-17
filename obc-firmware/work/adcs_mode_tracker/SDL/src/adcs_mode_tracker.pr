@@ -4,102 +4,40 @@ process Adcs_Mode_Tracker;
     /* CIF TEXT (309, 0), (282, 140) */
     -- Text area for declarations and comments
     
-    dcl adcs_mode ADCS_Mode_T;
+    dcl target_adcs_mode ADCS_Mode_T;
     dcl report ADCS_Mode_Status_Report_T;
     
     -- massive thanks to Maxime Perrotin @ ESA
     -- for the architecture / design pattern advice!
     /* CIF ENDTEXT */
-    /* CIF procedure (325, 214), (212, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure change_adcs_mode_detumbling;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (16, 12), (267, 140) */
-        -- Text area for declarations and comments
-        
-        fpar
-            in/out Success T_Boolean;
-        /* CIF ENDTEXT */
-        /* CIF START (467, 25), (70, 35) */
-        START;
-            /* CIF task (398, 80), (206, 35) */
-            task adcs_mode := adcs_detumbling;
-            /* CIF task (446, 135), (110, 35) */
-            task success := true;
-            /* CIF task (395, 190), (213, 35) */
-            task report.adcs_mode := adcs_mode;
-            /* CIF task (361, 245), (281, 35) */
-            task report.adcs_last_op := mode_status_change;
-            /* CIF return (484, 295), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF procedure (326, 164), (166, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    procedure change_adcs_mode_idle;
-        /* CIF Keep Specific Geode Partition 'default' */
-        /* CIF TEXT (16, 12), (267, 140) */
-        -- Text area for declarations and comments
-        
-        fpar
-            in/out Success T_Boolean;
-        /* CIF ENDTEXT */
-        /* CIF START (467, 25), (70, 35) */
-        START;
-            /* CIF task (421, 80), (160, 35) */
-            task adcs_mode := adcs_idle;
-            /* CIF task (446, 135), (110, 35) */
-            task success := true;
-            /* CIF task (395, 190), (213, 35) */
-            task report.adcs_mode := adcs_mode;
-            /* CIF task (361, 245), (281, 35) */
-            task report.adcs_last_op := mode_status_change;
-            /* CIF return (484, 295), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF START (614, 162), (70, 35) */
+    /* CIF START (406, 177), (70, 35) */
     START;
-        /* CIF task (568, 217), (160, 35) */
-        task adcs_mode := adcs_idle;
-        /* CIF NEXTSTATE (614, 267), (70, 35) */
+        /* CIF NEXTSTATE (406, 232), (70, 35) */
         NEXTSTATE Idle;
-    /* CIF state (836, 7), (70, 35) */
+    /* CIF state (789, 6), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Idle;
-        /* CIF input (761, 62), (212, 35) */
-        input change_adcs_mode_detumbling;
-            /* CIF output (756, 117), (222, 35) */
-            output report_adcs_mode_status(report);
-            /* CIF NEXTSTATE (821, 172), (92, 35) */
+        /* CIF input (691, 61), (256, 35) */
+        input change_adcs_mode(target_adcs_mode);
+            /* CIF output (703, 116), (232, 68) */
+            output report_adcs_mode_status({
+  adcs_mode target_adcs_mode,
+  adcs_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (773, 214), (92, 35) */
             NEXTSTATE Detumbling;
     endstate;
-    /* CIF state (1082, 8), (92, 35) */
+    /* CIF state (1205, 8), (92, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Detumbling;
-        /* CIF input (1044, 63), (166, 35) */
-        input change_adcs_mode_idle;
-            /* CIF output (1016, 118), (222, 35) */
-            output report_adcs_mode_status(report);
-            /* CIF NEXTSTATE (1093, 180), (70, 35) */
-            NEXTSTATE Idle;
-    endstate;
-    /* CIF state (838, 272), (70, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state *
-    /* CIF comment (928, 272), (209, 38) */
-    comment 'unsupported transition catcher:
-- any other state';
-        /* CIF input (838, 327), (70, 35) */
-        input *
-        /* CIF comment (928, 327), (123, 35) */
-        comment '- any other signal';
-            /* CIF output (766, 382), (213, 68) */
+        /* CIF input (1122, 63), (256, 35) */
+        input change_adcs_mode(target_adcs_mode);
+            /* CIF output (1134, 118), (232, 68) */
             output report_adcs_mode_status({
-  adcs_mode adcs_mode,
-  adcs_last_op mode_status_nop
+  adcs_mode target_adcs_mode,
+  adcs_last_op mode_status_change
 });
-            /* CIF NEXTSTATE (838, 470), (70, 35) */
-            NEXTSTATE -
-            /* CIF comment (928, 470), (152, 35) */
-            comment 'back to previous state';
+            /* CIF NEXTSTATE (1216, 212), (70, 35) */
+            NEXTSTATE Idle;
     endstate;
 endprocess Adcs_Mode_Tracker;
