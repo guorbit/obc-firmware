@@ -14,6 +14,8 @@
 #include <FreeRTOS.h>
 #include <semphr.h>
 
+#include "msp430_uart.h"
+
 bool P4_6_LED_ON = false;
 
 void hal_startup( void )
@@ -26,12 +28,14 @@ void hal_startup( void )
     P1DIR |= 0x01;                      // Set P1.0 to output direction
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
+    USART0_Init();
 }
 
 void hal_PI_blink_led(void)
 {
    // Write your code here
     P1OUT ^= 0x01;                      // Toggle P1.0 using XOR
+    USART0_SendByte('.');
 }
 
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )

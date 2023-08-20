@@ -12,13 +12,6 @@ void USART0_Init () {
     P2SEL1 |= BIT0| BIT1;                   // Configure UART pins
     P2SEL0 &= ~(BIT0| BIT1);
 
-    // Startup clock system with max DCO setting ~8MHz
-    CSCTL0_H = CSKEY >> 8;                  // Unlock clock registers
-    CSCTL1 = DCOFSEL_3 | DCORSEL;           // Set DCO to 8MHz
-    CSCTL2 = SELA__VLOCLK | SELS__DCOCLK | SELM__DCOCLK;
-    CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;   // Set all dividers
-    CSCTL0_H = 0  ;                         // Lock CS registers
-
     // Configure USCI_A0 for UART mode
     UCA0CTLW0 = UCSWRST;                    // Put eUSCI in reset
     UCA0CTLW0 |= UCSSEL__SMCLK;             // CLK = SMCLK
@@ -45,4 +38,9 @@ void USART0_SendData (unsigned char data[], unsigned char length, int lineterm) 
         USART0_SendByte('\n');                  // new line
         USART0_SendByte('\r');                  // carriage return
     }
+}
+
+unsigned char USART0_ReadByte (void) {
+    unsigned char c = UCA0RXBUF;
+    return c;
 }
