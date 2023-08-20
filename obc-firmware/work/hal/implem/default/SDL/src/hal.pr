@@ -1,0 +1,20 @@
+process Hal;
+
+   procedure Set_Led;
+/* CIF TEXT (0, 0), (170, 140) */
+fpar
+   in Val T_Boolean;
+/* CIF ENDTEXT */
+start;
+return;
+endprocedure;
+   /* CIF START (320, 10), (70, 35) */
+   start;
+     nextstate Wait;
+
+   /* CIF STATE (450, 10), (70, 35) */
+   state Wait;
+   endstate;
+
+endprocess;
+
