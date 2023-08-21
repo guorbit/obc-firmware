@@ -1,13 +1,16 @@
 <InterfaceView version="1.2" asn1file="obc-firmware.acn" mscfile="/home/taste/obc-model/obc-model.msc" UiFile="interfaceview.ui.xml">
-<Function id="{4c76f858-03de-4264-8ff7-1b3a466f1eb8}" name="obc_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" startup_priority="1" instances_max="1">
+<Function id="{4c76f858-03de-4264-8ff7-1b3a466f1eb8}" name="obc_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_min="1" instances_max="1" startup_priority="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" is_visible="true" language="C" default_implementation="msp430" fixed_system_element="NO" required_system_element="NO" instances_min="1" startup_priority="1" FPGA_Configurations="" instances_max="1">
+<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" is_visible="true" language="C" default_implementation="msp430" fixed_system_element="NO" required_system_element="NO" instances_min="1" instances_max="1" startup_priority="1" FPGA_Configurations="">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="Ada"/>
-<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" dispatch_offset="0" stack_size="256" period="500" wcet="200" priority="1">
+<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" period="500" priority="1" stack_size="256" wcet="200" dispatch_offset="0">
 </Provided_Interface>
 
 <Provided_Interface id="{51d88f2f-533a-4b8b-bf54-9b00b639836e}" name="set_led" kind="Protected" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
     <Input_Parameter name="val" type="T-Boolean" encoding="NATIVE"/>
+</Provided_Interface>
+
+<Provided_Interface id="{ec0b4b51-7ee6-4776-bb14-cb9f92e3ff9c}" name="handle_usart" kind="Cyclic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" period="100" priority="1" stack_size="1024" wcet="0">
 </Provided_Interface>
 
     <Implementations>

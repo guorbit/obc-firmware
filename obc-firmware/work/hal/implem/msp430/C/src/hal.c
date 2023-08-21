@@ -68,10 +68,16 @@ const cmdQueueNode* cmdQueuePeek( cmdQueue* queue );
 cmdQueueNode* cmdQueueDequeue( cmdQueue* queue );
 void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned char param[], const uint8_t paramSize );
 void cmdQueuePopCmd( cmdQueue* queue );
-void cmdQueueSendCmd( cmdQueue* queue );
+void cmdQueueSendNextCmd( cmdQueue* queue );
 
 void commsDriverSetConfig( commsDriverConfig* config );
-void commsDriverEnqueueConfigCmds( cmdQueue* queue, commsDriverConfig* config );
+void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config );
+
+cmdQueue commsCmdQueue;
+uint64_t cmdResendTimeoutCounter;
+uint8_t readyToSendNextCmd;
+
+commsDriverConfig commsConfig;
 
 void hal_startup( void )
 {
@@ -83,7 +89,15 @@ void hal_startup( void )
     P1DIR |= 0x01;                      // Set P1.0 to output direction
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
+
     USART0_Init();
+
+    cmdQueueInit(&commsCmdQueue);
+    cmdResendTimeoutCounter = 1000;
+    readyToSendNextCmd = 1;
+
+    commsDriverSetConfig(&commsConfig);
+    cmdQueueAddConfigCmds(&commsCmdQueue, &commsConfig);
 }
 
 void hal_PI_blink_led(void)
@@ -105,6 +119,34 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
     }
     P4_6_LED_ON = *IN_val;
 }
+
+void hal_PI_handle_usart( void )
+{
+    unsigned char incomingByte = 'a'; // USART0_ReadByte();
+    if (incomingByte == '*')
+    {
+       if (commsCmdQueue.size > 0)
+       {
+           cmdQueuePopCmd(&commsCmdQueue);
+       }
+       readyToSendNextCmd = 1;
+    }
+    if (incomingByte != NULL) USART0_SendByte(incomingByte);
+
+    if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
+
+    cmdQueueAddCmd(&commsCmdQueue, "CH", "0", 1);
+//    char temp[10];
+//    snprintf(&temp, 10, "%d", commsCmdQueue.size);
+//    USART0_SendData(temp);
+
+    if (commsCmdQueue.size > 0 && (readyToSendNextCmd || cmdResendTimeoutCounter <= 0)) {
+        readyToSendNextCmd = 0;
+        cmdResendTimeoutCounter = 50;
+        cmdQueueSendNextCmd(&commsCmdQueue);
+    }
+}
+
 
 void cmdQueueNodeFree( cmdQueueNode* node )
 {
@@ -185,7 +227,7 @@ void cmdQueuePopCmd( cmdQueue* queue )
     }
 }
 
-void cmdQueueSendCmd( cmdQueue* queue )
+void cmdQueueSendNextCmd( cmdQueue* queue )
 {
     const cmdQueueNode* node = cmdQueuePeek(queue);
     if (node != NULL)
@@ -216,7 +258,7 @@ void commsDriverSetConfig( commsDriverConfig* config )
     strcpy(config->aprsCallsign, "");
 }
 
-void commsDriverEnqueueConfigCmds( cmdQueue* queue, commsDriverConfig* config )
+void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config )
 {
     unsigned char temp[10];
     cmdQueueAddCmd(queue, "CH", "0", 1);

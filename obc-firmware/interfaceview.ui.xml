@@ -4,9 +4,11 @@
 </Taste>
 </Entity><Entity id="{972e8e24-275f-4a0e-b469-39f22bf2547f}"><Taste RootCoordinates="-62600 -26600 62600 26600" coordinates="-50800 52600 131900 67400">
 </Taste>
-</Entity><Entity id="{bb72fda3-b26b-440a-8320-300a1328ce27}"><Taste coordinates="-50800 57500">
+</Entity><Entity id="{bb72fda3-b26b-440a-8320-300a1328ce27}"><Taste coordinates="-50800 55500">
 </Taste>
-</Entity><Entity id="{51d88f2f-533a-4b8b-bf54-9b00b639836e}"><Taste coordinates="-46500 52600">
+</Entity><Entity id="{51d88f2f-533a-4b8b-bf54-9b00b639836e}"><Taste coordinates="-47600 52600">
+</Taste>
+</Entity><Entity id="{ec0b4b51-7ee6-4776-bb14-cb9f92e3ff9c}"><Taste coordinates="-50800 60000">
 </Taste>
 </Entity>
 </UI>

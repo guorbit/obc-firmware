@@ -18,6 +18,9 @@ void hal_startup(void);
 void hal_PI_blink_led( void );
 
 
+void hal_PI_handle_usart( void );
+
+
 void hal_PI_set_led( const asn1SccT_Boolean * );
 
 /* Required interfaces */
