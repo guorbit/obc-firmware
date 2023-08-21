@@ -24,8 +24,8 @@ bool P4_6_LED_ON = false;
 typedef struct cmdQueueNode
 {
     struct cmdQueueNode* next;
-    unsigned char cmd[2];
-    unsigned char* param;
+    unsigned char* cmdData; // cmd code always exactly of size 2
+    uint8_t cmdDataSize;
 } cmdQueueNode;
 
 typedef struct cmdQueue
@@ -38,9 +38,11 @@ typedef struct cmdQueue
 void cmdQueueNodeFree( cmdQueueNode* node );
 void cmdQueueInit( cmdQueue* queue );
 void cmdQueueEnqueue( cmdQueue* queue, cmdQueueNode* node );
+const cmdQueueNode* cmdQueuePeek( cmdQueue* queue );
 cmdQueueNode* cmdQueueDequeue( cmdQueue* queue );
-void cmdQueueAddCmd( cmdQueue* queue, unsigned char cmd[], unsigned char param[], uint8_t paramSize );
+void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned char param[], const uint8_t paramSize );
 void cmdQueuePopCmd( cmdQueue* queue );
+void cmdQueueSendCmd( cmdQueue* queue );
 
 void hal_startup( void )
 {
@@ -77,7 +79,7 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 
 void cmdQueueNodeFree( cmdQueueNode* node )
 {
-    free(node->param);
+    free(node->cmdData);
     free(node);
 }
 
@@ -120,20 +122,26 @@ cmdQueueNode* cmdQueueDequeue( cmdQueue* queue )
     return node;
 }
 
-void cmdQueueAddCmd( cmdQueue* queue, unsigned char cmd[], unsigned char param[], uint8_t paramSize )
+const cmdQueueNode* cmdQueuePeek( cmdQueue* queue )
+{
+    return queue->head;
+}
+
+void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned char param[], const uint8_t paramSize )
 {
     cmdQueueNode* newNode = (cmdQueueNode*)malloc(sizeof(cmdQueueNode));
     if (newNode != NULL)
     {
-        unsigned char* paramField = (unsigned char*)malloc(sizeof(unsigned char*)*paramSize);
-        if (paramField == NULL) // not enought memory for newNode
+        unsigned char* cmdDataField = (unsigned char*)malloc(sizeof(unsigned char*) * (paramSize+2));
+        if (cmdDataField == NULL) // not enought memory for newNode cmd data
         {
             free(newNode);
         }
         else
         {
-            memcpy(newNode->cmd, cmd, 2);
-            memcpy(newNode->param, param, paramSize);
+            memcpy(newNode->cmdData, cmd, 2);
+            memcpy(newNode->cmdData+2, param, paramSize);
+            newNode->cmdDataSize = paramSize+2;
             cmdQueueEnqueue(queue, newNode);
         }
     }
@@ -145,5 +153,15 @@ void cmdQueuePopCmd( cmdQueue* queue )
     if (popedNode != NULL)
     {
         cmdQueueNodeFree(popedNode);
+    }
+}
+
+void cmdQueueSendCmd( cmdQueue* queue )
+{
+    const cmdQueueNode* node = cmdQueuePeek(queue);
+    if (node != NULL)
+    {
+        USART0_SendByte('~');
+        USART0_SendData(node->cmdData, node->cmdDataSize, 1);
     }
 }
