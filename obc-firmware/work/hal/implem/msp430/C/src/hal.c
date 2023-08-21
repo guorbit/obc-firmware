@@ -14,10 +14,17 @@
 #include <FreeRTOS.h>
 #include <semphr.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "msp430_uart.h"
+
+#define CMD_CODE_LENGTH 2
+#define PAYLOAD_ID_LENGTH 6
+#define FIELD_LIST_LENGTH 12
+#define LORA_UPLING_CODE_LENGTH 0
+#define APRS_CALLSIGN_LENGTH 0
 
 bool P4_6_LED_ON = false;
 
@@ -35,6 +42,25 @@ typedef struct cmdQueue
     uint8_t size;
 } cmdQueue;
 
+typedef struct commsDriverConfig {
+  char payloadID[PAYLOAD_ID_LENGTH+1];
+  char fieldList[FIELD_LIST_LENGTH+1];
+  uint8_t sendFieldList; // bool
+  uint16_t gpsFlightModeAltitude;
+  uint16_t cutdownAltitude;
+  uint16_t cutdownTime;
+  double LoRaFrequency;
+  uint16_t LoRaImplicit;
+  uint16_t LoRaCoding;
+  uint16_t LoRaBandwidth;
+  uint16_t LoRaSpreading;
+  uint16_t LoRaLowOpt;
+  uint16_t LoRaCycle;
+  uint16_t LoRaSlot;
+  char LoRaUplinkCode[LORA_UPLING_CODE_LENGTH+1];
+  char aprsCallsign[APRS_CALLSIGN_LENGTH+1];
+} commsDriverConfig;
+
 void cmdQueueNodeFree( cmdQueueNode* node );
 void cmdQueueInit( cmdQueue* queue );
 void cmdQueueEnqueue( cmdQueue* queue, cmdQueueNode* node );
@@ -43,6 +69,9 @@ cmdQueueNode* cmdQueueDequeue( cmdQueue* queue );
 void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned char param[], const uint8_t paramSize );
 void cmdQueuePopCmd( cmdQueue* queue );
 void cmdQueueSendCmd( cmdQueue* queue );
+
+void commsDriverSetConfig( commsDriverConfig* config );
+void commsDriverEnqueueConfigCmds( cmdQueue* queue, commsDriverConfig* config );
 
 void hal_startup( void )
 {
@@ -132,16 +161,16 @@ void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned 
     cmdQueueNode* newNode = (cmdQueueNode*)malloc(sizeof(cmdQueueNode));
     if (newNode != NULL)
     {
-        unsigned char* cmdDataField = (unsigned char*)malloc(sizeof(unsigned char*) * (paramSize+2));
+        unsigned char* cmdDataField = (unsigned char*)malloc(sizeof(unsigned char*) * (paramSize+CMD_CODE_LENGTH));
         if (cmdDataField == NULL) // not enought memory for newNode cmd data
         {
             free(newNode);
         }
         else
         {
-            memcpy(newNode->cmdData, cmd, 2);
-            memcpy(newNode->cmdData+2, param, paramSize);
-            newNode->cmdDataSize = paramSize+2;
+            memcpy(newNode->cmdData, cmd, CMD_CODE_LENGTH);
+            if (param != NULL) memcpy(newNode->cmdData+CMD_CODE_LENGTH, param, paramSize);
+            newNode->cmdDataSize = paramSize+CMD_CODE_LENGTH;
             cmdQueueEnqueue(queue, newNode);
         }
     }
@@ -164,4 +193,71 @@ void cmdQueueSendCmd( cmdQueue* queue )
         USART0_SendByte('~');
         USART0_SendData(node->cmdData, node->cmdDataSize, 1);
     }
+}
+
+
+void commsDriverSetConfig( commsDriverConfig* config )
+{
+    strcpy(config->payloadID, "msp430");
+    strcpy(config->fieldList, "01234569ABCD");
+    config->sendFieldList = 1;
+    config->gpsFlightModeAltitude = 2000;
+    config->cutdownAltitude = 0;
+    config->cutdownTime = 5;
+    config->LoRaFrequency = 868.0;
+    config->LoRaImplicit = 1;
+    config->LoRaCoding = 5;
+    config->LoRaBandwidth = 3;
+    config->LoRaSpreading = 6;
+    config->LoRaLowOpt = 0;
+    config->LoRaCycle = 0;
+    config->LoRaSlot = -1;
+    strcpy(config->LoRaUplinkCode, "");
+    strcpy(config->aprsCallsign, "");
+}
+
+void commsDriverEnqueueConfigCmds( cmdQueue* queue, commsDriverConfig* config )
+{
+    unsigned char temp[10];
+    cmdQueueAddCmd(queue, "CH", "0", 1);
+
+    cmdQueueAddCmd(queue, "CV", NULL, 0);
+
+    cmdQueueAddCmd(queue, "CP", config->payloadID, PAYLOAD_ID_LENGTH);
+    cmdQueueAddCmd(queue, "CF", config->fieldList, FIELD_LIST_LENGTH);
+    snprintf(temp, 10, "%d", config->sendFieldList);
+    cmdQueueAddCmd(queue, "CL", temp, 1);
+
+    snprintf(temp, 10, "%d", config->gpsFlightModeAltitude);
+    cmdQueueAddCmd(queue, "GF", temp, strlen(temp));
+
+    snprintf(temp, 10, "%d", config->cutdownAltitude);
+    cmdQueueAddCmd(queue, "CC", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->cutdownTime);
+    cmdQueueAddCmd(queue, "CT", temp, strlen(temp));
+
+    snprintf(temp, 10, "%.3f", config->LoRaFrequency);
+    cmdQueueAddCmd(queue, "LF", temp, strlen(temp));
+
+    snprintf(temp, 10, "%d", config->LoRaImplicit);
+    cmdQueueAddCmd(queue, "LI", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->LoRaCoding);
+    cmdQueueAddCmd(queue, "LE", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->LoRaBandwidth);
+    cmdQueueAddCmd(queue, "LB", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->LoRaSpreading);
+    cmdQueueAddCmd(queue, "LS", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->LoRaLowOpt);
+    cmdQueueAddCmd(queue, "LL", temp, strlen(temp));
+
+    snprintf(temp, 10, "%d", config->LoRaCycle);
+    cmdQueueAddCmd(queue, "LT", temp, strlen(temp));
+    snprintf(temp, 10, "%d", config->LoRaSlot);
+    cmdQueueAddCmd(queue, "LO", temp, strlen(temp));
+
+    cmdQueueAddCmd(queue, "LU", config->LoRaUplinkCode, LORA_UPLING_CODE_LENGTH);
+
+    cmdQueueAddCmd(queue, "AP", config->aprsCallsign, APRS_CALLSIGN_LENGTH);
+
+    cmdQueueAddCmd(queue, "CS", NULL, 0);
 }
