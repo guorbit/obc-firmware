@@ -14,9 +14,33 @@
 #include <FreeRTOS.h>
 #include <semphr.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "msp430_uart.h"
 
 bool P4_6_LED_ON = false;
+
+typedef struct cmdQueueNode
+{
+    struct cmdQueueNode* next;
+    unsigned char cmd[2];
+    unsigned char* param;
+} cmdQueueNode;
+
+typedef struct cmdQueue
+{
+    cmdQueueNode* head;
+    cmdQueueNode* tail;
+    uint8_t size;
+} cmdQueue;
+
+void cmdQueueNodeFree( cmdQueueNode* node );
+void cmdQueueInit( cmdQueue* queue );
+void cmdQueueEnqueue( cmdQueue* queue, cmdQueueNode* node );
+cmdQueueNode* cmdQueueDequeue( cmdQueue* queue );
+void cmdQueueAddCmd( cmdQueue* queue, unsigned char cmd[], unsigned char param[], uint8_t paramSize );
+void cmdQueuePopCmd( cmdQueue* queue );
 
 void hal_startup( void )
 {
@@ -49,4 +73,77 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
         P4OUT &= ~0x40;                 // Unset P4.6 using AND
     }
     P4_6_LED_ON = *IN_val;
+}
+
+void cmdQueueNodeFree( cmdQueueNode* node )
+{
+    free(node->param);
+    free(node);
+}
+
+void cmdQueueInit( cmdQueue* q )
+{
+    q->head = NULL;
+    q->tail = NULL;
+    q->size = 0;
+}
+
+void cmdQueueEnqueue( cmdQueue* queue, cmdQueueNode* node )
+{
+    node->next = NULL;
+    if (queue->tail == NULL)
+    {
+        queue->head = node;
+    }
+    else
+    {
+        queue->tail->next = node;
+    }
+    queue->tail = node;
+    queue->size++;
+}
+
+cmdQueueNode* cmdQueueDequeue( cmdQueue* queue )
+{
+    if (queue->head == NULL) // underflow
+    {
+        return NULL;
+    }
+    cmdQueueNode* node = queue->head;
+    queue->head = queue->head->next;
+    if (queue->head == NULL)
+    {
+        queue->tail = NULL;
+    }
+    queue->size--;
+
+    return node;
+}
+
+void cmdQueueAddCmd( cmdQueue* queue, unsigned char cmd[], unsigned char param[], uint8_t paramSize )
+{
+    cmdQueueNode* newNode = (cmdQueueNode*)malloc(sizeof(cmdQueueNode));
+    if (newNode != NULL)
+    {
+        unsigned char* paramField = (unsigned char*)malloc(sizeof(unsigned char*)*paramSize);
+        if (paramField == NULL) // not enought memory for newNode
+        {
+            free(newNode);
+        }
+        else
+        {
+            memcpy(newNode->cmd, cmd, 2);
+            memcpy(newNode->param, param, paramSize);
+            cmdQueueEnqueue(queue, newNode);
+        }
+    }
+}
+
+void cmdQueuePopCmd( cmdQueue* queue )
+{
+    cmdQueueNode* popedNode = cmdQueueDequeue(queue);
+    if (popedNode != NULL)
+    {
+        cmdQueueNodeFree(popedNode);
+    }
 }
