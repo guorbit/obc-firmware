@@ -93,7 +93,7 @@ void hal_startup( void )
     USART0_Init();
 
     cmdQueueInit(&commsCmdQueue);
-    cmdResendTimeoutCounter = 1000;
+    cmdResendTimeoutCounter = 10000;
     readyToSendNextCmd = 1;
 
     commsDriverSetConfig(&commsConfig);
@@ -122,7 +122,7 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 
 void hal_PI_handle_usart( void )
 {
-    unsigned char incomingByte = 'a'; // USART0_ReadByte();
+    unsigned char incomingByte = USART0_ReadByte();
     if (incomingByte == '*')
     {
        if (commsCmdQueue.size > 0)
@@ -135,14 +135,9 @@ void hal_PI_handle_usart( void )
 
     if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
 
-    cmdQueueAddCmd(&commsCmdQueue, "CH", "0", 1);
-//    char temp[10];
-//    snprintf(&temp, 10, "%d", commsCmdQueue.size);
-//    USART0_SendData(temp);
-
     if (commsCmdQueue.size > 0 && (readyToSendNextCmd || cmdResendTimeoutCounter <= 0)) {
         readyToSendNextCmd = 0;
-        cmdResendTimeoutCounter = 50;
+        cmdResendTimeoutCounter = 100;
         cmdQueueSendNextCmd(&commsCmdQueue);
     }
 }
