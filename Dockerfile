@@ -59,6 +59,7 @@ RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISAB
 # RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/85_rtems.sh'
 # RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/86_air.sh'
 
+RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/87_kazoo.sh'
 # Log into git as Giorgio
 RUN bash -c 'cd /root/tool-src/kazoo ; git config --global user.name "Giorgio Ciacchella"'
 RUN bash -c 'cd /root/tool-src/kazoo ; git config --global user.email "2481024C@student.gla.ac.uk"'
@@ -68,7 +69,7 @@ RUN bash -c 'cd /root/tool-src/kazoo ; git fetch --all ; git checkout feature-lu
 RUN bash -c 'cd /root/tool-src/kazoo ; git merge origin/feature_bullseye'
 # Rebuild kazoo
 RUN bash -c 'cd /root/tool-src/kazoo ; make install'
-#RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/87_kazoo.sh'
+
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/88_spaceCreator.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/89_linux_runtime.sh'
 # Install TASTE-Runtime-Common fork
