@@ -1,7 +1,7 @@
 /* CIF PROCESS (292, 103), (150, 75) */
 process Eps_Mode_Tracker;
     /* CIF Keep Specific Geode Partition 'default' */
-    /* CIF TEXT (309, 0), (282, 140) */
+    /* CIF TEXT (172, 0), (282, 140) */
     -- Text area for declarations and comments
     
     dcl target_eps_mode EPS_Mode_T;
@@ -10,34 +10,62 @@ process Eps_Mode_Tracker;
     -- massive thanks to Maxime Perrotin @ ESA
     -- for the architecture / design pattern advice!
     /* CIF ENDTEXT */
-    /* CIF START (396, 167), (70, 35) */
+    /* CIF START (275, 168), (70, 35) */
     START;
-        /* CIF NEXTSTATE (396, 222), (70, 35) */
+        /* CIF NEXTSTATE (275, 223), (70, 35) */
         NEXTSTATE Idle;
-    /* CIF state (1062, 11), (94, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state High_Power;
-        /* CIF input (987, 66), (245, 35) */
-        input change_eps_mode(target_eps_mode);
-            /* CIF output (996, 121), (227, 68) */
-            output report_eps_mode_status({
-  eps_mode target_eps_mode,
-  eps_last_op mode_status_change
-});
-            /* CIF NEXTSTATE (1075, 237), (70, 35) */
-            NEXTSTATE Idle;
-    endstate;
-    /* CIF state (741, 11), (70, 35) */
+    /* CIF state (690, 12), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Idle;
-        /* CIF input (648, 66), (245, 35) */
+        /* CIF input (603, 67), (245, 35) */
         input change_eps_mode(target_eps_mode);
-            /* CIF output (657, 121), (227, 68) */
-            output report_eps_mode_status({
-  eps_mode target_eps_mode,
+            /* CIF decision (662, 122), (127, 50) */
+            decision target_eps_mode;
+                /* CIF ANSWER (542, 192), (119, 23) */
+                (eps_high_power):
+                    /* CIF output (489, 235), (227, 68) */
+                    output report_eps_mode_status({
+  eps_mode eps_high_power,
   eps_last_op mode_status_change
 });
-            /* CIF NEXTSTATE (724, 237), (94, 35) */
-            NEXTSTATE High_Power;
+                    /* CIF NEXTSTATE (555, 323), (94, 35) */
+                    NEXTSTATE High_Power;
+                /* CIF ANSWER (805, 192), (70, 23) */
+                else:
+                    /* CIF output (737, 235), (207, 68) */
+                    output report_eps_mode_status({
+  eps_mode eps_idle,
+  eps_last_op mode_status_nop
+});
+                    /* CIF NEXTSTATE (805, 323), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (1171, 14), (94, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state High_Power;
+        /* CIF input (1096, 69), (245, 35) */
+        input change_eps_mode(target_eps_mode);
+            /* CIF decision (1155, 124), (127, 50) */
+            decision target_eps_mode;
+                /* CIF ANSWER (1059, 194), (71, 23) */
+                (eps_idle):
+                    /* CIF output (981, 237), (227, 68) */
+                    output report_eps_mode_status({
+  eps_mode eps_idle,
+  eps_last_op mode_status_change
+});
+                    /* CIF NEXTSTATE (1060, 325), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1300, 194), (70, 23) */
+                else:
+                    /* CIF output (1231, 237), (207, 68) */
+                    output report_eps_mode_status({
+  eps_mode eps_high_power,
+  eps_last_op mode_status_nop
+});
+                    /* CIF NEXTSTATE (1287, 325), (94, 35) */
+                    NEXTSTATE High_Power;
+            enddecision;
     endstate;
 endprocess Eps_Mode_Tracker;

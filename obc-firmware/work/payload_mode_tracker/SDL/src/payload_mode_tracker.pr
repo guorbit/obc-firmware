@@ -1,4 +1,4 @@
-/* CIF PROCESS (321, 65), (159, 75) */
+/* CIF PROCESS (320, 65), (159, 75) */
 process Payload_Mode_Tracker;
     /* CIF Keep Specific Geode Partition 'default' */
     /* CIF TEXT (90, 3), (282, 140) */
@@ -14,30 +14,58 @@ process Payload_Mode_Tracker;
     START;
         /* CIF NEXTSTATE (190, 227), (70, 35) */
         NEXTSTATE Idle;
-    /* CIF state (921, 12), (70, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Imaging;
-        /* CIF input (808, 67), (296, 35) */
-        input change_payload_mode(target_payload_mode);
-            /* CIF output (830, 122), (253, 68) */
-            output report_payload_mode_status({
-  payload_mode target_payload_mode,
-  payload_last_op mode_status_change
-});
-            /* CIF NEXTSTATE (922, 215), (70, 35) */
-            NEXTSTATE Idle;
-    endstate;
-    /* CIF state (537, 11), (70, 35) */
+    /* CIF state (635, 12), (70, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Idle;
-        /* CIF input (421, 66), (296, 35) */
+        /* CIF input (522, 67), (296, 35) */
         input change_payload_mode(target_payload_mode);
-            /* CIF output (443, 121), (253, 68) */
-            output report_payload_mode_status({
-  payload_mode target_payload_mode,
+            /* CIF decision (594, 122), (152, 50) */
+            decision target_payload_mode;
+                /* CIF ANSWER (472, 192), (122, 23) */
+                (payload_imaging):
+                    /* CIF output (407, 235), (253, 68) */
+                    output report_payload_mode_status({
+  payload_mode payload_imaging,
   payload_last_op mode_status_change
 });
-            /* CIF NEXTSTATE (534, 215), (70, 35) */
-            NEXTSTATE Imaging;
+                    /* CIF NEXTSTATE (499, 323), (70, 35) */
+                    NEXTSTATE Imaging;
+                /* CIF ANSWER (763, 192), (70, 23) */
+                else:
+                    /* CIF output (681, 235), (233, 68) */
+                    output report_payload_mode_status({
+  payload_mode payload_idle,
+  payload_last_op mode_status_nop
+});
+                    /* CIF NEXTSTATE (763, 323), (70, 35) */
+                    NEXTSTATE Idle;
+            enddecision;
+    endstate;
+    /* CIF state (1199, 10), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Imaging;
+        /* CIF input (1086, 65), (296, 35) */
+        input change_payload_mode(target_payload_mode);
+            /* CIF decision (1158, 120), (152, 50) */
+            decision target_payload_mode;
+                /* CIF ANSWER (1049, 190), (97, 23) */
+                (payload_idle):
+                    /* CIF output (971, 233), (253, 68) */
+                    output report_payload_mode_status({
+  payload_mode payload_idle,
+  payload_last_op mode_status_change
+});
+                    /* CIF NEXTSTATE (1063, 321), (70, 35) */
+                    NEXTSTATE Idle;
+                /* CIF ANSWER (1327, 190), (70, 23) */
+                else:
+                    /* CIF output (1245, 233), (233, 68) */
+                    output report_payload_mode_status({
+  payload_mode payload_imaging,
+  payload_last_op mode_status_nop
+});
+                    /* CIF NEXTSTATE (1327, 321), (70, 35) */
+                    NEXTSTATE Imaging;
+            enddecision;
     endstate;
 endprocess Payload_Mode_Tracker;

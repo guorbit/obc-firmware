@@ -60,7 +60,11 @@ RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISAB
 # RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/86_air.sh'
 # Install kazoo fork
 RUN bash -c 'cd /root/tool-src/kazoo ; git fetch --all ; git checkout feature-lurker-msp430-update-attempt ; git pull'
-RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/87_kazoo.sh'
+# Merge SDL-Ada coverage fix to kazoo
+RUN bash -c 'cd /root/tool-src/kazoo ; git merge origin/feature_bullseye'
+# Rebuild kazoo
+RUN bash -c 'cd /root/tool-src/kazoo ; make install'
+#RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/87_kazoo.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/88_spaceCreator.sh'
 RUN bash -c 'cd /root/tool-src ; PATH=/root/tool-inst/bin:$PATH HOME=/root DISABLE_TASTE_BANNER=1 install/89_linux_runtime.sh'
 # Install TASTE-Runtime-Common fork
