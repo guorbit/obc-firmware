@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "msp430_uart.h"
 
@@ -56,7 +57,7 @@ typedef struct commsDriverConfig {
   uint16_t LoRaSpreading;
   uint16_t LoRaLowOpt;
   uint16_t LoRaCycle;
-  uint16_t LoRaSlot;
+  int16_t LoRaSlot;
   char LoRaUplinkCode[LORA_UPLING_CODE_LENGTH+1];
   char aprsCallsign[APRS_CALLSIGN_LENGTH+1];
 } commsDriverConfig;
@@ -198,8 +199,8 @@ void cmdQueueAddCmd( cmdQueue* queue, const unsigned char cmd[], const unsigned 
     cmdQueueNode* newNode = (cmdQueueNode*)malloc(sizeof(cmdQueueNode));
     if (newNode != NULL)
     {
-        unsigned char* cmdDataField = (unsigned char*)malloc(sizeof(unsigned char*) * (paramSize+CMD_CODE_LENGTH));
-        if (cmdDataField == NULL) // not enought memory for newNode cmd data
+        newNode->cmdData = (unsigned char*)malloc(sizeof(unsigned char*) * (paramSize+CMD_CODE_LENGTH));
+        if (newNode->cmdData == NULL) // not enought memory for newNode cmd data
         {
             free(newNode);
         }
