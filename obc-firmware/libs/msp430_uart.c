@@ -41,7 +41,12 @@ void USART0_SendData (unsigned char data[], unsigned char length, int lineterm) 
 }
 
 unsigned char USART0_ReadByte (void) {
-    unsigned char c = UCA0RXBUF;
+    unsigned char c = '\0';
+    if (UCA0IFG & UCRXIFG)
+    {
+        c = UCA1RXBUF;
+    }
+
     return c;
 }
 
@@ -70,7 +75,7 @@ void USART1_SendByte (unsigned char data) {
 
 void USART1_SendData (unsigned char data[], unsigned char length, int lineterm) {
     unsigned char i;
-    for(i=0; i<length; i++) {
+    for (i=0; i<length; i++) {
         USART1_SendByte(data[i]);
     }
 
@@ -82,6 +87,11 @@ void USART1_SendData (unsigned char data[], unsigned char length, int lineterm) 
 }
 
 unsigned char USART1_ReadByte (void) {
-    unsigned char c = UCA1RXBUF;
+    unsigned char c = '\0';
+    if (UCA1IFG & UCRXIFG)
+    {
+        c = UCA1RXBUF;
+    }
+
     return c;
 }

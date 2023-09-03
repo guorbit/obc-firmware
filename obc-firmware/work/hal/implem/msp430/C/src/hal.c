@@ -105,7 +105,7 @@ void hal_PI_blink_led(void)
 {
    // Write your code here
     P1OUT ^= 0x01;                      // Toggle P1.0 using XOR
-    USART1_SendByte('.');
+    // USART1_SendByte('.');
 }
 
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
@@ -132,7 +132,7 @@ void hal_PI_handle_usart( void )
        }
        readyToSendNextCmd = 1;
     }
-    if (incomingByte != NULL) USART1_SendByte(incomingByte);
+    if (incomingByte != '\0') USART1_SendByte(incomingByte);
 
     if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
 
