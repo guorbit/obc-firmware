@@ -91,10 +91,10 @@ void hal_startup( void )
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
 
-    USART0_Init();
+    USART1_Init();
 
     cmdQueueInit(&commsCmdQueue);
-    cmdResendTimeoutCounter = 10000;
+    cmdResendTimeoutCounter = 1000;
     readyToSendNextCmd = 1;
 
     commsDriverSetConfig(&commsConfig);
@@ -105,7 +105,7 @@ void hal_PI_blink_led(void)
 {
    // Write your code here
     P1OUT ^= 0x01;                      // Toggle P1.0 using XOR
-    USART0_SendByte('.');
+    USART1_SendByte('.');
 }
 
 void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
@@ -123,7 +123,7 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 
 void hal_PI_handle_usart( void )
 {
-    unsigned char incomingByte = USART0_ReadByte();
+    unsigned char incomingByte = USART1_ReadByte();
     if (incomingByte == '*')
     {
        if (commsCmdQueue.size > 0)
@@ -132,13 +132,13 @@ void hal_PI_handle_usart( void )
        }
        readyToSendNextCmd = 1;
     }
-    if (incomingByte != NULL) USART0_SendByte(incomingByte);
+    if (incomingByte != NULL) USART1_SendByte(incomingByte);
 
     if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
 
     if (commsCmdQueue.size > 0 && (readyToSendNextCmd || cmdResendTimeoutCounter <= 0)) {
         readyToSendNextCmd = 0;
-        cmdResendTimeoutCounter = 100;
+        cmdResendTimeoutCounter = 10;
         cmdQueueSendNextCmd(&commsCmdQueue);
     }
 }
@@ -228,8 +228,8 @@ void cmdQueueSendNextCmd( cmdQueue* queue )
     const cmdQueueNode* node = cmdQueuePeek(queue);
     if (node != NULL)
     {
-        USART0_SendByte('~');
-        USART0_SendData(node->cmdData, node->cmdDataSize, 1);
+        USART1_SendByte('~');
+        USART1_SendData(node->cmdData, node->cmdDataSize, 1);
     }
 }
 
