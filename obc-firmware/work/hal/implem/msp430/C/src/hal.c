@@ -27,6 +27,8 @@
 #define LORA_UPLING_CODE_LENGTH 0
 #define APRS_CALLSIGN_LENGTH 0
 
+#define COMMS_MODULE_RX_MSG_BUFFER_SIZE 101
+
 bool P4_6_LED_ON = false;
 
 typedef struct cmdQueueNode
@@ -74,11 +76,20 @@ void cmdQueueSendNextCmd( cmdQueue* queue );
 void commsDriverSetConfig( commsDriverConfig* config );
 void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config );
 
+/* returns received bytes no.
+ * full responses will end with '\r\n' (CR-LF)
+ */
+uint8_t commsDriverReceiveMessage( unsigned char RXBuffer[], uint8_t lim );
+// primitive parser for the sake of cloudview
+uint8_t commsDriverParseReceivedMessage( unsigned char message[], uint8_t msgLength );
+
 cmdQueue commsCmdQueue;
 uint64_t cmdResendTimeoutCounter;
 uint8_t readyToSendNextCmd;
 
 commsDriverConfig commsConfig;
+
+unsigned char commsModuleRXBuffer[COMMS_MODULE_RX_MSG_BUFFER_SIZE]; // ended with '\0'
 
 void hal_startup( void )
 {
@@ -91,6 +102,7 @@ void hal_startup( void )
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
 
+    commsModuleRXBuffer[0] = '\0';
     USART1_Init();
 
     cmdQueueInit(&commsCmdQueue);
@@ -123,16 +135,23 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
 
 void hal_PI_handle_usart( void )
 {
-    unsigned char incomingByte = USART1_ReadByte();
-    if (incomingByte == '*')
+    uint8_t bytesReceivedNo;
+    if ((bytesReceivedNo
+        = commsDriverReceiveMessage(commsModuleRXBuffer, COMMS_MODULE_RX_MSG_BUFFER_SIZE)))
     {
-       if (commsCmdQueue.size > 0)
-       {
-           cmdQueuePopCmd(&commsCmdQueue);
-       }
-       readyToSendNextCmd = 1;
+//        USART1_SendData(commsModuleRXBuffer, bytesReceivedNo, 0); // for debug
+//        USART1_SendByte(bytesReceivedNo+'0');
+//        USART1_SendByte('K');
+        uint8_t parserCode = commsDriverParseReceivedMessage(commsModuleRXBuffer, bytesReceivedNo);
+        if (parserCode == 1)
+        {
+            if (commsCmdQueue.size > 0)
+            {
+                cmdQueuePopCmd(&commsCmdQueue);
+            }
+            readyToSendNextCmd = 1;
+        }
     }
-    if (incomingByte != '\0') USART1_SendByte(incomingByte);
 
     if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
 
@@ -298,4 +317,37 @@ void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config )
     cmdQueueAddCmd(queue, "AP", config->aprsCallsign, APRS_CALLSIGN_LENGTH);
 
     cmdQueueAddCmd(queue, "CS", NULL, 0);
+}
+
+uint8_t commsDriverReceiveMessage( unsigned char RXBuffer[], uint8_t lim )
+{
+    uint8_t bufferCounter = 0;
+    unsigned char in;
+    while (bufferCounter < lim-1
+           && (in = USART1_ReadByte()) != '\0' && in != '\n')
+    {
+        // USART1_SendByte(in);
+        RXBuffer[bufferCounter++] = in;
+    }
+    if (in == '\n')
+    {
+        RXBuffer[bufferCounter++] = '\n';
+    }
+    RXBuffer[bufferCounter] = '\0';
+
+    return bufferCounter;
+}
+
+
+uint8_t commsDriverParseReceivedMessage( unsigned char msg[], uint8_t msgLength )
+{
+    if (msgLength == 0) return 0;
+
+    // (1) cmd understood response
+    if (msg[0] == '*' && (msg[1] == '\r' || msg[1] == '\n'))
+    {
+        return 1;
+    }
+
+    return 0;
 }
