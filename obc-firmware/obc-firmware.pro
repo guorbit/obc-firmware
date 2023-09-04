@@ -10,8 +10,9 @@ DISTFILES += work/binaries/coverage/index.html
 DISTFILES += work/binaries/filters
 DISTFILES += work/system.asn
 
-DISTFILES += deploymentview_cpp.dv.xml
-DISTFILES += deploymentview_pohic.dv.xml
+DISTFILES += \
+    deploymentview.dv.xml
+DISTFILES +=
 DISTFILES += obc-firmware.asn
 DISTFILES += obc-firmware.acn
 include(work/taste.pro)

@@ -1,4 +1,4 @@
-<DeploymentView version="1.2" UiFile="deploymentview_cpp.ui.xml">
+<DeploymentView version="1.2" UiFile="deploymentview.ui.xml">
     <Node id="{0933e7d4-0404-49ad-826d-c2521fc8115f}" name="x86 Linux C++" type="ocarina_processors_x86::x86.generic_linux" node_label="Node_1" namespace="ocarina_processors_x86">
         <Partition id="{bf80ed21-30bf-4f5c-a146-5b4919d27061}" name="gs_partition">
             <Function id="{5564b17d-c297-483e-aefc-11c6bf43d906}" name="gs_gui" path="gs_gui"/>
