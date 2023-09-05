@@ -55,22 +55,27 @@ Location                ::= SEQUENCE {
 }
 
 Area-of-Interest        ::= SEQUENCE {
-    loc-start       Location,
-    loc-stop        Location
+    loc-nw          Location,
+    loc-ne          Location,
+    loc-se          Location,
+    loc-sw          Location,
+    enabled         BOOLEAN
 }
 
 AoI-List                ::= SEQUENCE (SIZE (32)) OF Area-of-Interest
 AoI-List-Index          ::= INTEGER (0 .. 31)
 
-AoI-Action              ::= ENUMERATED {
-    add,
-    remove
-}
-
-AoI-Config-TC           ::= SEQUENCE {
-    action          AoI-Action,
-    index           AoI-List-Index,
-    aoi             Area-of-Interest
+AoI-Config-TC           ::= CHOICE {
+    configure       SEQUENCE {
+        index       AoI-List-Index,
+        aoi         Area-of-Interest
+    },
+    enable          SEQUENCE {
+        index       AoI-List-Index
+    },
+    disable         SEQUENCE {
+        index       AoI-List-Index
+    }
 }
 
 AoI-Config-Report       ::= SEQUENCE {

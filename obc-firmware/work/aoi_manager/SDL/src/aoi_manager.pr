@@ -1,22 +1,143 @@
-/* CIF PROCESS (250, 150), (150, 75) */
+/* CIF PROCESS (55, 151), (150, 75) */
 process Aoi_Manager;
-    /* CIF TEXT (0, 22), (267, 188) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    /* CIF TEXT (45, 38), (267, 173) */
     -- Text area for declarations and comments
     
     dcl aoi_config_tc AoI_Config_TC;
     dcl aoi_config_report AoI_Config_Report;
     
     dcl idx AoI_List_Index;
-    dcl aoi Area_of_Interest;
     
     dcl aoi_list AoI_List;
     
     dcl loc Location;
     dcl loc_is_aoi T_Boolean;
     /* CIF ENDTEXT */
-    /* CIF procedure (125, 413), (119, 35) */
+    /* CIF procedure (158, 273), (151, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    procedure find_min_max_aoi_alt;
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (12, 27), (267, 158) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in aoi Area_of_Interest,
+          in/out alt_min Altitude_m,
+          in/out alt_max Altitude_m;
+        
+        dcl cur_alt_challenger Altitude_m;
+        dcl cur_alt_min Altitude_m;
+        dcl cur_alt_max Altitude_m;
+        /* CIF ENDTEXT */
+        /* CIF START (418, 43), (70, 35) */
+        START;
+            /* CIF task (338, 98), (228, 35) */
+            task cur_alt_challenger := aoi.loc_nw.alt;
+            /* CIF task (344, 153), (216, 35) */
+            task cur_alt_min := cur_alt_challenger;
+            /* CIF task (343, 208), (219, 35) */
+            task cur_alt_max := cur_alt_challenger;
+            /* CIF join (435, 258), (35, 35) */
+            join check_ne;
+        /* CIF label (414, 531), (70, 35) */
+        /* CIF Keep Specific Geode Partition 'default' */
+        connection done:
+            /* CIF task (372, 586), (152, 35) */
+            task alt_min := cur_alt_min;
+            /* CIF task (370, 641), (157, 35) */
+            task alt_max := cur_alt_max;
+            /* CIF return (431, 696), (35, 35) */
+            return ;
+        /* CIF End Label */
+        endconnection;
+        /* CIF label (1226, 38), (75, 35) */
+        /* CIF Keep Specific Geode Partition 'default' */
+        connection check_se:
+            /* CIF task (1152, 93), (224, 35) */
+            task cur_alt_challenger := aoi.loc_se.alt;
+            /* CIF decision (1153, 148), (221, 50) */
+            decision cur_alt_challenger <= cur_alt_min;
+                /* CIF ANSWER (1355, 218), (70, 23) */
+                (false):
+                /* CIF ANSWER (1129, 218), (70, 23) */
+                (true):
+                    /* CIF task (1055, 261), (216, 35) */
+                    task cur_alt_min := cur_alt_challenger;
+            enddecision;
+            /* CIF decision (1152, 312), (223, 50) */
+            decision cur_alt_challenger >= cur_alt_max;
+                /* CIF ANSWER (1355, 382), (70, 23) */
+                (false):
+                /* CIF ANSWER (1129, 382), (70, 23) */
+                (true):
+                    /* CIF task (1054, 425), (219, 35) */
+                    task cur_alt_max := cur_alt_challenger;
+            enddecision;
+            /* CIF join (1247, 476), (35, 35) */
+            join check_sw;
+        /* CIF End Label */
+        endconnection;
+        /* CIF label (1674, 37), (78, 35) */
+        /* CIF Keep Specific Geode Partition 'default' */
+        connection check_sw:
+            /* CIF task (1600, 92), (226, 35) */
+            task cur_alt_challenger := aoi.loc_sw.alt;
+            /* CIF decision (1603, 147), (221, 50) */
+            decision cur_alt_challenger <= cur_alt_min;
+                /* CIF ANSWER (1804, 217), (70, 23) */
+                (false):
+                /* CIF ANSWER (1578, 217), (70, 23) */
+                (true):
+                    /* CIF task (1504, 260), (216, 35) */
+                    task cur_alt_min := cur_alt_challenger;
+            enddecision;
+            /* CIF decision (1602, 311), (223, 50) */
+            decision cur_alt_challenger >= cur_alt_max;
+                /* CIF ANSWER (1804, 381), (70, 23) */
+                (false):
+                /* CIF ANSWER (1578, 381), (70, 23) */
+                (true):
+                    /* CIF task (1503, 424), (219, 35) */
+                    task cur_alt_max := cur_alt_challenger;
+            enddecision;
+            /* CIF join (1696, 475), (35, 35) */
+            join done;
+        /* CIF End Label */
+        endconnection;
+        /* CIF label (752, 40), (77, 35) */
+        /* CIF Keep Specific Geode Partition 'default' */
+        connection check_ne:
+            /* CIF task (678, 95), (226, 35) */
+            task cur_alt_challenger := aoi.loc_ne.alt;
+            /* CIF decision (680, 150), (221, 50) */
+            decision cur_alt_challenger <= cur_alt_min;
+                /* CIF ANSWER (881, 220), (70, 23) */
+                (false):
+                /* CIF ANSWER (655, 220), (70, 23) */
+                (true):
+                    /* CIF task (581, 263), (216, 35) */
+                    task cur_alt_min := cur_alt_challenger;
+            enddecision;
+            /* CIF decision (679, 314), (223, 50) */
+            decision cur_alt_challenger >= cur_alt_max;
+                /* CIF ANSWER (881, 384), (70, 23) */
+                (false):
+                /* CIF ANSWER (655, 384), (70, 23) */
+                (true):
+                    /* CIF task (580, 427), (219, 35) */
+                    task cur_alt_max := cur_alt_challenger;
+            enddecision;
+            /* CIF join (774, 478), (35, 35) */
+            join check_se;
+        /* CIF End Label */
+        endconnection;
+    endprocedure;
+    /* CIF procedure (172, 224), (119, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     procedure check_loc_is_aoi;
-        /* CIF TEXT (5, 10), (267, 158) */
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (5, 10), (267, 188) */
         -- Text area for declarations and comments
         
         fpar
@@ -26,165 +147,142 @@ process Aoi_Manager;
         
         dcl i T_UInt32;
         dcl aoi Area_of_Interest;
-        dcl loc_blank Location;
+        dcl aoi_alt_min Altitude_m;
+        dcl aoi_alt_max Altitude_m;
+        dcl loc_is_aoi T_Boolean;
         /* CIF ENDTEXT */
         /* CIF START (424, 30), (70, 35) */
         START;
             /* CIF task (424, 85), (70, 35) */
             task i := 0;
-            /* CIF label (424, 135), (70, 35) */
-            loop:
-            /* CIF PROCEDURECALL (346, 190), (225, 35) */
-            call print("iterating through AoI list...");
-            /* CIF decision (405, 240), (106, 50) */
+            /* CIF label (417, 135), (82, 35) */
+            cont_loop:
+            /* CIF decision (405, 190), (106, 50) */
             decision i < length(list);
-                /* CIF ANSWER (632, 310), (70, 23) */
+                /* CIF ANSWER (586, 260), (70, 23) */
                 (false):
-                    /* CIF PROCEDURECALL (529, 353), (275, 35) */
-                    call print("reached EoL with no Loc-AoI match");
-                    /* CIF return (649, 403), (35, 35) */
+                    /* CIF return (603, 303), (35, 35) */
                     return false;
-                /* CIF ANSWER (249, 310), (70, 23) */
+                /* CIF ANSWER (249, 260), (70, 23) */
                 (true):
-                    /* CIF task (240, 353), (86, 35) */
+                    /* CIF task (240, 303), (86, 35) */
                     task aoi := list(i);
-                    /* CIF decision (201, 408), (164, 50) */
-                    decision aoi.loc_start = loc_blank;
-                        /* CIF ANSWER (371, 478), (70, 23) */
+                    /* CIF decision (238, 358), (91, 50) */
+                    decision aoi.enabled;
+                        /* CIF ANSWER (345, 428), (70, 23) */
                         (false):
-                        /* CIF ANSWER (135, 478), (70, 23) */
-                        (true):
-                            /* CIF PROCEDURECALL (43, 521), (252, 35) */
-                            call print("skipping blank entry; next item");
-                            /* CIF task (135, 576), (70, 35) */
+                            /* CIF task (345, 466), (70, 35) */
                             task i := i+1;
-                            /* CIF join (152, 626), (35, 35) */
-                            join loop;
+                            /* CIF join (362, 516), (35, 35) */
+                            join cont_loop;
+                        /* CIF ANSWER (156, 428), (70, 23) */
+                        (true):
                     enddecision;
-                    /* CIF decision (110, 677), (346, 50) */
-                    decision aoi.loc_start.alt <= loc.alt and loc.alt <= aoi.loc_stop.alt;
-                        /* CIF ANSWER (376, 747), (70, 23) */
-                        (false):
-                            /* CIF PROCEDURECALL (317, 790), (187, 35) */
-                            call print("no match; next item");
-                            /* CIF task (376, 840), (70, 35) */
-                            task i := i+1;
-                            /* CIF join (393, 895), (35, 35) */
-                            join loop;
-                        /* CIF ANSWER (128, 747), (70, 23) */
+                    /* CIF PROCEDURECALL (119, 578), (328, 35) */
+                    call find_min_max_aoi_alt(aoi, aoi_alt_min, aoi_alt_max);
+                    /* CIF task (188, 641), (191, 173) */
+                    task loc_is_aoi :=
+loc.lat <= aoi.loc_nw.lat and
+loc.lon >= aoi.loc_nw.lon and
+loc.lat <= aoi.loc_ne.lat and
+loc.lon <= aoi.loc_ne.lon and
+loc.lat >= aoi.loc_se.lat and
+loc.lon <= aoi.loc_se.lon and
+loc.lat >= aoi.loc_sw.lat and
+loc.lon >= aoi.loc_sw.lon and
+loc.alt >= aoi_alt_min and
+loc.alt <= aoi_alt_max;
+                    /* CIF decision (244, 838), (79, 50) */
+                    decision loc_is_aoi;
+                        /* CIF ANSWER (128, 923), (70, 23) */
                         (true):
-                            /* CIF PROCEDURECALL (67, 790), (191, 35) */
-                            call print("Loc-AoI match found");
-                            /* CIF return (145, 840), (35, 35) */
+                            /* CIF return (145, 966), (35, 35) */
                             return true;
+                        /* CIF ANSWER (376, 923), (70, 23) */
+                        (false):
+                            /* CIF task (376, 966), (70, 35) */
+                            task i := i+1;
+                            /* CIF join (393, 1021), (35, 35) */
+                            join cont_loop;
                     enddecision;
             enddecision;
     endprocedure;
-    /* CIF procedure (128, 325), (115, 35) */
-    procedure aoi_list_remove;
-        /* CIF TEXT (12, 16), (267, 140) */
-        -- Text area for declarations and comments
-        
-        fpar
-          in/out list AoI_List,
-          in idx AoI_List_Index;
-        
-        dcl aoi_blank Area_of_Interest;
-        /* CIF ENDTEXT */
-        /* CIF START (371, 44), (70, 35) */
-        START;
-            /* CIF PROCEDURECALL (305, 94), (201, 35) */
-            call print("removing AoI from list");
-            /* CIF task (334, 149), (142, 35) */
-            task list (idx) := aoi_blank;
-            /* CIF PROCEDURECALL (307, 204), (197, 35) */
-            call print("AoI removed from list");
-    endprocedure;
-    /* CIF procedure (138, 244), (93, 35) */
-    procedure aoi_list_add;
-        /* CIF TEXT (16, 17), (267, 140) */
-        -- Text area for declarations and comments
-        
-        fpar
-          in/out list AoI_List,
-          in idx AoI_List_Index,
-          in aoi Area_of_Interest;
-        /* CIF ENDTEXT */
-        /* CIF START (378, 38), (70, 35) */
-        START;
-            /* CIF PROCEDURECALL (327, 93), (170, 35) */
-            call print("adding AoI to list");
-            /* CIF task (360, 148), (104, 35) */
-            task list (idx) := aoi;
-            /* CIF PROCEDURECALL (330, 203), (165, 35) */
-            call print("AoI added to list");
-            /* CIF return (395, 258), (35, 35) */
-            return ;
-    endprocedure;
-    /* CIF START (29, 233), (70, 35) */
+    /* CIF START (63, 223), (70, 35) */
     START;
-        /* CIF NEXTSTATE (29, 283), (70, 35) */
-        NEXTSTATE Wait;
-    /* CIF state (550, 42), (70, 35) */
-    state Wait;
-        /* CIF input (490, 97), (188, 35) */
-        input tc_config_aoi(aoi_config_tc);
-            /* CIF PROCEDURECALL (483, 152), (202, 35) */
-            call print("AoI Config TC received");
-            /* CIF decision (514, 207), (141, 50) */
-            decision aoi_config_tc.action;
-                /* CIF ANSWER (698, 277), (70, 23) */
-                (remove):
-                    /* CIF PROCEDURECALL (609, 315), (247, 35) */
-                    call print("AoI Config TC action: REMOVE");
-                    /* CIF task (647, 370), (171, 35) */
-                    task idx := aoi_config_tc.index;
-                    /* CIF PROCEDURECALL (637, 473), (190, 35) */
-                    call aoi_list_remove(aoi_list, idx);
-                /* CIF ANSWER (398, 277), (70, 23) */
-                (add):
-                    /* CIF PROCEDURECALL (322, 315), (221, 35) */
-                    call print("AoI Config TC action: ADD");
-                    /* CIF task (347, 370), (171, 35) */
-                    task idx := aoi_config_tc.index;
-                    /* CIF task (354, 425), (156, 35) */
-                    task aoi := aoi_config_tc.aoi;
-                    /* CIF PROCEDURECALL (337, 475), (191, 35) */
-                    call aoi_list_add(aoi_list, idx, aoi);
-            enddecision;
-            /* CIF task (454, 526), (261, 35) */
-            task aoi_config_report.aoi_list_upd := aoi_list;
-            /* CIF PROCEDURECALL (484, 581), (200, 35) */
-            call print("reporting AoI Config...");
-            /* CIF PROCEDURECALL (464, 631), (241, 35) */
-            call report_aoi_config(aoi_config_report);
-            /* CIF PROCEDURECALL (491, 686), (186, 35) */
-            call print("AoI Config reported");
-            /* CIF NEXTSTATE (550, 736), (70, 35) */
-            NEXTSTATE Wait;
+        /* CIF NEXTSTATE (51, 273), (93, 35) */
+        NEXTSTATE Outside_aoi;
+    /* CIF state (1178, 40), (159, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Outside_aoi, Inside_aoi;
+        /* CIF input (1173, 95), (169, 35) */
+        input trigger_request_location;
+            /* CIF output (1197, 150), (122, 35) */
+            output request_location;
+            /* CIF NEXTSTATE (1206, 205), (103, 35) */
+            NEXTSTATE Wait_location;
     endstate;
-    /* CIF state (1141, 44), (70, 35) */
-    state Wait;
-        /* CIF input (1110, 99), (130, 35) */
+    /* CIF state (1473, 39), (103, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait_location;
+        /* CIF input (1459, 94), (130, 35) */
         input send_location(loc);
-            /* CIF PROCEDURECALL (1090, 154), (171, 35) */
-            call print("location received");
-            /* CIF PROCEDURECALL (1084, 209), (182, 35) */
-            call print("checking location...");
-            /* CIF task (1042, 264), (266, 35) */
+            /* CIF task (1391, 149), (266, 35) */
             task loc_is_aoi := check_loc_is_aoi(loc, aoi_list);
-            /* CIF decision (1136, 319), (79, 50) */
+            /* CIF decision (1485, 204), (79, 50) */
             decision loc_is_aoi;
-                /* CIF ANSWER (1050, 389), (70, 23) */
+                /* CIF ANSWER (1414, 274), (70, 23) */
                 (true):
-                    /* CIF PROCEDURECALL (1011, 432), (146, 35) */
-                    call print("!! Loc is AoI !!");
-                /* CIF ANSWER (1246, 389), (70, 23) */
+                    /* CIF PROCEDURECALL (1399, 317), (99, 35) */
+                    call set_led(true);
+                    /* CIF NEXTSTATE (1407, 372), (82, 35) */
+                    NEXTSTATE Inside_aoi;
+                /* CIF ANSWER (1580, 274), (70, 23) */
                 (false):
-                    /* CIF PROCEDURECALL (1206, 432), (149, 35) */
-                    call print("Loc is not AoI");
+                    /* CIF PROCEDURECALL (1563, 317), (102, 35) */
+                    call set_led(false);
+                    /* CIF NEXTSTATE (1568, 372), (93, 35) */
+                    NEXTSTATE Outside_aoi;
             enddecision;
-            /* CIF NEXTSTATE (1141, 483), (70, 35) */
-            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (686, 38), (159, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Outside_aoi, Inside_aoi;
+        /* CIF input (671, 93), (188, 35) */
+        input tc_config_aoi(aoi_config_tc);
+            /* CIF decision (687, 148), (157, 50) */
+            decision present(aoi_config_tc);
+                /* CIF ANSWER (998, 218), (70, 23) */
+                (disable):
+                    /* CIF task (924, 256), (216, 35) */
+                    task idx := aoi_config_tc.disable.index;
+                    /* CIF PROCEDURECALL (918, 306), (228, 35) */
+                    call writeln("received disable idx ", idx);
+                    /* CIF task (938, 356), (188, 35) */
+                    task aoi_list(idx).enabled := false;
+                /* CIF ANSWER (731, 218), (70, 23) */
+                (enable):
+                    /* CIF task (658, 256), (214, 35) */
+                    task idx := aoi_config_tc.enable.index;
+                    /* CIF PROCEDURECALL (652, 306), (226, 35) */
+                    call writeln("received enable idx ", idx);
+                    /* CIF task (673, 356), (184, 35) */
+                    task aoi_list(idx).enabled := true;
+                /* CIF ANSWER (446, 218), (79, 23) */
+                (configure):
+                    /* CIF task (371, 261), (230, 35) */
+                    task idx := aoi_config_tc.configure.index;
+                    /* CIF PROCEDURECALL (364, 311), (243, 35) */
+                    call writeln("received configure idx ", idx);
+                    /* CIF task (351, 361), (269, 35) */
+                    task aoi_list (idx) := aoi_config_tc.configure.aoi;
+            enddecision;
+            /* CIF task (635, 424), (261, 35) */
+            task aoi_config_report.aoi_list_upd := aoi_list;
+            /* CIF PROCEDURECALL (645, 476), (241, 35) */
+            call report_aoi_config(aoi_config_report);
+            /* CIF NEXTSTATE (731, 531), (70, 35) */
+            NEXTSTATE -
+            /* CIF comment (824, 531), (133, 35) */
+            comment 'return to last state';
     endstate;
 endprocess Aoi_Manager;

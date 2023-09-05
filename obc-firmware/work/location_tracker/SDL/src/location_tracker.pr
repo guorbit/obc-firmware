@@ -1,6 +1,7 @@
 /* CIF PROCESS (250, 150), (150, 75) */
 process Location_Tracker;
-    /* CIF TEXT (328, 18), (267, 140) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    /* CIF TEXT (339, 24), (267, 140) */
     -- Text area for declarations and comments
     
     dcl loc_cur Location;
@@ -10,43 +11,46 @@ process Location_Tracker;
     dcl lat Latitude_WGS84;
     dcl lon Longitude_WGS84;
     /* CIF ENDTEXT */
-    /* CIF START (374, 192), (70, 35) */
+    /* CIF START (434, 194), (70, 35) */
     START;
-        /* CIF task (340, 247), (137, 35) */
+        /* CIF task (400, 249), (137, 35) */
         task loc_cur := loc_blank;
-        /* CIF NEXTSTATE (374, 297), (70, 35) */
+        /* CIF NEXTSTATE (434, 299), (70, 35) */
         NEXTSTATE Wait;
     /* CIF state (1105, 44), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (1060, 99), (152, 35) */
-        input trigger_send_location;
-            /* CIF output (1059, 154), (155, 35) */
+        /* CIF input (1077, 99), (122, 35) */
+        input request_location;
+            /* CIF output (1061, 154), (155, 35) */
             output send_location(loc_cur);
-            /* CIF NEXTSTATE (1102, 204), (70, 35) */
-            NEXTSTATE Wait;
-    endstate;
-    /* CIF state (915, 45), (70, 35) */
-    state Wait;
-        /* CIF input (884, 100), (117, 35) */
-        input trigger_get_gps;
-            /* CIF PROCEDURECALL (884, 155), (118, 35) */
-            call get_gps(lat, lon);
-            /* CIF task (885, 210), (115, 35) */
-            task loc_cur.lat := lat;
-            /* CIF task (882, 265), (121, 35) */
-            task loc_cur.lon := lon;
-            /* CIF NEXTSTATE (908, 315), (70, 35) */
+            /* CIF NEXTSTATE (1104, 204), (70, 35) */
             NEXTSTATE Wait;
     endstate;
     /* CIF state (719, 46), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
     state Wait;
-        /* CIF input (675, 101), (142, 35) */
+        /* CIF input (681, 101), (142, 35) */
         input trigger_get_altitude;
-            /* CIF PROCEDURECALL (687, 156), (119, 35) */
+            /* CIF PROCEDURECALL (693, 156), (119, 35) */
             call get_altitude(alt);
-            /* CIF task (689, 211), (115, 35) */
+            /* CIF task (695, 211), (115, 35) */
             task loc_cur.alt := alt;
-            /* CIF NEXTSTATE (712, 261), (70, 35) */
+            /* CIF NEXTSTATE (718, 261), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (915, 43), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait;
+        /* CIF input (890, 98), (117, 35) */
+        input trigger_get_gps;
+            /* CIF PROCEDURECALL (890, 153), (118, 35) */
+            call get_gps(lat, lon);
+            /* CIF task (891, 208), (115, 35) */
+            task loc_cur.lat := lat;
+            /* CIF task (888, 263), (121, 35) */
+            task loc_cur.lon := lon;
+            /* CIF NEXTSTATE (914, 313), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Location_Tracker;
