@@ -21,22 +21,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Select mocking SDL implementations for non-SDL functions
+        run: perl -i -pe 's/(language)="(?!SDL).*?" (default_implementation)="(?!default).*?"/$1="SDL" $2="x86"/g' obc-firmware/interfaceview.xml
+
+      - name: Select Ada code generation backend for SDL functions
+        run: perl -i -pe 's/(language="SDL".*\n.*name="TASTE_IV_Properties::Default_Codegen" value)="(.*?)"/$1="Ada"/g' obc-firmware/interfaceview.xml
+
       - name: Make Docker-run.sh executable
         run: chmod +x Docker-run.sh
 
       - name: Build Docker container
-        run: docker build -t taste .
+        run: docker build -t taste:bullseye-fork .
 
-      # run with bind mount of TASTE firmware directory
+      # detached run with bind mount of TASTE firmware directory
       - name: Run Docker container
         run: ./Docker-run.sh
 
       - name: Build OBC Firmware for default deployment (x86 linux)
-        run: docker exec -i taste bash -c "
+        run: docker exec -i taste-fork bash -c "
           source /root/.bashrc.taste              &&
           cd /root/work/obc-firmware/obc-firmware &&
-          make
+          make interfaceview debug
           "
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

@@ -36,34 +36,184 @@ BEGIN
 --  -- You can also declare constants
 --  myVar       MySeqOf     ::= { hello, world }
 
-CounterK                ::= INTEGER (0 .. 1000)
-OString                 ::=  OCTET STRING (SIZE (0 .. 255))
+OString                     ::=  OCTET STRING (SIZE (0 .. 255))
 
-Time-UNIX               ::= INTEGER (0 .. 4294967294)   -- overflow in 2106
-Delay-ns                ::= INTEGER (0 .. 1000000000)   -- max 1s
+Time-UNIX                   ::= INTEGER (0 .. 4294967294)   -- overflow in 2106
+Delay-ns                    ::= INTEGER (0 .. 1000000000)   -- max 1s
 
-Temperature-K           ::= REAL (0.0 .. 800.0)
-Humidity-RH             ::= REAL (0.0 .. 100.0)
-Pressure-hPa            ::= REAL (0.0 .. 10000.0)
+Temperature-K               ::= REAL (0.0 .. 800.0)
+Humidity-RH                 ::= REAL (0.0 .. 100.0)
+Pressure-hPa                ::= REAL (0.0 .. 10000.0)
 
-Latitude-WGS84          ::= REAL (-90.0 .. 90.0)
-Longitude-WGS84         ::= REAL (-180.0 .. 180.0)
-Altitude-m              ::= REAL (0.0 .. 100000.0)
-Location                ::= SEQUENCE {
+Latitude-WGS84              ::= REAL (-90.0 .. 90.0)
+Longitude-WGS84             ::= REAL (-180.0 .. 180.0)
+Altitude-m                  ::= REAL (0.0 .. 100000.0)
+Location                    ::= SEQUENCE {
     lat             Latitude-WGS84,
     lon             Longitude-WGS84,
     alt             Altitude-m
 }
 
-LED-Actuation-TC        ::= SEQUENCE {
-    on              BOOLEAN
+EPS-Mode-T                  ::= ENUMERATED {
+    eps-idle,
+    eps-high-power
+}
+Comms-Mode-T                ::= ENUMERATED {
+    comms-idle,
+    comms-uplink,
+    comms-downlink
+}
+Deployer-Mode-T             ::= ENUMERATED {
+    deployer-idle,
+    deployer-deployment
+}
+ADCS-Mode-T                 ::= ENUMERATED {
+    adcs-idle,
+    adcs-detumbling
+}
+Payload-Mode-T              ::= ENUMERATED {
+    payload-idle,
+    payload-imaging
+}
+Pipeline-Mode-T             ::= ENUMERATED {
+    pipeline-idle,
+    pipeline-processing-fp,
+    pipeline-processing-lp
 }
 
-LED-Actuation-Report    ::= SEQUENCE {
-    on              BOOLEAN
+System-Mode-T               ::= SEQUENCE {
+    eps-mode        EPS-Mode-T,
+    comms-mode      Comms-Mode-T,
+    deployer-mode   Deployer-Mode-T,
+    adcs-mode       ADCS-Mode-T,
+    payload-mode    Payload-Mode-T,
+    pipeline-mode   Pipeline-Mode-T
+}  (( WITH COMPONENTS {     -- IDLE
+       eps-mode         (eps-idle),
+       comms-mode       (comms-idle),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- UPLINK
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-uplink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- DOWNLINK
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-downlink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- IMAGING
+       eps-mode         (eps-idle),
+       comms-mode       (comms-idle),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-imaging),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- PROCESSING
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-idle),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-processing-fp)
+    }
+    | WITH COMPONENTS {     -- UPLINK + IMAGING
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-uplink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-imaging),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- UPLINK + PROCESSING LP
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-uplink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-processing-lp)
+    }
+    | WITH COMPONENTS {     -- DOWNLINK + IMAGING
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-downlink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-imaging),
+       pipeline-mode    (pipeline-idle)
+    }
+    | WITH COMPONENTS {     -- DOWNLINK + PROCESSING LP
+       eps-mode         (eps-high-power),
+       comms-mode       (comms-downlink),
+       deployer-mode    (deployer-idle),
+       adcs-mode        (adcs-idle),
+       payload-mode     (payload-idle),
+       pipeline-mode    (pipeline-processing-lp)
+    }
+))
+
+Mode-Status-Operation-T         ::= ENUMERATED {
+    mode-status-nop,
+    mode-status-change
 }
 
-Deployment-Digital      ::= BOOLEAN
-Deployment-Analogue     ::= REAL (0.0 .. 100.0)
+EPS-Mode-Status-Report-T        ::= SEQUENCE {
+    eps-mode                    EPS-Mode-T,
+    eps-last-op                 Mode-Status-Operation-T
+}
+Comms-Mode-Status-Report-T      ::= SEQUENCE {
+    comms-mode                  Comms-Mode-T,
+    comms-last-op               Mode-Status-Operation-T
+}
+Deployer-Mode-Status-Report-T   ::= SEQUENCE {
+    deployer-mode               Deployer-Mode-T,
+    deployer-last-op            Mode-Status-Operation-T
+}
+ADCS-Mode-Status-Report-T       ::= SEQUENCE {
+    adcs-mode                   ADCS-Mode-T,
+    adcs-last-op                Mode-Status-Operation-T
+}
+Payload-Mode-Status-Report-T    ::= SEQUENCE {
+    payload-mode                Payload-Mode-T,
+    payload-last-op             Mode-Status-Operation-T
+}
+Pipeline-Mode-Status-Report-T  ::= SEQUENCE {
+    pipeline-mode               Pipeline-Mode-T,
+    pipeline-last-op            Mode-Status-Operation-T
+}
+System-Mode-Status-Report-T     ::= SEQUENCE {
+    eps-report                  EPS-Mode-Status-Report-T,
+    comms-report                Comms-Mode-Status-Report-T,
+    deployer-report             Deployer-Mode-Status-Report-T,
+    adcs-report                 ADCS-Mode-Status-Report-T,
+    payload-report              Payload-Mode-Status-Report-T,
+    pipeline-report             Pipeline-Mode-Status-Report-T
+}
+
+Mission-Mode-T                  ::= ENUMERATED {
+    mission-idle,
+    mission-imaging,
+    mission-processing
+}
+
+Mission-Mode-Change-TC-T        ::= SEQUENCE {
+    target-mission-mode         Mission-Mode-T
+}
+
+Mission-Mode-Change-Report-T    ::= SEQUENCE {
+    target-mission-mode         Mission-Mode-T,
+    system-mode-status-report   System-Mode-Status-Report-T
+}
+
 END
 

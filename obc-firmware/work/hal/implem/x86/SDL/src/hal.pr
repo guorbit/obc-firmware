@@ -1,0 +1,42 @@
+/* CIF PROCESS (250, 150), (150, 75) */
+process Hal;
+    /* CIF procedure (319, 153), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    procedure Set_Led;
+        /* CIF Keep Specific Geode Partition 'default' */
+        /* CIF TEXT (0, 0), (170, 140) */
+        fpar
+           in Val T_Boolean;
+        /* CIF ENDTEXT */
+        /* CIF START (276, 15), (70, 35) */
+        START;
+            /* CIF PROCEDURECALL (259, 70), (104, 35) */
+            call write("LED: ");
+            /* CIF PROCEDURECALL (264, 125), (94, 35) */
+            call writeln(Val);
+            /* CIF return (294, 175), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF START (320, 10), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (320, 60), (70, 35) */
+        NEXTSTATE Wait;
+    /* CIF state (627, 11), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait;
+        /* CIF input (623, 66), (76, 35) */
+        input blink_led;
+            /* CIF PROCEDURECALL (604, 121), (115, 35) */
+            call writeln("blink");
+            /* CIF NEXTSTATE (627, 171), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+    /* CIF state (469, 10), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait;
+        /* CIF input (469, 65), (70, 35) */
+        input set_led;
+            /* CIF NEXTSTATE (469, 120), (70, 35) */
+            NEXTSTATE Wait;
+    endstate;
+endprocess Hal;

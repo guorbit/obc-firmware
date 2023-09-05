@@ -1,0 +1,43 @@
+/* CIF PROCESS (325, 57), (166, 75) */
+process Deployer_Mode_Tracker;
+    /* CIF Keep Specific Geode Partition 'default' */
+    /* CIF TEXT (309, 0), (293, 140) */
+    -- Text area for declarations and comments
+    
+    dcl target_deployer_mode Deployer_Mode_T;
+    dcl report Deployer_Mode_Status_Report_T;
+    
+    -- massive thanks to Maxime Perrotin @ ESA
+    -- for the architecture / design pattern advice!
+    /* CIF ENDTEXT */
+    /* CIF START (414, 184), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (414, 239), (70, 35) */
+        NEXTSTATE Idle;
+    /* CIF state (1176, 4), (95, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Deployment;
+        /* CIF input (1070, 59), (308, 35) */
+        input change_deployer_mode(target_deployer_mode);
+            /* CIF output (1093, 114), (263, 68) */
+            output report_deployer_mode_status({
+  deployer_mode target_deployer_mode,
+  deployer_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (1190, 230), (70, 35) */
+            NEXTSTATE Idle;
+    endstate;
+    /* CIF state (783, 4), (70, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Idle;
+        /* CIF input (663, 59), (308, 35) */
+        input change_deployer_mode(target_deployer_mode);
+            /* CIF output (686, 114), (263, 68) */
+            output report_deployer_mode_status({
+  deployer_mode target_deployer_mode,
+  deployer_last_op mode_status_change
+});
+            /* CIF NEXTSTATE (770, 230), (95, 35) */
+            NEXTSTATE Deployment;
+    endstate;
+endprocess Deployer_Mode_Tracker;

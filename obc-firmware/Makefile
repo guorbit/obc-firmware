@@ -15,7 +15,7 @@ SPACECREATOR?=spacecreator.AppImage
 # $ taste reset
 
 current_dir=$(shell pwd)
-export MSP430_OBC_EXTERNAL_SOURCE_PATH=${current_dir}/libs
+export OBC_PARTITION_EXTERNAL_SOURCE_PATH=${current_dir}/libs
 
 # Disable the progress bar from taste-update-data-view when building systems
 export NO_PROGRESS_BAR=1
