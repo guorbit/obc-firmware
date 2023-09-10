@@ -1,31 +1,31 @@
-<InterfaceView version="1.2" asn1file="/root/work/obc-firmware/obc-firmware/obc-firmware.asn" mscfile="/home/taste/obc-model/obc-model.msc" UiFile="interfaceview.ui.xml">
-<Function id="{4c76f858-03de-4264-8ff7-1b3a466f1eb8}" name="obc_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" startup_priority="1" instances_max="1" instances_min="1">
+<InterfaceView version="1.2" asn1file="obc-firmware.acn" mscfile="/home/taste/obc-model/obc-model.msc" UiFile="interfaceview.ui.xml" modifierHash="b87cedc">
+<Function id="{4c76f858-03de-4264-8ff7-1b3a466f1eb8}" name="obc_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{8974cb23-8b1f-4b4f-aab1-629ede19a62d}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="1024" wcet="0">
+<Provided_Interface id="{8974cb23-8b1f-4b4f-aab1-629ede19a62d}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="1024" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="UPER"/>
 </Provided_Interface>
 
-<Provided_Interface id="{dfd7e3db-012f-41d1-8efc-ecfc44c00380}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{dfd7e3db-012f-41d1-8efc-ecfc44c00380}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="pipeline_mode_status_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{dd6b4966-9d5d-497b-b071-ed1357e651f6}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{dd6b4966-9d5d-497b-b071-ed1357e651f6}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="payload_mode_status_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{fd02c6b8-e242-4467-90f2-19d951bb7689}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="16" stack_size="2048" wcet="0">
+<Required_Interface id="{fd02c6b8-e242-4467-90f2-19d951bb7689}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="16" stack_size="2048" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="UPER"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{382679aa-f03c-4cbf-a7b8-0f5b4e2e0133}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{382679aa-f03c-4cbf-a7b8-0f5b4e2e0133}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{814bb92d-eba3-4600-b6c2-d1ed5b85cbb5}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{814bb92d-eba3-4600-b6c2-d1ed5b85cbb5}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -37,17 +37,17 @@
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Function id="{cff3dce7-920c-4848-971c-5d3de03c1dbd}" name="mission_mode_change_tc_handler" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{cff3dce7-920c-4848-971c-5d3de03c1dbd}" name="mission_mode_change_tc_handler" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{b6cee5cd-ea42-46c7-be4e-790460789f5a}" name="tc_change_mission_mode" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="16" stack_size="1024" wcet="0">
+<Provided_Interface id="{b6cee5cd-ea42-46c7-be4e-790460789f5a}" name="tc_change_mission_mode" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="16" stack_size="1024" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="UPER"/>
 </Provided_Interface>
 
-<Provided_Interface id="{7d433119-0bf4-4574-983c-8879e1bfecac}" name="relay_system_mode_status_report" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="512" wcet="0">
+<Provided_Interface id="{7d433119-0bf4-4574-983c-8879e1bfecac}" name="relay_system_mode_status_report" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="512" priority="1" miat="0">
     <Input_Parameter name="system_mode_status_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{0cad64b8-9497-4385-bf6a-5c0b970741c3}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="16" stack_size="2048" wcet="0">
+<Required_Interface id="{0cad64b8-9497-4385-bf6a-5c0b970741c3}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="16" stack_size="2048" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="UPER"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="false"/>
@@ -70,9 +70,9 @@
     </Implementations>
 </Function>
 
-<Function id="{420eaf7a-1895-4d1b-b2e5-c7f40bcaad42}" name="system_mode_manager" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{420eaf7a-1895-4d1b-b2e5-c7f40bcaad42}" name="system_mode_manager" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{613158a6-a19d-4b90-91b7-0276c13dde4a}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{613158a6-a19d-4b90-91b7-0276c13dde4a}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="pipeline_mode_status_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
@@ -80,23 +80,23 @@
     <Input_Parameter name="target_system_mode_in" type="System-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Provided_Interface id="{f04b4f3c-06ce-4a4f-b47e-4511288de870}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{f04b4f3c-06ce-4a4f-b47e-4511288de870}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="payload_mode_status_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{54d4ca84-18fb-4d57-a90e-09e9f2a9d0bc}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{54d4ca84-18fb-4d57-a90e-09e9f2a9d0bc}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{b376c999-6c5b-43b6-b95c-883b9a7399d3}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{b376c999-6c5b-43b6-b95c-883b9a7399d3}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Required_Interface id="{550e5102-2dad-4ae1-854f-3268932a78e4}" name="relay_system_mode_status_report" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="512" wcet="0">
+<Required_Interface id="{550e5102-2dad-4ae1-854f-3268932a78e4}" name="relay_system_mode_status_report" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="512" priority="1" miat="0">
     <Input_Parameter name="system_mode_status_report" type="System-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -158,25 +158,25 @@
     </Implementations>
 </Function>
 
-<Function id="{08f78e57-51be-456e-97bb-ba95b57b2566}" name="pipeline_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{08f78e57-51be-456e-97bb-ba95b57b2566}" name="pipeline_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{6c61c9cd-9a34-475e-8850-2b8af6015c5b}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{6c61c9cd-9a34-475e-8850-2b8af6015c5b}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{3529da38-0425-44a0-a778-0ae3e1f218fb}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{3529da38-0425-44a0-a778-0ae3e1f218fb}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="pipeline_mode_status_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Function id="{c6448cb3-50f4-4ff0-a4f6-4b2a7773901f}" name="pipeline_mode_tracker" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{c6448cb3-50f4-4ff0-a4f6-4b2a7773901f}" name="pipeline_mode_tracker" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{4c310b47-ef29-46e3-8769-4dabf278b75f}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{4c310b47-ef29-46e3-8769-4dabf278b75f}" name="change_pipeline_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_pipeline_mode" type="Pipeline-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{fdc4ca19-be8f-438b-ba80-b693a331e5b7}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{fdc4ca19-be8f-438b-ba80-b693a331e5b7}" name="report_pipeline_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="pipeline_mode_status_report" type="Pipeline-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -202,13 +202,13 @@
     </Implementations>
 </Function>
 
-<Function id="{88fc8749-5905-433c-af04-b933b456c849}" name="gs_gui" is_type="NO" is_visible="true" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{88fc8749-5905-433c-af04-b933b456c849}" name="gs_gui" is_type="NO" is_visible="true" language="GUI" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="Ada"/>
-<Provided_Interface id="{0cb9d1c5-84bc-42c5-afc6-122a06df302a}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="16" stack_size="2048" wcet="0">
+<Provided_Interface id="{0cb9d1c5-84bc-42c5-afc6-122a06df302a}" name="report_mission_mode_change" kind="Sporadic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="16" stack_size="2048" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_report" type="Mission-Mode-Change-Report-T" encoding="UPER"/>
 </Provided_Interface>
 
-<Required_Interface id="{929d2509-c0aa-4dbc-9974-2a6bdcf442c9}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="1024" wcet="0">
+<Required_Interface id="{929d2509-c0aa-4dbc-9974-2a6bdcf442c9}" name="tc_change_mission_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="1024" priority="1" miat="0">
     <Input_Parameter name="mission_mode_change_tc" type="Mission-Mode-Change-TC-T" encoding="UPER"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -219,25 +219,25 @@
     </Implementations>
 </Function>
 
-<Function id="{a5acb82c-debf-4095-96b3-08b67399c076}" name="payload_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{a5acb82c-debf-4095-96b3-08b67399c076}" name="payload_subsystem" is_type="NO" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{b39541e9-71cb-4d5e-9171-91261976f233}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{b39541e9-71cb-4d5e-9171-91261976f233}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{af2671e4-0339-4b40-b4ae-a88ee7382e68}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{af2671e4-0339-4b40-b4ae-a88ee7382e68}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="payload_mode_status_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
 </Required_Interface>
 
-<Function id="{155c111d-7661-4e5f-80e7-c60707828360}" name="payload_mode_tracker" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{155c111d-7661-4e5f-80e7-c60707828360}" name="payload_mode_tracker" is_type="NO" is_visible="true" language="SDL" default_implementation="default" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{d7d8cd6f-6bb8-4548-be22-146044f5a1e0}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Provided_Interface id="{d7d8cd6f-6bb8-4548-be22-146044f5a1e0}" name="change_payload_mode" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="target_payload_mode" type="Payload-Mode-T" encoding="NATIVE"/>
 </Provided_Interface>
 
-<Required_Interface id="{c6018e36-342e-4666-b852-995c6eb935d3}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" priority="1" miat="0" queue_size="1" stack_size="340" wcet="0">
+<Required_Interface id="{c6018e36-342e-4666-b852-995c6eb935d3}" name="report_payload_mode_status" kind="Sporadic" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0" queue_size="1" stack_size="340" priority="1" miat="0">
     <Input_Parameter name="payload_mode_status_report" type="Payload-Mode-Status-Report-T" encoding="NATIVE"/>
     <Property name="Taste::InheritPI" value="true"/>
     <Property name="Taste::Autonamed" value="true"/>
@@ -263,9 +263,9 @@
     </Implementations>
 </Function>
 
-<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" is_visible="true" language="C" default_implementation="msp430" fixed_system_element="NO" required_system_element="NO" FPGA_Configurations="" startup_priority="1" instances_max="1" instances_min="1">
+<Function id="{972e8e24-275f-4a0e-b469-39f22bf2547f}" name="HAL" is_type="NO" is_visible="true" language="SDL" default_implementation="x86" fixed_system_element="NO" required_system_element="NO" instances_max="1" startup_priority="1" FPGA_Configurations="" instances_min="1">
     <Property name="TASTE_IV_Properties::Default_Codegen" value="C"/>
-<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" dispatch_offset="0" period="500" priority="1" stack_size="256" wcet="200">
+<Provided_Interface id="{bb72fda3-b26b-440a-8320-300a1328ce27}" name="blink_led" kind="Cyclic" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" dispatch_offset="0" wcet="200" period="500" stack_size="256" priority="1">
 </Provided_Interface>
 
 <Provided_Interface id="{51d88f2f-533a-4b8b-bf54-9b00b639836e}" name="set_led" kind="Protected" is_visible="true" enable_multicast="true" layer="default" required_system_element="NO" is_simulink_interface="false" wcet="0">
@@ -303,14 +303,14 @@
     <Target func_name="gs_gui" pi_name="report_mission_mode_change" />
 </Connection>
 
-<Connection id="{4e84295d-50ab-4d78-8f3c-8d5e5de14075}" name="obc_subsystem_change_payload_mode____payload_subsystem_change_payload_mode" required_system_element="NO">
-    <Source func_name="obc_subsystem" ri_name="change_payload_mode" />
-    <Target func_name="payload_subsystem" pi_name="change_payload_mode" />
-</Connection>
-
 <Connection id="{d3be9db5-f69b-4b49-ad87-47ce985e68b9}" name="gs_gui_tc_change_mission_mode____obc_subsystem_tc_change_mission_mode" required_system_element="NO">
     <Source func_name="gs_gui" ri_name="tc_change_mission_mode" />
     <Target func_name="obc_subsystem" pi_name="tc_change_mission_mode" />
+</Connection>
+
+<Connection id="{4e84295d-50ab-4d78-8f3c-8d5e5de14075}" name="obc_subsystem_change_payload_mode____payload_subsystem_change_payload_mode" required_system_element="NO">
+    <Source func_name="obc_subsystem" ri_name="change_payload_mode" />
+    <Target func_name="payload_subsystem" pi_name="change_payload_mode" />
 </Connection>
 
 <Comment id="{79126f59-8bdb-46a9-87c3-e562c108e91d}" name="Welcome to TASTE!\n============\n\nRight click to add a function, and use Ctrl-Click to connect functions together.\n\nYou can split the screen in multiple windows using Ctrl-E-3" is_visible="true" required_system_element="NO">

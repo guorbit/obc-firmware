@@ -7,7 +7,7 @@ docker images | grep ^taste > /dev/null || {
     echo "[x] You haven't built the TASTE Docker container."
     echo '[x] You need to execute this to create it:'
     echo '[x]'
-    echo '[x]     docker build -t taste:bullseye-fork .'
+    echo '[x]     docker build -t taste:bullseye .'
     echo '[x]'
     exit 1
 }
@@ -29,7 +29,7 @@ touch ${XAUTH}
 xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f ${XAUTH} nmerge -
 export TASTE_IN_DOCKER=1
 docker run \
-    --name taste-fork \
+    --name taste \
     --privileged \
     -e DISPLAY \
     -e TASTE_IN_DOCKER \
@@ -39,4 +39,4 @@ docker run \
     -v "$HOME":"$HOMEB"/work \
     -v "$PWD":"$HOMEB"/work/obc-firmware \
     -v /dev:/dev \
-    -dit taste:bullseye-fork /bin/bash -i
+    -dit taste:bullseye /bin/bash -i

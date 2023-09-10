@@ -6,8 +6,9 @@ on:
   # automatically triggered by push events on all branches except for main
   push:
     branches:
-      - 'feature/*'	# run on feature branches
       - 'main'          # run on main
+      - 'feature/*'	# run on feature branches
+      - 'cloudview-*'   # run on cloudview branches
       - 'cid-test'      # run on cid-test for testing
 
 jobs:
@@ -31,14 +32,14 @@ jobs:
         run: chmod +x Docker-run.sh
 
       - name: Build Docker container
-        run: docker build -t taste:bullseye-fork .
+        run: docker build -t taste:bullseye .
 
       # detached run with bind mount of TASTE firmware directory
       - name: Run Docker container
         run: ./Docker-run.sh
 
       - name: Build OBC Firmware for default deployment (x86 linux)
-        run: docker exec -i taste-fork bash -c "
+        run: docker exec -i taste bash -c "
           source /root/.bashrc.taste              &&
           cd /root/work/obc-firmware/obc-firmware &&
           make interfaceview debug
