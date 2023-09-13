@@ -14,7 +14,7 @@
 #include <FreeRTOS.h>
 #include <semphr.h>
 
-bool P4_6_LED_ON = false;
+#include "msp430_pwm.h"
 
 void hal_startup( void )
 {
@@ -26,11 +26,12 @@ void hal_startup( void )
     P1DIR |= 0x01;                      // Set P1.0 to output direction
     P4DIR |= 0x40;                      // Set P4.6 to output direction
     P4OUT &= ~0x40;                     // Unset P4.6
+
+    setup_pwm(2400);                    // set up PWM with a ~400ms period
 }
 
 void hal_PI_blink_led(void)
 {
-   // Write your code here
     P1OUT ^= 0x01;                      // Toggle P1.0 using XOR
 }
 
@@ -44,5 +45,19 @@ void hal_PI_set_led( const asn1SccT_Boolean *IN_val )
     {
         P4OUT &= ~0x40;                 // Unset P4.6 using AND
     }
-    P4_6_LED_ON = *IN_val;
+}
+
+void hal_PI_send_camera_capture_image_pulse( void )
+{
+    pulse_single_width(2000);               // 2.0ms pulse (periodic, needs pulse)
+}
+
+void hal_PI_send_camera_toggle_usb_pulse( void )
+{
+    pulse_single_width(1500);               // 1.5ms pulse (periodic, needs pulse)
+}
+
+void hal_PI_send_camera_idle_signal( void )
+{
+    //set_pwm_pulse_width(1000);               // 1.0ms pulses (periodic)
 }

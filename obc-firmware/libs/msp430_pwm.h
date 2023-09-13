@@ -23,16 +23,32 @@ along with MSP430 Demo-Sat. If not, see <https://www.gnu.org/licenses/>.
 /**
  * Prepares MSP430 PWM to work.
  *
+ * @param period_us - requested period in microseconds.
+ *
  * PIN configuration:
  *  P1.4 is PWM output
  */
-void setup_pwm(void);
+void setup_pwm(int period_ms);
 
 /**
  * Set PWM duty cycle.
  *
- * @param duty_cycle - requested duty cycle from 0.0 (0% fill) up to 1.0 (100% fill).
+ * @param duty_cycle_percent - requested duty cycle from 0.0 (0% fill) up to 1.0 (100% fill).
  */
-void set_pwm_value(float duty_cycle);
+void set_pwm_duty_cycle(float duty_cycle_percent);
+
+/**
+ * Set PWM pulse width.
+ *
+ * @param pulse_width_us - requested pulse width in microseconds.
+ */
+void set_pwm_pulse_width(int pulse_width_us);
+
+/**
+ * Send a single pulse of given duration.
+ *
+ * @param pulse_width_us - requested pulse width in microseconds.
+ */
+void pulse_single_width(int pulse_width_us);
 
 #endif

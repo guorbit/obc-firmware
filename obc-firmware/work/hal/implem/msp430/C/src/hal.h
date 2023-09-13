@@ -11,11 +11,22 @@
 extern "C" {
 #endif
 
+#include <stdlib.h>
+#include <stdio.h>
 
 void hal_startup(void);
 
 /* Provided interfaces */
 void hal_PI_blink_led( void );
+
+
+void hal_PI_send_camera_capture_image_pulse( void );
+
+
+void hal_PI_send_camera_idle_signal( void );
+
+
+void hal_PI_send_camera_toggle_usb_pulse( void );
 
 
 void hal_PI_set_led( const asn1SccT_Boolean * );
