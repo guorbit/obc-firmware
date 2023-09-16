@@ -35,8 +35,8 @@ void USART0_SendData (unsigned char data[], unsigned char length, int lineterm) 
 
     if (lineterm)
     {
-        USART0_SendByte('\n');                  // new line
         USART0_SendByte('\r');                  // carriage return
+        USART0_SendByte('\n');                  // new line
     }
 }
 
@@ -55,9 +55,8 @@ void USART1_Init() {
     UCA1CTLW0 |= UCSWRST;                   // put UART A1 into SW reset
 
     UCA1CTLW0 |= UCSSEL__SMCLK;             // CLK = SMCLK
-    UCA1BR0 = 4;                            // 8000000/16/115200
-    UCA1BR1 = 0x00;
-    UCA1MCTLW |= 0x55;                      // UCOS16 | UCBRF_1;
+    UCA1BRW = 13;                             // prescalar to 8
+    UCA1MCTLW |= 1;
 
     // setup pins
     P2SEL1 |= BIT5 + BIT6;
@@ -81,8 +80,8 @@ void USART1_SendData (unsigned char data[], unsigned char length, int lineterm) 
 
     if (lineterm)
     {
-        USART1_SendByte('\n');                  // new line
         USART1_SendByte('\r');                  // carriage return
+        // USART1_SendByte('\n');                  // new line
     }
 }
 

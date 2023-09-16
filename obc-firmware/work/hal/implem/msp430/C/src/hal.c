@@ -23,7 +23,7 @@
 
 #define CMD_CODE_LENGTH 2
 #define PAYLOAD_ID_LENGTH 6
-#define FIELD_LIST_LENGTH 12
+#define FIELD_LIST_LENGTH 18
 #define LORA_UPLING_CODE_LENGTH 0
 #define APRS_CALLSIGN_LENGTH 0
 
@@ -91,6 +91,8 @@ commsDriverConfig commsConfig;
 
 unsigned char commsModuleRXBuffer[COMMS_MODULE_RX_MSG_BUFFER_SIZE]; // ended with '\0'
 
+uint8_t cmdRepeatedCounter = 0;
+
 void hal_startup( void )
 {
    // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
@@ -155,9 +157,15 @@ void hal_PI_handle_usart( void )
 
     if (cmdResendTimeoutCounter > 0) cmdResendTimeoutCounter--;
 
-    if (commsCmdQueue.size > 0 && (readyToSendNextCmd || cmdResendTimeoutCounter <= 0)) {
+    if (commsCmdQueue.size > 0 && (readyToSendNextCmd || cmdResendTimeoutCounter <= 0))
+    {
         readyToSendNextCmd = 0;
         cmdResendTimeoutCounter = 10;
+        if (++cmdRepeatedCounter >= 3)
+        {
+            cmdQueuePopCmd(&commsCmdQueue);
+            cmdRepeatedCounter = 0;
+        }
         cmdQueueSendNextCmd(&commsCmdQueue);
     }
 }
@@ -256,13 +264,13 @@ void cmdQueueSendNextCmd( cmdQueue* queue )
 void commsDriverSetConfig( commsDriverConfig* config )
 {
     strcpy(config->payloadID, "msp430");
-    strcpy(config->fieldList, "01234569ABCD");
+    strcpy(config->fieldList, "01234569ABCDIJKLMN");
     config->sendFieldList = 1;
-    config->gpsFlightModeAltitude = 2000;
+    config->gpsFlightModeAltitude = 500;
     config->cutdownAltitude = 0;
     config->cutdownTime = 5;
     config->LoRaFrequency = 868.0;
-    config->LoRaImplicit = 1;
+    config->LoRaImplicit = 0;
     config->LoRaCoding = 5;
     config->LoRaBandwidth = 3;
     config->LoRaSpreading = 6;
@@ -281,6 +289,7 @@ void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config )
     cmdQueueAddCmd(queue, "CV", NULL, 0);
 
     cmdQueueAddCmd(queue, "CP", config->payloadID, PAYLOAD_ID_LENGTH);
+    cmdQueueAddCmd(queue, "F0", "666", 3);
     cmdQueueAddCmd(queue, "CF", config->fieldList, FIELD_LIST_LENGTH);
     snprintf(temp, 10, "%d", config->sendFieldList);
     cmdQueueAddCmd(queue, "CL", temp, 1);
@@ -316,6 +325,7 @@ void cmdQueueAddConfigCmds( cmdQueue* queue, const commsDriverConfig* config )
 
     cmdQueueAddCmd(queue, "AP", config->aprsCallsign, APRS_CALLSIGN_LENGTH);
 
+
     cmdQueueAddCmd(queue, "CS", NULL, 0);
 }
 
@@ -324,14 +334,17 @@ uint8_t commsDriverReceiveMessage( unsigned char RXBuffer[], uint8_t lim )
     uint8_t bufferCounter = 0;
     unsigned char in;
     while (bufferCounter < lim-1
-           && (in = USART1_ReadByte()) != '\0' && in != '\n')
+           && (in = USART1_ReadByte()) != '\0' && in != '\r')
     {
         // USART1_SendByte(in);
-        RXBuffer[bufferCounter++] = in;
+        if (in != '\n')
+        {
+            RXBuffer[bufferCounter++] = in;
+        }
     }
-    if (in == '\n')
+    if (in == '\r')
     {
-        RXBuffer[bufferCounter++] = '\n';
+        RXBuffer[bufferCounter++] = '\r';
     }
     RXBuffer[bufferCounter] = '\0';
 
