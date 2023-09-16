@@ -5,6 +5,5 @@ include(gs_gui/gs_gui.pro)
 include(hal/hal.pro)
 include(mission_mode_change_tc_handler/mission_mode_change_tc_handler.pro)
 include(payload_mode_tracker/payload_mode_tracker.pro)
-include(pipeline_mode_tracker/pipeline_mode_tracker.pro)
 include(system_mode_manager/system_mode_manager.pro)
 

@@ -1,4 +1,4 @@
-/* CIF PROCESS (307, 148), (164, 75) */
+/* CIF PROCESS (304, 148), (164, 75) */
 process System_Mode_Manager;
     /* CIF Keep Specific Geode Partition 'default' */
     /* CIF TEXT (492, 56), (416, 173) */
@@ -14,7 +14,7 @@ process System_Mode_Manager;
     dcl payload_mode_status_report Payload_Mode_Status_Report_T;
     dcl pipeline_mode_status_report Pipeline_Mode_Status_Report_T;
     /* CIF ENDTEXT */
-    /* CIF procedure (609, 607), (153, 35) */
+    /* CIF procedure (606, 607), (153, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     procedure change_system_mode;
         /* CIF Keep Specific Geode Partition 'default' */
@@ -34,138 +34,176 @@ process System_Mode_Manager;
     endprocedure;
     /* CIF START (657, 314), (70, 35) */
     START;
-        /* CIF task (594, 369), (196, 68) */
+        /* CIF task (593, 369), (196, 68) */
         task current_system_mode := {
   payload_mode payload_idle,
   pipeline_mode pipeline_idle
 };
-        /* CIF PROCEDURECALL (607, 457), (169, 35) */
-        call send_camera_idle_signal;
-        /* CIF NEXTSTATE (642, 507), (98, 35) */
+        /* CIF NEXTSTATE (642, 457), (98, 35) */
         NEXTSTATE Wait_change;
-    /* CIF label (2768, 122), (105, 35) */
+    /* CIF label (3068, 119), (105, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     connection payload_done:
-        /* CIF decision (2699, 177), (245, 50) */
+        /* CIF decision (2998, 174), (245, 50) */
         decision current_system_mode.pipeline_mode;
-            /* CIF ANSWER (2271, 247), (98, 23) */
+            /* CIF ANSWER (2296, 244), (98, 23) */
             (pipeline_idle):
-                /* CIF decision (2201, 289), (238, 50) */
+                /* CIF decision (2226, 286), (238, 50) */
                 decision target_system_mode.pipeline_mode;
-                    /* CIF ANSWER (2242, 359), (157, 23) */
+                    /* CIF ANSWER (2266, 356), (157, 23) */
                     (pipeline_processing_lp):
-                        /* CIF PROCEDURECALL (2215, 402), (210, 35) */
+                        /* CIF PROCEDURECALL (2240, 399), (210, 35) */
                         call send_camera_toggle_usb_pulse;
-                    /* CIF ANSWER (2020, 359), (159, 23) */
+                        /* CIF PROCEDURECALL (2194, 449), (302, 35) */
+                        call change_pipeline_mode(pipeline_processing_lp);
+                    /* CIF ANSWER (1893, 356), (159, 23) */
                     (pipeline_processing_fp):
-                        /* CIF PROCEDURECALL (1994, 402), (210, 35) */
+                        /* CIF PROCEDURECALL (1868, 399), (210, 35) */
                         call send_camera_toggle_usb_pulse;
-                    /* CIF ANSWER (2457, 359), (70, 23) */
+                        /* CIF PROCEDURECALL (1821, 449), (303, 35) */
+                        call change_pipeline_mode(pipeline_processing_fp);
+                    /* CIF ANSWER (2645, 356), (70, 23) */
                     else:
-                        /* CIF join (2475, 397), (35, 35) */
+                        /* CIF join (2662, 394), (35, 35) */
                         join pipeline_skip;
                 enddecision;
-            /* CIF ANSWER (3234, 247), (157, 23) */
+            /* CIF ANSWER (3742, 244), (157, 23) */
             (pipeline_processing_lp):
-                /* CIF decision (3194, 290), (238, 50) */
+                /* CIF decision (3702, 287), (238, 50) */
                 decision target_system_mode.pipeline_mode;
-                    /* CIF ANSWER (3251, 360), (159, 23) */
+                    /* CIF ANSWER (3741, 357), (159, 23) */
                     (pipeline_processing_fp):
-                    /* CIF ANSWER (3085, 360), (98, 23) */
+                    /* CIF ANSWER (3531, 357), (98, 23) */
                     (pipeline_idle):
-                        /* CIF PROCEDURECALL (3029, 403), (210, 35) */
+                        /* CIF PROCEDURECALL (3475, 400), (210, 35) */
                         call send_camera_toggle_usb_pulse;
-                        /* CIF PROCEDURECALL (3050, 453), (169, 35) */
-                        call send_camera_idle_signal;
-                    /* CIF ANSWER (3456, 360), (70, 23) */
+                        /* CIF PROCEDURECALL (3459, 450), (243, 35) */
+                        call change_pipeline_mode(pipeline_idle);
+                    /* CIF ANSWER (3984, 357), (70, 23) */
                     else:
-                        /* CIF join (3473, 403), (35, 35) */
+                        /* CIF join (4001, 400), (35, 35) */
                         join pipeline_skip;
                 enddecision;
-            /* CIF ANSWER (2742, 247), (159, 23) */
+            /* CIF ANSWER (3042, 244), (159, 23) */
             (pipeline_processing_fp):
-                /* CIF decision (2702, 290), (238, 50) */
+                /* CIF decision (3003, 287), (238, 50) */
                 decision target_system_mode.pipeline_mode;
-                    /* CIF ANSWER (2767, 360), (157, 23) */
+                    /* CIF ANSWER (3043, 357), (157, 23) */
                     (pipeline_processing_lp):
-                    /* CIF ANSWER (2601, 360), (98, 23) */
+                    /* CIF ANSWER (2833, 357), (98, 23) */
                     (pipeline_idle):
-                        /* CIF PROCEDURECALL (2545, 403), (210, 35) */
+                        /* CIF PROCEDURECALL (2777, 400), (210, 35) */
                         call send_camera_toggle_usb_pulse;
-                        /* CIF PROCEDURECALL (2566, 453), (169, 35) */
-                        call send_camera_idle_signal;
-                    /* CIF ANSWER (2946, 360), (70, 23) */
+                        /* CIF PROCEDURECALL (2761, 450), (243, 35) */
+                        call change_pipeline_mode(pipeline_idle);
+                    /* CIF ANSWER (3289, 357), (70, 23) */
                     else:
-                        /* CIF join (2963, 403), (35, 35) */
+                        /* CIF join (3306, 400), (35, 35) */
                         join pipeline_skip;
                 enddecision;
         enddecision;
-        /* CIF output (2629, 519), (383, 35) */
-        output change_pipeline_mode(target_system_mode.pipeline_mode);
-        /* CIF NEXTSTATE (2769, 574), (103, 35) */
+        /* CIF NEXTSTATE (3069, 516), (103, 35) */
         NEXTSTATE Wait_Pipeline;
     /* CIF End Label */
     endconnection;
-    /* CIF label (148, 722), (106, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    connection pipeline_done:
-        /* CIF output (0, 777), (403, 35) */
-        output relay_system_mode_status_report(system_mode_status_report);
-        /* CIF NEXTSTATE (152, 832), (98, 35) */
-        NEXTSTATE Wait_change;
-    /* CIF End Label */
-    endconnection;
-    /* CIF label (1966, 721), (99, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    connection payload_skip:
-        /* CIF task (1709, 776), (613, 35) */
-        task system_mode_status_report.payload_report.payload_mode := current_system_mode.payload_mode;
-        /* CIF task (1762, 831), (506, 35) */
-        task system_mode_status_report.payload_report.payload_last_op := mode_status_nop;
-        /* CIF join (1998, 886), (35, 35) */
-        join payload_done;
-    /* CIF End Label */
-    endconnection;
-    /* CIF label (3363, 718), (100, 35) */
+    /* CIF label (3655, 710), (100, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     connection pipeline_skip:
-        /* CIF task (3105, 773), (616, 35) */
+        /* CIF task (3397, 765), (616, 35) */
         task system_mode_status_report.pipeline_report.pipeline_mode := current_system_mode.pipeline_mode;
-        /* CIF task (3158, 828), (508, 35) */
+        /* CIF task (3451, 820), (508, 35) */
         task system_mode_status_report.pipeline_report.pipeline_last_op := mode_status_nop;
-        /* CIF join (3395, 883), (35, 35) */
+        /* CIF join (3688, 875), (35, 35) */
         join pipeline_done;
     /* CIF End Label */
     endconnection;
-    /* CIF state (1322, 61), (98, 35) */
+    /* CIF label (1963, 721), (99, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    connection payload_skip:
+        /* CIF task (1706, 776), (613, 35) */
+        task system_mode_status_report.payload_report.payload_mode := current_system_mode.payload_mode;
+        /* CIF task (1760, 831), (506, 35) */
+        task system_mode_status_report.payload_report.payload_last_op := mode_status_nop;
+        /* CIF join (1996, 886), (35, 35) */
+        join payload_done;
+    /* CIF End Label */
+    endconnection;
+    /* CIF label (644, 721), (106, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    connection pipeline_done:
+        /* CIF output (496, 776), (403, 35) */
+        output relay_system_mode_status_report(system_mode_status_report);
+        /* CIF NEXTSTATE (648, 831), (98, 35) */
+        NEXTSTATE Wait_change;
+    /* CIF End Label */
+    endconnection;
+    /* CIF state (1319, 723), (102, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait_Payload;
+        /* CIF input (1182, 778), (378, 35) */
+        input report_payload_mode_status(payload_mode_status_report);
+            /* CIF decision (1228, 833), (286, 50) */
+            decision payload_mode_status_report.payload_mode;
+                /* CIF ANSWER (1075, 903), (237, 23) */
+                (target_system_mode.payload_mode):
+                    /* CIF task (956, 941), (475, 35) */
+                    task current_system_mode.payload_mode := target_system_mode.payload_mode;
+                /* CIF ANSWER (1518, 903), (70, 23) */
+                else:
+            enddecision;
+            /* CIF task (1134, 992), (475, 35) */
+            task system_mode_status_report.payload_report := payload_mode_status_report;
+            /* CIF join (1354, 1042), (35, 35) */
+            join payload_done;
+    endstate;
+    /* CIF state (3080, 710), (103, 35) */
+    /* CIF Keep Specific Geode Partition 'default' */
+    state Wait_Pipeline;
+        /* CIF input (2942, 765), (380, 35) */
+        input report_pipeline_mode_status(pipeline_mode_status_report);
+            /* CIF decision (2988, 820), (288, 50) */
+            decision pipeline_mode_status_report.pipeline_mode;
+                /* CIF ANSWER (2870, 890), (238, 23) */
+                (target_system_mode.pipeline_mode):
+                    /* CIF task (2751, 928), (477, 35) */
+                    task current_system_mode.pipeline_mode := target_system_mode.pipeline_mode;
+                /* CIF ANSWER (3283, 890), (70, 23) */
+                else:
+            enddecision;
+            /* CIF task (2894, 979), (477, 35) */
+            task system_mode_status_report.pipeline_report := pipeline_mode_status_report;
+            /* CIF join (3115, 1034), (35, 35) */
+            join pipeline_done;
+    endstate;
+    /* CIF state (1319, 61), (98, 35) */
     /* CIF Keep Specific Geode Partition 'default' */
     state Wait_change;
-        /* CIF input (1295, 116), (153, 35) */
+        /* CIF input (1292, 116), (153, 35) */
         input change_system_mode;
-            /* CIF decision (1250, 171), (244, 50) */
+            /* CIF decision (1247, 171), (244, 50) */
             decision current_system_mode.payload_mode;
-                /* CIF ANSWER (1119, 241), (97, 23) */
+                /* CIF ANSWER (1116, 241), (97, 23) */
                 (payload_idle):
-                    /* CIF decision (1048, 284), (237, 50) */
+                    /* CIF decision (1046, 284), (237, 50) */
                     decision target_system_mode.payload_mode;
-                        /* CIF ANSWER (1027, 354), (122, 23) */
+                        /* CIF ANSWER (1024, 354), (122, 23) */
                         (payload_imaging):
                         /* CIF ANSWER (1237, 354), (70, 23) */
                         else:
                             /* CIF join (1254, 397), (35, 35) */
                             join payload_skip;
                     enddecision;
-                /* CIF ANSWER (1501, 241), (122, 23) */
+                /* CIF ANSWER (1498, 241), (122, 23) */
                 (payload_imaging):
-                    /* CIF decision (1444, 284), (237, 50) */
+                    /* CIF decision (1441, 284), (237, 50) */
                     decision target_system_mode.payload_mode;
-                        /* CIF ANSWER (1437, 354), (97, 23) */
+                        /* CIF ANSWER (1434, 354), (97, 23) */
                         (payload_idle):
-                            /* CIF decision (1367, 397), (238, 50) */
+                            /* CIF decision (1364, 397), (238, 50) */
                             decision target_system_mode.pipeline_mode;
-                                /* CIF ANSWER (1360, 467), (98, 23) */
+                                /* CIF ANSWER (1357, 467), (98, 23) */
                                 (pipeline_idle):
-                                    /* CIF PROCEDURECALL (1324, 505), (169, 35) */
+                                    /* CIF PROCEDURECALL (1322, 505), (169, 35) */
                                     call send_camera_idle_signal;
                                 /* CIF ANSWER (1533, 467), (70, 23) */
                                 else:
@@ -176,47 +214,9 @@ process System_Mode_Manager;
                             join payload_skip;
                     enddecision;
             enddecision;
-            /* CIF output (1181, 607), (381, 35) */
+            /* CIF output (1178, 607), (381, 35) */
             output change_payload_mode(target_system_mode.payload_mode);
-            /* CIF NEXTSTATE (1321, 662), (102, 35) */
+            /* CIF NEXTSTATE (1318, 662), (102, 35) */
             NEXTSTATE Wait_Payload;
-    endstate;
-    /* CIF state (2767, 719), (103, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Wait_Pipeline;
-        /* CIF input (2629, 774), (380, 35) */
-        input report_pipeline_mode_status(pipeline_mode_status_report);
-            /* CIF decision (2675, 829), (288, 50) */
-            decision pipeline_mode_status_report.pipeline_mode;
-                /* CIF ANSWER (2557, 899), (238, 23) */
-                (target_system_mode.pipeline_mode):
-                    /* CIF task (2438, 937), (477, 35) */
-                    task current_system_mode.pipeline_mode := target_system_mode.pipeline_mode;
-                /* CIF ANSWER (2967, 899), (70, 23) */
-                else:
-            enddecision;
-            /* CIF task (2580, 988), (477, 35) */
-            task system_mode_status_report.pipeline_report := pipeline_mode_status_report;
-            /* CIF join (2801, 1043), (35, 35) */
-            join pipeline_done;
-    endstate;
-    /* CIF state (1322, 723), (102, 35) */
-    /* CIF Keep Specific Geode Partition 'default' */
-    state Wait_Payload;
-        /* CIF input (1185, 778), (378, 35) */
-        input report_payload_mode_status(payload_mode_status_report);
-            /* CIF decision (1231, 833), (286, 50) */
-            decision payload_mode_status_report.payload_mode;
-                /* CIF ANSWER (1078, 903), (237, 23) */
-                (target_system_mode.payload_mode):
-                    /* CIF task (959, 941), (475, 35) */
-                    task current_system_mode.payload_mode := target_system_mode.payload_mode;
-                /* CIF ANSWER (1518, 903), (70, 23) */
-                else:
-            enddecision;
-            /* CIF task (1136, 992), (475, 35) */
-            task system_mode_status_report.payload_report := payload_mode_status_report;
-            /* CIF join (1356, 1042), (35, 35) */
-            join payload_done;
     endstate;
 endprocess System_Mode_Manager;
