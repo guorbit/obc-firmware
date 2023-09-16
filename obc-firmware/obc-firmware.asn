@@ -36,6 +36,11 @@ BEGIN
 --  -- You can also declare constants
 --  myVar       MySeqOf     ::= { hello, world }
 
+ModeChangeTimedCounter      ::= INTEGER (0 .. 3600000)
+i-sensing-entry     ModeChangeTimedCounter ::= 3
+i-sensing-progress  ModeChangeTimedCounter ::= 9
+i-sensing-exit      ModeChangeTimedCounter ::= 18
+
 OString                     ::=  OCTET STRING (SIZE (0 .. 255))
 
 Time-UNIX                   ::= INTEGER (0 .. 4294967294)   -- overflow in 2106
