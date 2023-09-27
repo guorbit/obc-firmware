@@ -37,9 +37,9 @@ BEGIN
 --  myVar       MySeqOf     ::= { hello, world }
 
 ModeChangeTimedCounter      ::= INTEGER (0 .. 3600000)
-i-sensing-entry     ModeChangeTimedCounter ::= 3
-i-sensing-progress  ModeChangeTimedCounter ::= 9
-i-sensing-exit      ModeChangeTimedCounter ::= 18
+i-sensing-entry     ModeChangeTimedCounter ::= 10
+i-sensing-progress  ModeChangeTimedCounter ::= 25
+i-sensing-exit      ModeChangeTimedCounter ::= 30
 
 OString                     ::=  OCTET STRING (SIZE (0 .. 255))
 
