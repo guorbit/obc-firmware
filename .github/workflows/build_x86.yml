@@ -10,6 +10,7 @@ on:
       - 'feature/*'	# run on feature branches
       - 'cloudview-*'   # run on cloudview branches
       - 'cid-test'      # run on cid-test for testing
+      - 'docker/*'      # run on docker branches for testing
 
 jobs:
   # build and run the TASTE Docker container
