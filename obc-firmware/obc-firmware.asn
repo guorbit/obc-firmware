@@ -203,7 +203,8 @@ System-Mode-Status-Report-T     ::= SEQUENCE {
 Mission-Mode-T                  ::= ENUMERATED {
     mission-idle,
     mission-imaging,
-    mission-processing
+    mission-processing,
+    mission-initial
 }
 
 Mission-Mode-Change-TC-T        ::= SEQUENCE {
