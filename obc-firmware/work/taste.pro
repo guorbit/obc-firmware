@@ -3,6 +3,7 @@ HEADERS += work/dataview/C/dataview-uniq.h
 HEADERS += work/dataview/Ada/src/*.ads
 include(adcs_mode_tracker/adcs_mode_tracker.pro)
 include(comms_mode_tracker/comms_mode_tracker.pro)
+include(demo_timer_manager/demo_timer_manager.pro)
 include(deployer_mode_tracker/deployer_mode_tracker.pro)
 include(eps_mode_tracker/eps_mode_tracker.pro)
 include(gs_gui/gs_gui.pro)
